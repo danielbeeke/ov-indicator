@@ -1,0 +1,23 @@
+bus-loader {
+  position: fixed;
+  background: #f9f7f7;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  padding: 30px;
+  transition: all .4s ease-in-out;
+  opacity: 1;
+  transform: scale(1);
+
+  .loading-animation {
+    width: 100%;
+    object-fit: scale-down;
+    height: calc(100% - 50px);
+  }
+
+  &.done {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}

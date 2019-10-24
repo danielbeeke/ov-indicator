@@ -3,12 +3,9 @@
  * @returns {Promise}
  */
 export let proxy = function () {
-  arguments[0] = `https://api.allorigins.win/get?url=${encodeURIComponent(arguments[0])}`;
+  arguments[0] = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(arguments[0])}`;
   return fetch(...arguments)
     .then(response => response.json())
-    .then(response => {
-      return JSON.parse(response.contents)
-    });
 };
 
 /**
@@ -57,10 +54,12 @@ export let getBusStops = (lat, lon, limit = 5) => {
 
     busStops = busStops.slice(0, limit);
 
+    document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busTrips' }));
+
     let promises = busStops.map(busStop => proxy(`https://ovzoeker.nl/api/arrivals/${busStop.stop_id}`)
       .then(response => busStop.arrivals = response.arrivals));
 
-    return Promise.all(promises).then(() => busStops);
+    return Promise.all(promises).then(() => busStops.filter(busStop => busStop.arrivals.length > 0));
   });
 };
 
@@ -79,9 +78,10 @@ export let getCurrentPosition = () => {
 /**
  * Returns a relative time string.
  * @param epoch
+ * @param addPrefixOrSuffix
  * @returns {string}
  */
-export let relativeTime = (epoch) => {
+export let relativeTime = (epoch, addPrefixOrSuffix = true) => {
   const rtf = new Intl.RelativeTimeFormat('nl', {
     localeMatcher: "best fit",
     numeric: "auto",
@@ -114,7 +114,7 @@ export let relativeTime = (epoch) => {
   }
 
   let outputParts = [];
-  if (pastOrFuture === 'future') outputParts.push('Over ');
+  if (pastOrFuture === 'future' && addPrefixOrSuffix) outputParts.push('Over ');
 
   timeParts.forEach((timePart, index) => {
     outputParts.push(cleaner(timePart));
@@ -123,7 +123,7 @@ export let relativeTime = (epoch) => {
     if (index === 0 && timeParts.length === 3) outputParts.push(', ');
   });
 
-  if (pastOrFuture === 'past') outputParts.push(' geleden');
+  if (pastOrFuture === 'past' && addPrefixOrSuffix) outputParts.push(' geleden');
 
   return outputParts.join('');
 };
