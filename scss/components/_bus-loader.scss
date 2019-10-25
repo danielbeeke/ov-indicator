@@ -1,19 +1,15 @@
 bus-loader {
-  position: fixed;
-  background: #f9f7f7;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  padding: 30px;
+  transform: scale(1);
   transition: all .4s ease-in-out;
   opacity: 1;
-  transform: scale(1);
+  flex: 0 1 400px;
+  padding: 20px;
+  margin: auto;
 
   .loading-animation {
     width: 100%;
     object-fit: scale-down;
-    height: calc(100% - 50px);
+    height: calc(100% - 150px);
   }
 
   &.done {

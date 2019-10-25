@@ -82,48 +82,30 @@ export let getCurrentPosition = () => {
  * @returns {string}
  */
 export let relativeTime = (epoch, addPrefixOrSuffix = true) => {
+  const cleaner = (string) => string.replace('over ', '').replace(' geleden', '').trim();
+  const pastOrFuture = epoch > new Date() / 1000 ? 'future' : 'past';
+
+  const lf = new Intl.ListFormat('nl', { style: 'long', type: 'conjunction' });
   const rtf = new Intl.RelativeTimeFormat('nl', {
     localeMatcher: "best fit",
     numeric: "auto",
     style: "long",
   });
 
-  let pastOrFuture = epoch > new Date() / 1000 ? 'future' : 'past';
+  const totalSeconds = Math.abs(epoch - (new Date() / 1000));
 
-  let totalSeconds = Math.abs(epoch - (new Date() / 1000));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor((totalSeconds % 3600) % 60);
+
   let timeParts = [];
+  if (hours) timeParts.push(cleaner(rtf.format(hours, 'hour')));
+  if (minutes) timeParts.push(cleaner(rtf.format(minutes, 'minutes')));
+  if (seconds) timeParts.push(cleaner(rtf.format(seconds, 'seconds')));
 
-  let hours = Math.floor(totalSeconds / 3600);
-  let minutes = Math.floor((totalSeconds % 3600) / 60);
-  let seconds = Math.floor((totalSeconds % 3600) % 60);
+  let output = lf.format(timeParts);
+  if (pastOrFuture === 'future' && addPrefixOrSuffix) output = 'Over ' + output;
+  if (pastOrFuture === 'past' && addPrefixOrSuffix) output = output + ' geleden';
 
-  let cleaner = (string) => {
-    return string.replace('over ', '').replace(' geleden', '').trim()
-  };
-
-  if (hours) {
-    timeParts.push(rtf.format(hours, 'hour'));
-  }
-
-  if (minutes) {
-    timeParts.push(rtf.format(minutes, 'minutes'));
-  }
-
-  if (seconds) {
-    timeParts.push(rtf.format(seconds, 'seconds'));
-  }
-
-  let outputParts = [];
-  if (pastOrFuture === 'future' && addPrefixOrSuffix) outputParts.push('Over ');
-
-  timeParts.forEach((timePart, index) => {
-    outputParts.push(cleaner(timePart));
-
-    if (index === 0 && timeParts.length === 2 || index === 1 && timeParts.length === 3) outputParts.push(' en ');
-    if (index === 0 && timeParts.length === 3) outputParts.push(', ');
-  });
-
-  if (pastOrFuture === 'past' && addPrefixOrSuffix) outputParts.push(' geleden');
-
-  return outputParts.join('');
+  return output;
 };

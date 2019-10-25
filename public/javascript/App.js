@@ -7,5 +7,6 @@ document.body.dispatchEvent(new CustomEvent('loading', { detail: 'boot' }));
 
 import('./BusIndicator.js').then(() => {
   let busIndicator = document.createElement('bus-indicator');
+  busIndicator.classList.add('hidden');
   document.body.appendChild(busIndicator);
 });
