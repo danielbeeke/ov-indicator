@@ -1,10 +1,11 @@
 .progress-bar {
-  line-height: 1.3;
-  padding: 1.6em .8em .5em .8em;
-
+  height: calc(100% - .6em);
   background-color: #fff;
   background-image: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
-
+  position: absolute;
+  top: 50%;
+  left: .3em;
+  transform: translateY(-50%);
   transition: width .5s ease-in-out;
   border-radius: .3em;
 }
@@ -17,12 +18,8 @@
   background-color: $color-tertiary;
 
   .label {
-    position: absolute;
     mix-blend-mode: difference;
     filter: invert(1) contrast(9);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) translateY(1px);
     z-index: 2;
     color: $color-tertiary;
   }

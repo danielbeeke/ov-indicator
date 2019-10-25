@@ -20,7 +20,7 @@ export class BaseElement extends HTMLElement {
   bindEvent = (callback) => {
     let that = this;
     return function () {
-      callback.apply(that, [this.value]);
+      callback.apply(that, [this.value, this]);
       that.draw();
     };
   };

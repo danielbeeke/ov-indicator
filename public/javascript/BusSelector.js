@@ -9,6 +9,8 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
       busStops: [],
       lat: null,
       lng: null,
+      animateToggleButtonBusStop: false,
+      animateToggleButtonTrip: false,
       currentGeolocationWatcher: null,
       selectedBusStop: null,
       selectedArrival: null,
@@ -117,7 +119,11 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
   /**
    * Makes a busStop favorite
    */
-  toggleBusStopFavorite () {
+  toggleBusStopFavorite (value, button) {
+    button.addEventListener('animationend', () => {
+      this.animateToggleButtonBusStop = false;
+    }, { once: true });
+    this.animateToggleButtonBusStop = true;
 
     // Remove it.
     if (this.favoriteBusStops.includes(this.selectedBusStop.stop_id)) {
@@ -138,7 +144,12 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
   /**
    * Makes a trip favorite
    */
-  toggleTripFavorite () {
+  toggleTripFavorite (value, button) {
+    button.addEventListener('animationend', () => {
+      this.animateToggleButtonTrip = false;
+    }, { once: true });
+    this.animateToggleButtonTrip = true;
+
     // Remove it.
     if (this.favoriteTrips.includes(this.selectedArrival.route_short_name)) {
       this.favoriteTrips = this.favoriteBusStops.filter(tripId => tripId !== this.selectedArrival.route_short_name)
@@ -151,7 +162,6 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
 
     // Save.
     localStorage.setItem('favoriteTrips', this.favoriteTrips.join(','));
-
   }
 
   /**
@@ -172,7 +182,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
         
     ${this.selectedBusStop ? html`
 
-      <button class="${this.favoriteBusStops.includes(this.selectedBusStop.stop_id) ? 'favorite' : ''} favorite-button" onclick="${this.toggleBusStopFavorite}"><span class="inner">♥</span>
+      <button class="${this.favoriteBusStops.includes(this.selectedBusStop.stop_id) ? 'favorite' : ''} ${ this.animateToggleButtonBusStop ? 'show-animation' : '' } favorite-button" onclick="${this.toggleBusStopFavorite}"><span class="inner">♥</span>
       </button>
 
     ` : ''}
@@ -192,7 +202,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
       `)}
       </select>
       
-    <button class="${this.favoriteTrips.includes(this.selectedArrival.route_short_name) ? 'favorite' : ''} favorite-button" onclick="${this.toggleTripFavorite}"><span class="inner">♥</span>
+    <button class="${this.favoriteTrips.includes(this.selectedArrival.route_short_name) ? 'favorite' : ''} ${ this.animateToggleButtonTrip ? 'show-animation' : '' } favorite-button" onclick="${this.toggleTripFavorite}"><span class="inner">♥</span>
     </button>
 
     </div>
