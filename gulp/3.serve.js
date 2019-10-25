@@ -16,14 +16,6 @@ gulp.task('browsersync', () => {
     port: 4000,
     server: {
       baseDir: 'public',
-      middleware: [function(req, res, next) {
-        let fileName = url.parse(req.url).pathname;
-        let fileExists = fs.existsSync('public/' + fileName);
-        if (!fileExists && fileName.indexOf("browser-sync-client") < 0 || fileName === '/') {
-          req.url = '/404.html';
-        }
-        return next();
-      }]
     },
     https: true,
     ghostMode: true,

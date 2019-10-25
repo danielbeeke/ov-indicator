@@ -1,6 +1,6 @@
-bus-indicator {
+bus-selector {
   padding: 20px;
-  flex: 0 1 400px;
+  flex: 0 1 $max-width;
   margin: auto;
 
   .bus-selector {

@@ -2,7 +2,7 @@ bus-loader {
   transform: scale(1);
   transition: all .4s ease-in-out;
   opacity: 1;
-  flex: 0 1 400px;
+  flex: 0 1 $max-width;
   padding: 20px;
   margin: auto;
 
@@ -10,10 +10,14 @@ bus-loader {
     width: 100%;
     object-fit: scale-down;
     height: calc(100% - 150px);
+    transition: all .4s ease-in-out;
   }
 
   &.done {
     opacity: 0;
-    transform: scale(1.5);
+
+    .loading-animation {
+      transform: scale(2);
+    }
   }
 }

@@ -79,9 +79,10 @@ export let getCurrentPosition = () => {
  * Returns a relative time string.
  * @param epoch
  * @param addPrefixOrSuffix
+ * @param style
  * @returns {string}
  */
-export let relativeTime = (epoch, addPrefixOrSuffix = true) => {
+export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
   const cleaner = (string) => string.replace('over ', '').replace(' geleden', '').trim();
   const pastOrFuture = epoch > new Date() / 1000 ? 'future' : 'past';
 
@@ -89,7 +90,7 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true) => {
   const rtf = new Intl.RelativeTimeFormat('nl', {
     localeMatcher: "best fit",
     numeric: "auto",
-    style: "long",
+    style: style,
   });
 
   const totalSeconds = Math.abs(epoch - (new Date() / 1000));

@@ -2,7 +2,7 @@ import {getBusStops, getCurrentPosition, relativeTime, calculateDistance} from '
 import {BaseElement} from './BaseElement.js';
 import {render, html} from 'https://unpkg.com/lighterhtml?module';
 
-customElements.define('bus-indicator', class BusIndicator extends BaseElement {
+customElements.define('bus-selector', class BusSelector extends BaseElement {
   constructor() {
     super();
     Object.assign(this, {
@@ -187,6 +187,7 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
         <option selected="${this.selectedArrival && this.selectedArrival.trip_id === arrival.trip_id}" value="${arrival.trip_id}">
           ${arrival.route_short_name} 
           ${arrival.trip_headsign} 
+          (${relativeTime(arrival.ts, false, 'short')})
         </option>
       `)}
       </select>
@@ -196,13 +197,6 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
 
     </div>
     ` : ''}   
-
-    ${this.selectedArrival ? html`
-      <span class="relative-time">${relativeTime(this.selectedArrival.ts, this.selectedArrival.route_short_name)}</span>
-      ${this.selectedArrival.punctuality ? html`
-        <span class="punctuality">${relativeTime((new Date() / 1000) + parseInt(this.selectedArrival.punctuality), false)}</span>
-      ` : ''}
-    ` : ''}
     
   `;
   }

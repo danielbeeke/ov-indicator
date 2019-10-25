@@ -11,7 +11,8 @@ customElements.define('bus-loader', class BusLoader extends HTMLElement {
     this.progressBar = document.createElement('div');
     this.progressBar.classList.add('progress-bar');
     this.progressBar.style.width = '0%';
-    this.progressBarWrapper.appendChild(this.progressBar)
+    this.progressBarWrapper.appendChild(this.progressBar);
+    this.progressBarWrapper.appendChild(this.label);
 
     this.image = document.createElement('img');
     this.image.src = 'img/bus-animation.gif';
@@ -59,7 +60,6 @@ customElements.define('bus-loader', class BusLoader extends HTMLElement {
 
   connectedCallback () {
     this.appendChild(this.image);
-    this.appendChild(this.label);
     this.appendChild(this.progressBarWrapper);
   }
 });
