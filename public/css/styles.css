@@ -46,6 +46,9 @@ a:visited {
 .hidden {
   display: none; }
 
+#__bs_notify__ {
+  display: none !important; }
+
 bus-indicator {
   padding: 20px;
   -webkit-box-flex: 0;
@@ -63,6 +66,13 @@ bus-indicator {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex; }
+  bus-indicator .relative-time {
+    float: left; }
+  bus-indicator .punctuality {
+    color: red;
+    float: left;
+    clear: both;
+    font-style: italic; }
 
 bus-loader {
   -webkit-transform: scale(1);
@@ -136,16 +146,15 @@ button {
     display: block;
     -webkit-transform: scale(2);
     -ms-transform: scale(2);
-    transform: scale(2); }
+    transform: scale(2);
+    -webkit-animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01);
+    animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01); }
   .favorite-button:focus {
     color: #b4b4b4; }
-    .favorite-button:focus .inner {
-      -webkit-animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01);
-      animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01); }
   .favorite-button.favorite {
     color: red;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
-    .favorite-button.favorite:focus .inner {
+    .favorite-button.favorite .inner {
       -webkit-animation: zoom 0.9s cubic-bezier(0.95, 0.18, 0.32, 1.01);
       animation: zoom 0.9s cubic-bezier(0.95, 0.18, 0.32, 1.01); }
     .favorite-button.favorite:focus {
@@ -153,25 +162,25 @@ button {
 
 @-webkit-keyframes zoom {
   0% {
-    -webkit-transform: scale(2);
-    transform: scale(2); }
+    -webkit-transform: scale(2) rotate(0);
+    transform: scale(2) rotate(0); }
   50% {
-    -webkit-transform: scale(9);
-    transform: scale(9); }
+    -webkit-transform: scale(9) rotate(-10deg);
+    transform: scale(9) rotate(-10deg); }
   100% {
-    -webkit-transform: scale(2);
-    transform: scale(2); } }
+    -webkit-transform: scale(2) rotate(0);
+    transform: scale(2) rotate(0); } }
 
 @keyframes zoom {
   0% {
-    -webkit-transform: scale(2);
-    transform: scale(2); }
+    -webkit-transform: scale(2) rotate(0);
+    transform: scale(2) rotate(0); }
   50% {
-    -webkit-transform: scale(9);
-    transform: scale(9); }
+    -webkit-transform: scale(9) rotate(-10deg);
+    transform: scale(9) rotate(-10deg); }
   100% {
-    -webkit-transform: scale(2);
-    transform: scale(2); } }
+    -webkit-transform: scale(2) rotate(0);
+    transform: scale(2) rotate(0); } }
 
 @-webkit-keyframes remove {
   0% {
@@ -212,11 +221,11 @@ button {
   -webkit-transition: width .5s ease-in-out;
   -o-transition: width .5s ease-in-out;
   transition: width .5s ease-in-out;
-  -webkit-border-radius: .5em;
-  border-radius: .5em; }
+  -webkit-border-radius: .3em;
+  border-radius: .3em; }
 
 .progress-bar-wrapper {
-  padding: .6em .8em .5em .8em;
+  padding: 4px;
   -webkit-border-radius: .5em;
   border-radius: .5em;
   margin-top: 20px;

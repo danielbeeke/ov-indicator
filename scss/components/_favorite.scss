@@ -6,21 +6,18 @@
   .inner {
     display: block;
     transform: scale(2);
+    animation: remove .7s cubic-bezier(.95,.18,.32,1.01);
   }
 
   &:focus {
     color: #b4b4b4;
-
-    .inner {
-      animation: remove .7s cubic-bezier(.95,.18,.32,1.01);
-    }
   }
 
   &.favorite {
     color: red;
     text-shadow: 0 1px 1px rgba(black, .2);
 
-    &:focus .inner {
+    .inner {
       animation: zoom .9s cubic-bezier(.95,.18,.32,1.01);
     }
 
@@ -32,9 +29,9 @@
 }
 
 @keyframes zoom {
-  0% { transform: scale(2); }
-  50% { transform: scale(9); }
-  100% { transform: scale(2); }
+  0% { transform: scale(2) rotate(0); }
+  50% { transform: scale(9) rotate(-10deg); }
+  100% { transform: scale(2) rotate(0); }
 }
 
 @keyframes remove {

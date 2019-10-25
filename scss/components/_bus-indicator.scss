@@ -10,4 +10,15 @@ bus-indicator {
   .trip-selector {
     display: flex;
   }
+
+  .relative-time {
+    float: left;
+  }
+
+  .punctuality {
+    color: red;
+    float: left;
+    clear: both;
+    font-style: italic;
+  }
 }

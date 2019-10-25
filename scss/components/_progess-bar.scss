@@ -6,11 +6,11 @@
   background-image: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
 
   transition: width .5s ease-in-out;
-  border-radius: .5em;
+  border-radius: .3em;
 }
 
 .progress-bar-wrapper {
-  padding: .6em .8em .5em .8em;
+  padding: 4px;
   border-radius: .5em;
   margin-top: 20px;
   background-color: $color-tertiary;

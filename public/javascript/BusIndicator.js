@@ -1,4 +1,4 @@
-import {getBusStops, getCurrentPosition, relativeTime} from './Helpers.js';
+import {getBusStops, getCurrentPosition, relativeTime, calculateDistance} from './Helpers.js';
 import {BaseElement} from './BaseElement.js';
 import {render, html} from 'https://unpkg.com/lighterhtml?module';
 
@@ -7,6 +7,9 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
     super();
     Object.assign(this, {
       busStops: [],
+      lat: null,
+      lng: null,
+      currentGeolocationWatcher: null,
       selectedBusStop: null,
       selectedArrival: null,
       favoriteBusStops: localStorage.getItem('favoriteBusStops') ? localStorage.getItem('favoriteBusStops').split(',') : [],
@@ -17,7 +20,7 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
       if (event.detail === 'destroyed') {
         this.classList.remove('hidden')
       }
-    })
+    });
   }
 
   /**
@@ -31,6 +34,10 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
    * Favorite busStops first then comes the most near ones.
    */
   sortBusStops () {
+    this.busStops.forEach(busStop => {
+      busStop.distance = calculateDistance(busStop.stop_lat, busStop.stop_lon, this.lat, this.lng);
+    });
+
     this.busStops.sort((a, b) => {
       let firstSort = this.favoriteBusStops.includes(b.stop_id) - this.favoriteBusStops.includes(a.stop_id);
       if (firstSort !== 0) { return firstSort }
@@ -47,15 +54,20 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
 
     getCurrentPosition()
       .then(position => {
-        document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busStops' }));
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
 
+        document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busStops' }));
         return getBusStops(position.coords.latitude, position.coords.longitude, 5)
       })
       .then(busStops => {
         this.busStops = busStops;
         this.sortBusStops();
-        this.selectedBusStop = busStops[0];
-        this.selectedArrival = this.selectedBusStop.arrivals[0];
+        this.selectedBusStop = this.busStops[0];
+
+        if (this.selectedBusStop && this.selectedBusStop.arrivals) {
+          this.selectedArrival = this.selectedBusStop.arrivals[0];
+        }
         this.draw();
         document.body.dispatchEvent(new CustomEvent('loading', { detail: 'done' }));
       });
@@ -74,6 +86,25 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
   changeBusStop (value) {
     this.selectedBusStop = this.busStops.find(busStop => busStop.stop_id === value);
     this.selectedArrival = this.selectedBusStop.arrivals[0];
+
+    if (this.currentGeolocationWatcher) {
+      navigator.geolocation.clearWatch(this.currentGeolocationWatcher);
+    }
+
+    this.currentGeolocationWatcher = navigator.geolocation.watchPosition((position) => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      this.draw();
+
+      if (this.selectedBusStop.distance < 10) {
+        navigator.geolocation.clearWatch(this.currentGeolocationWatcher);
+      }
+    }, (error) => {
+      console.warn(error);
+    }, {
+      enableHighAccuracy: true,
+      maximumAge: 10
+    });
   }
 
   /**
@@ -133,7 +164,9 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
 
     <select id="selectedBusStop" onchange="${this.changeBusStop}" class="${this.busStops.length === 0 ? 'hidden' : '' }">
       ${this.busStops.map(busStop => html`
-        <option selected="${this.selectedBusStop && this.selectedBusStop.stop_id === busStop.stop_id}" value="${busStop.stop_id}">${busStop.name}</option>
+        <option selected="${this.selectedBusStop && this.selectedBusStop.stop_id === busStop.stop_id}" value="${busStop.stop_id}">
+            ${busStop.name} (${busStop.distance} meter)
+        </option>
       `)}
     </select>
         
