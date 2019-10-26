@@ -180,30 +180,31 @@ button {
   -webkit-transform: translateZ(-1);
   transform: translateZ(-1);
   margin-bottom: 10px;
-  -webkit-transition: color .3s ease-in-out, text-shadow .3s ease-in-out;
-  -o-transition: color .3s ease-in-out, text-shadow .3s ease-in-out;
-  transition: color .3s ease-in-out, text-shadow .3s ease-in-out; }
-  .favorite-button .inner {
+  -webkit-transition: color .3s ease-in-out, text-shadow .3s ease-in-out, -webkit-filter .3s ease-in-out;
+  transition: color .3s ease-in-out, text-shadow .3s ease-in-out, -webkit-filter .3s ease-in-out;
+  -o-transition: color .3s ease-in-out, text-shadow .3s ease-in-out, filter .3s ease-in-out;
+  transition: color .3s ease-in-out, text-shadow .3s ease-in-out, filter .3s ease-in-out;
+  transition: color .3s ease-in-out, text-shadow .3s ease-in-out, filter .3s ease-in-out, -webkit-filter .3s ease-in-out; }
+  .favorite-button svg {
     display: block;
     -webkit-transform: scale(2);
     -ms-transform: scale(2);
-    transform: scale(2); }
+    transform: scale(2);
+    max-width: 10px; }
   .favorite-button:focus {
     color: #b4b4b4; }
-  .favorite-button.favorite {
-    color: red;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
-    .favorite-button.favorite:focus {
-      color: red; }
+  .favorite-button:not(.favorite) {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1); }
 
 .favorite-button.show-animation {
   -webkit-transform: translateX(0);
   -ms-transform: translateX(0);
   transform: translateX(0); }
-  .favorite-button.show-animation:not(.favorite) .inner {
+  .favorite-button.show-animation:not(.favorite) svg {
     -webkit-animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01) 0.1s;
     animation: remove 0.7s cubic-bezier(0.95, 0.18, 0.32, 1.01) 0.1s; }
-  .favorite-button.show-animation.favorite .inner {
+  .favorite-button.show-animation.favorite svg {
     -webkit-animation: zoom 0.9s cubic-bezier(0.95, 0.18, 0.32, 1.01) 0.1s;
     animation: zoom 0.9s cubic-bezier(0.95, 0.18, 0.32, 1.01) 0.1s; }
 

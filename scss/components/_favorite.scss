@@ -3,36 +3,32 @@
   margin-left: 10px;
   transform: translateZ(-1);
   margin-bottom: 10px;
-  transition: color .3s ease-in-out, text-shadow .3s ease-in-out;
+  transition: color .3s ease-in-out, text-shadow .3s ease-in-out, filter .3s ease-in-out;
 
-  .inner {
+  svg {
     display: block;
     transform: scale(2);
+    max-width: 10px;
   }
 
   &:focus {
     color: #b4b4b4;
   }
 
-  &.favorite {
-    color: red;
-    text-shadow: 0 1px 1px rgba(black, .2);
-
-    &:focus {
-      color: red;
-    }
+  &:not(.favorite) {
+    filter: grayscale(1);
   }
 }
 
 .favorite-button.show-animation {
   transform: translateX(0);
 
-  &:not(.favorite) .inner {
+  &:not(.favorite) svg {
     animation: remove .7s cubic-bezier(.95,.18,.32,1.01) .1s;
   }
 
   &.favorite {
-    .inner {
+    svg {
       animation: zoom .9s cubic-bezier(.95,.18,.32,1.01) .1s;
     }
   }
