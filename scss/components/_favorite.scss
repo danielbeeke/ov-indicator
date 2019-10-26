@@ -1,9 +1,9 @@
 .favorite-button {
   color: #b4b4b4;
   margin-left: 10px;
+  transform: translateZ(-1);
   margin-bottom: 10px;
   transition: color .3s ease-in-out, text-shadow .3s ease-in-out;
-  position: relative;
 
   .inner {
     display: block;
@@ -25,15 +25,15 @@
 }
 
 .favorite-button.show-animation {
-  z-index: 40;
+  transform: translateX(0);
 
-  .inner {
-    animation: remove .7s cubic-bezier(.95,.18,.32,1.01);
+  &:not(.favorite) .inner {
+    animation: remove .7s cubic-bezier(.95,.18,.32,1.01) .1s;
   }
 
   &.favorite {
     .inner {
-      animation: zoom .9s cubic-bezier(.95,.18,.32,1.01);
+      animation: zoom .9s cubic-bezier(.95,.18,.32,1.01) .1s;
     }
   }
 }

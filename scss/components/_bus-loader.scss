@@ -2,9 +2,12 @@ bus-loader {
   transform: scale(1);
   transition: all .4s ease-in-out;
   opacity: 1;
-  flex: 0 1 $max-width;
+  flex: 1 1 auto;
   padding: 20px;
   margin: auto;
+  width: 100%;
+  max-width: $max-width;
+  overflow: hidden;
 
   .loading-animation {
     width: 100%;

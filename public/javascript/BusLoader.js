@@ -1,22 +1,12 @@
-customElements.define('bus-loader', class BusLoader extends HTMLElement {
+import {BaseElement} from './BaseElement.js';
+import {html} from 'https://unpkg.com/lighterhtml?module';
+
+customElements.define('bus-loader', class BusLoader extends BaseElement {
   constructor () {
     super();
 
-    this.label = document.createElement('span');
-    this.label.classList.add('label');
-
-    this.progressBarWrapper = document.createElement('div');
-    this.progressBarWrapper.classList.add('progress-bar-wrapper');
-
-    this.progressBar = document.createElement('div');
-    this.progressBar.classList.add('progress-bar');
-    this.progressBar.style.width = '0%';
-    this.progressBarWrapper.appendChild(this.progressBar);
-    this.progressBarWrapper.appendChild(this.label);
-
-    this.image = document.createElement('img');
-    this.image.src = 'img/bus-animation.gif';
-    this.image.classList.add('loading-animation');
+    this.progress = 0;
+    this.text = '';
 
     this.phases = {
       boot: {
@@ -52,14 +42,25 @@ customElements.define('bus-loader', class BusLoader extends HTMLElement {
       }
 
       if (this.phases[event.detail]) {
-        this.label.innerText = this.phases[event.detail].text;
-        this.progressBar.style.width = this.phases[event.detail].percentage + '%';
+        this.text = this.phases[event.detail].text;
+        this.progress = this.phases[event.detail].percentage + '%';
+        this.draw();
       }
     })
   }
 
   connectedCallback () {
-    this.appendChild(this.image);
-    this.appendChild(this.progressBarWrapper);
+    this.draw();
+  }
+
+  draw() {
+    return html`
+      <img src="img/bus-animation.gif" class="loading-animation">
+
+      <div class="progress-bar-wrapper">
+        <div class="progress-bar" style="width: ${this.progress}"></div>
+        <div class="label">${this.text}</div>
+      </div>
+    `
   }
 });

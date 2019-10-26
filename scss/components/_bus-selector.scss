@@ -1,7 +1,10 @@
 bus-selector {
   padding: 20px;
-  flex: 0 1 $max-width;
-  margin: auto;
+  flex: 0 1 auto;
+  width: 100%;
+  max-width: $max-width;
+  display: flex;
+  flex-direction: column;
 
   .bus-selector {
     display: flex;

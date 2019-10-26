@@ -57,9 +57,9 @@ export let getBusStops = (lat, lon, limit = 5) => {
     document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busTrips' }));
 
     let promises = busStops.map(busStop => proxy(`https://ovzoeker.nl/api/arrivals/${busStop.stop_id}`)
-      .then(response => busStop.arrivals = response.arrivals));
+      .then(response => busStop.trips = response.arrivals));
 
-    return Promise.all(promises).then(() => busStops.filter(busStop => busStop.arrivals.length > 0));
+    return Promise.all(promises).then(() => busStops.filter(busStop => busStop.trips.length > 0));
   });
 };
 

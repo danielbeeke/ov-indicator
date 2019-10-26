@@ -1,4 +1,4 @@
-import {render, html} from 'https://unpkg.com/lighterhtml?module';
+import {render} from 'https://unpkg.com/lighterhtml?module';
 
 export class BaseElement extends HTMLElement {
   constructor () {
@@ -24,4 +24,7 @@ export class BaseElement extends HTMLElement {
       that.draw();
     };
   };
+
+  draw () {}
+
 }
