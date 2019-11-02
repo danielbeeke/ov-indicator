@@ -5,6 +5,8 @@ bus-selector {
   max-width: $max-width;
   display: flex;
   flex-direction: column;
+  opacity: 1;
+  transition: opacity $speed $easing;
 
   .bus-selector {
     display: flex;
@@ -23,5 +25,11 @@ bus-selector {
     float: left;
     clear: both;
     font-style: italic;
+  }
+
+  &.hidden {
+    opacity: 0;
+    height: 0;
+    position: absolute;
   }
 }

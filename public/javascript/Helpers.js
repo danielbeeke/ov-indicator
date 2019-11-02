@@ -19,8 +19,6 @@ export let proxy = function () {
 export function calculateDistance(lat1, lon1, lat2, lon2) {
   var radlat1 = Math.PI * lat1 / 180;
   var radlat2 = Math.PI * lat2 / 180;
-  var radlon1 = Math.PI * lon1 / 180;
-  var radlon2 = Math.PI * lon2 / 180;
   var theta = lon1 - lon2;
   var radtheta = Math.PI * theta / 180;
   var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
@@ -36,16 +34,21 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
  * @param lat
  * @param lon
  * @param limit
- * @returns {Promise}
+ * @returns {Promise<busStops>}
  */
 export let getBusStops = (lat, lon, limit = 5) => {
   return proxy(`https://ovzoeker.nl/api/stops/${lat},${lon}`).then(busStops => {
     busStops.forEach(busStop => {
       busStop.distance = calculateDistance(busStop.stop_lat, busStop.stop_lon, lat, lon);
 
-      let nameSplit = busStop.stop_name.split(', ');
-      nameSplit.shift();
-      busStop.name = nameSplit.join(', ');
+      if (busStop.stop_name.split(', ').length > 1) {
+        let nameSplit = busStop.stop_name.split(', ');
+        nameSplit.shift();
+        busStop.name = nameSplit.join(', ');
+      }
+      else {
+        busStop.name = busStop.stop_name;
+      }
     });
 
     busStops.sort(function (a, b) {
@@ -65,12 +68,14 @@ export let getBusStops = (lat, lon, limit = 5) => {
 
 /**
  * Returns the geolocation in a Promise
- * @returns {Promise}
+ * @returns {Promise<position>}
  */
 export let getCurrentPosition = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(position => {
       resolve(position)
+    }, error => {
+      reject(error.message)
     });
   });
 };

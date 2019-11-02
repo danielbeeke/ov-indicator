@@ -1,4 +1,4 @@
-import {render} from 'https://unpkg.com/lighterhtml?module';
+import {render} from './vendor/lighterhtml.js';
 
 export class BaseElement extends HTMLElement {
   constructor () {

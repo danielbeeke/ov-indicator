@@ -1,8 +1,8 @@
 bus-loader {
   transform: scale(1);
-  transition: all .4s ease-in-out;
+  transition: all $speed $easing;
   opacity: 1;
-  flex: 1 1 auto;
+  flex: 0 0  auto;
   padding: 20px;
   margin: auto;
   width: 100%;
@@ -13,7 +13,7 @@ bus-loader {
     width: 100%;
     object-fit: scale-down;
     height: calc(100% - 150px);
-    transition: all .4s ease-in-out;
+    transition: all $speed $easing;
   }
 
   &.done {

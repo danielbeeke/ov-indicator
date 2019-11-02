@@ -1,3 +1,11 @@
 bus-indicator {
   flex: 0 1 auto;
+  opacity: 1;
+  transition: opacity $speed $easing;
+
+  &.hidden {
+    opacity: 0;
+    height: 0;
+    position: absolute;
+  }
 }

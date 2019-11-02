@@ -18,7 +18,7 @@ gulp.task('browsersync', () => {
       baseDir: 'public',
     },
     https: true,
-    ghostMode: true,
+    ghostMode: false,
   });
 
   gulp.watch(['public/javascript/**/*']).on('change', reload);

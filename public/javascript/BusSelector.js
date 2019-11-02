@@ -1,11 +1,15 @@
 import {getBusStops, getCurrentPosition, relativeTime, calculateDistance} from './Helpers.js';
 import {BaseElement} from './BaseElement.js';
-import {html} from 'https://unpkg.com/lighterhtml?module';
+import {html} from './vendor/lighterhtml.js';
 import './BusIndicator.js';
 
 customElements.define('bus-selector', class BusSelector extends BaseElement {
   constructor() {
     super();
+
+    /**
+     * Defining initial state.
+     */
     Object.assign(this, {
       busStops: [],
       lat: null,
@@ -19,6 +23,9 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
       favoriteTrips: localStorage.getItem('favoriteTrips') ? localStorage.getItem('favoriteTrips').split(',') : []
     });
 
+    /**
+     * When the preloader is destroyed we will fade in.
+     */
     document.body.addEventListener('loading', event => {
       if (event.detail === 'destroyed') {
         this.classList.remove('hidden')
@@ -34,7 +41,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
   }
 
   /**
-   * Favorite busStops first then comes the most near ones.
+   * Favorite busStops first after that come the most near ones.
    */
   sortBusStops () {
     this.busStops.forEach(busStop => {
@@ -56,25 +63,28 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
     document.body.dispatchEvent(new CustomEvent('loading', { detail: 'geoLocation' }));
 
     getCurrentPosition()
-      .then(position => {
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
+    .then(position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
 
-        document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busStops' }));
-        return getBusStops(position.coords.latitude, position.coords.longitude, 5)
-      })
-      .then(busStops => {
-        this.busStops = busStops;
-        this.sortBusStops();
-        this.selectedBusStop = this.busStops[0];
+      document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busStops' }));
+      return getBusStops(position.coords.latitude, position.coords.longitude)
+    })
+    .then(busStops => {
+      this.busStops = busStops;
+      this.sortBusStops();
+      this.selectedBusStop = this.busStops[0];
 
-        if (this.selectedBusStop && this.selectedBusStop.trips) {
-          this.selectedTrip = this.selectedBusStop.trips[0];
-          this.emitSelectionAndData();
-        }
-        this.draw();
-        document.body.dispatchEvent(new CustomEvent('loading', { detail: 'done' }));
-      });
+      if (this.selectedBusStop && this.selectedBusStop.trips) {
+        this.selectedTrip = this.selectedBusStop.trips[0];
+        this.emitSelectionAndData();
+      }
+      this.draw();
+      document.body.dispatchEvent(new CustomEvent('loading', { detail: 'done' }));
+    })
+    .catch(error => {
+      document.body.dispatchEvent(new CustomEvent('loading', { detail: 'noGeolocation' }));
+    });
 
     /**
      * Initial render and refresher
@@ -82,7 +92,10 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
     setInterval(() => this.draw(), 1000);
     this.draw();
   }
-  
+
+  /**
+   * Signals to other components that the user has selected a busStop and trip.
+   */
   emitSelectionAndData () {
     document.body.dispatchEvent(new CustomEvent('selectedData', {
       detail: {
@@ -211,7 +224,6 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
           <option selected="${this.selectedTrip && this.selectedTrip.trip_id === trip.trip_id}" value="${trip.trip_id}">
             ${trip.route_short_name} 
             ${trip.trip_headsign} 
-            (${relativeTime(trip.ts, false, 'short')})
           </option>
         `)}
         </select>
