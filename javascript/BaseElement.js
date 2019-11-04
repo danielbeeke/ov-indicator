@@ -1,4 +1,4 @@
-import {render, html} from 'https://unpkg.com/lighterhtml?module';
+import {render} from './vendor/lighterhtml.js';
 
 export class BaseElement extends HTMLElement {
   constructor () {
@@ -20,8 +20,11 @@ export class BaseElement extends HTMLElement {
   bindEvent = (callback) => {
     let that = this;
     return function () {
-      callback.apply(that, [this.value]);
+      callback.apply(that, [this.value, this]);
       that.draw();
     };
   };
+
+  draw () {}
+
 }

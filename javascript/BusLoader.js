@@ -1,47 +1,59 @@
-customElements.define('bus-loader', class BusLoader extends HTMLElement {
+import {BaseElement} from './BaseElement.js';
+import {html} from './vendor/lighterhtml.js';
+
+customElements.define('bus-loader', class BusLoader extends BaseElement {
   constructor () {
     super();
 
-    this.label = document.createElement('span');
-    this.label.classList.add('label');
+    this.progress = 0;
+    this.text = '';
 
-    this.progressBarWrapper = document.createElement('div');
-    this.progressBarWrapper.classList.add('progress-bar-wrapper');
-
-    this.progressBar = document.createElement('div');
-    this.progressBar.classList.add('progress-bar');
-    this.progressBar.style.width = '0%';
-    this.progressBarWrapper.appendChild(this.progressBar);
-    this.progressBarWrapper.appendChild(this.label);
-
-    this.image = document.createElement('img');
-    this.image.src = 'img/bus-animation.gif';
-    this.image.classList.add('loading-animation');
-
+    /**
+     * All the phases that are displayed in the loader.
+     */
     this.phases = {
       boot: {
         percentage: 5,
-        text: 'Programma starten'
+        texts: ['Programma starten', 'Booting skynet...', 'Hello', 'Busje komt zo...']
       },
       geoLocation: {
         percentage: 30,
-        text: 'Uitzoeken waar je bent...'
+        texts: ['Uitzoeken waar je bent...', 'Waar ben jij dan eigenlijk?']
       },
       busStops: {
         percentage: 60,
-        text: 'Bezig met het laden van bushaltes...',
+        texts: ['Bezig met het laden van bushaltes...', 'Bushalte informatie ophalen...'],
       },
       busTrips: {
         percentage: 90,
-        text: 'Busritten zoeken...'
+        texts: ['Busritten zoeken...', 'Welke bussen zijn er in de buurt?']
       },
       done: {
         percentage: 100,
-        text: 'Woehoe...'
+        texts: ['Woehoe...', 'Daar gaan we!', 'Rijden maar, buschauffeur!']
+      },
+      noGeolocation: {
+        percentage: 0,
+        texts: ['Je moet nog even toestemming voor geolocatie verlenen.']
       }
     };
 
+    /**
+     * Other components dispatch loading events.
+     */
     document.body.addEventListener('loading', event => {
+      /**
+       * If we know the phase, display the text and set the progressbar.
+       */
+      if (this.phases[event.detail]) {
+        this.text = this.phases[event.detail].texts[Math.floor(Math.random()*this.phases[event.detail].texts.length)];
+        this.progress = this.phases[event.detail].percentage + '%';
+        this.draw();
+      }
+
+      /**
+       * When we get the signal done, do an animation and remove this loader.
+       */
       if (event.detail === 'done') {
         this.addEventListener('transitionend', () => {
           this.remove();
@@ -50,16 +62,23 @@ customElements.define('bus-loader', class BusLoader extends HTMLElement {
 
         this.classList.add('done');
       }
-
-      if (this.phases[event.detail]) {
-        this.label.innerText = this.phases[event.detail].text;
-        this.progressBar.style.width = this.phases[event.detail].percentage + '%';
-      }
     })
   }
 
   connectedCallback () {
-    this.appendChild(this.image);
-    this.appendChild(this.progressBarWrapper);
+    this.draw();
+  }
+
+  /**
+   * Our lighterHTML render function.
+   * @returns {*}
+   */
+  draw() {
+    return html`
+      <div class="progress-bar-wrapper">
+        <div class="progress-bar" style="width: ${this.progress}"></div>
+        <div class="label">${this.text}</div>
+      </div>
+    `
   }
 });

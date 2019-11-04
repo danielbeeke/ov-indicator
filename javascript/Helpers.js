@@ -19,8 +19,6 @@ export let proxy = function () {
 export function calculateDistance(lat1, lon1, lat2, lon2) {
   var radlat1 = Math.PI * lat1 / 180;
   var radlat2 = Math.PI * lat2 / 180;
-  var radlon1 = Math.PI * lon1 / 180;
-  var radlon2 = Math.PI * lon2 / 180;
   var theta = lon1 - lon2;
   var radtheta = Math.PI * theta / 180;
   var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
@@ -36,16 +34,21 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
  * @param lat
  * @param lon
  * @param limit
- * @returns {Promise}
+ * @returns {Promise<busStops>}
  */
 export let getBusStops = (lat, lon, limit = 5) => {
   return proxy(`https://ovzoeker.nl/api/stops/${lat},${lon}`).then(busStops => {
     busStops.forEach(busStop => {
       busStop.distance = calculateDistance(busStop.stop_lat, busStop.stop_lon, lat, lon);
 
-      let nameSplit = busStop.stop_name.split(', ');
-      nameSplit.shift();
-      busStop.name = nameSplit.join(', ');
+      if (busStop.stop_name.split(', ').length > 1) {
+        let nameSplit = busStop.stop_name.split(', ');
+        nameSplit.shift();
+        busStop.name = nameSplit.join(', ');
+      }
+      else {
+        busStop.name = busStop.stop_name;
+      }
     });
 
     busStops.sort(function (a, b) {
@@ -57,20 +60,22 @@ export let getBusStops = (lat, lon, limit = 5) => {
     document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busTrips' }));
 
     let promises = busStops.map(busStop => proxy(`https://ovzoeker.nl/api/arrivals/${busStop.stop_id}`)
-      .then(response => busStop.arrivals = response.arrivals));
+      .then(response => busStop.trips = response.arrivals));
 
-    return Promise.all(promises).then(() => busStops.filter(busStop => busStop.arrivals.length > 0));
+    return Promise.all(promises).then(() => busStops.filter(busStop => busStop.trips.length > 0));
   });
 };
 
 /**
  * Returns the geolocation in a Promise
- * @returns {Promise}
+ * @returns {Promise<position>}
  */
 export let getCurrentPosition = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(position => {
       resolve(position)
+    }, error => {
+      reject(error.message)
     });
   });
 };
@@ -109,4 +114,68 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
   if (pastOrFuture === 'past' && addPrefixOrSuffix) output = output + ' geleden';
 
   return output;
+};
+
+export let calculateIndication = (distance, departmentTime, now = new Date() / 1000) => {
+  console.log(distance, now)
+  let defaultWalkingSpeed = 4;
+  let distanceInHours = distance / 1000 / defaultWalkingSpeed;
+  let distanceInSeconds = distanceInHours * 60 * 60;
+  let remainingSeconds = departmentTime - now;
+  let preparationTime = 90;
+  let coffeeTime = 360;
+  let coffeeTimeEnd = 60;
+
+  let runningFactor = 2;
+  let fastWalkingFactor = 1.;
+  let indication = 0;
+  let phase = 0;
+
+  // Phase 1, 0/20. Drinking coffee.
+  if (remainingSeconds >= distanceInSeconds + preparationTime + coffeeTimeEnd) {
+    phase = 1;
+
+    let waitingTime = remainingSeconds - (distanceInSeconds + preparationTime);
+    if (waitingTime > coffeeTime + coffeeTimeEnd) {
+      indication = 0;
+    }
+    else {
+      indication = Math.round(20 - 20 / (coffeeTime + coffeeTimeEnd) * waitingTime);
+    }
+  }
+
+  // Phase 2, 20/40. Starting to leave the house.
+  else if (remainingSeconds >= distanceInSeconds + coffeeTimeEnd) {
+    phase = 2;
+
+    let fraction = remainingSeconds - distanceInSeconds - coffeeTimeEnd;
+    let addition = 20 / 100 * (preparationTime - fraction);
+    indication = Math.round(20 + addition);
+  }
+
+  // Phase 3, 40/60. Should be walking.
+  else if (remainingSeconds * fastWalkingFactor > distanceInSeconds) {
+    phase = 3;
+
+    let fraction = remainingSeconds * fastWalkingFactor - distanceInSeconds;
+    let addition = 20 / fraction;
+    indication = Math.round(40 + addition);
+  }
+  else if (remainingSeconds * runningFactor > distanceInSeconds) {
+    phase = 4;
+
+    let fraction = remainingSeconds * runningFactor - distanceInSeconds;
+    let addition = 20 / fraction;
+    indication = Math.round(60 + (addition * 2));
+  }
+  else {
+    phase = 5;
+    indication = 95;
+  }
+
+  return {
+    neededHours: distanceInHours,
+    indication: indication,
+    phase: phase
+  }
 };
