@@ -67,7 +67,10 @@ bus-indicator {
   opacity: 1;
   -webkit-transition: opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
   -o-transition: opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
-  transition: opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93); }
+  transition: opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
+  width: 100%;
+  max-width: 620px;
+  padding: 20px; }
   bus-indicator.hidden {
     opacity: 0;
     height: 0;
@@ -271,6 +274,30 @@ button {
     -webkit-transform: scale(2) translateY(0);
     transform: scale(2) translateY(0);
     opacity: 1; } }
+
+.indicator-progress-bar {
+  width: 100%;
+  position: relative; }
+  .indicator-progress-bar .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; }
+
+.indicator-progress-bar-item {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin-right: -1px;
+  padding: 10px;
+  border: 1px dashed gray; }
+
+.indicator {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: black; }
 
 .progress-bar {
   height: -webkit-calc(100% - .6em);

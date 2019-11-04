@@ -2,6 +2,9 @@ bus-indicator {
   flex: 0 1 auto;
   opacity: 1;
   transition: opacity $speed $easing;
+  width: 100%;
+  max-width: $max-width;
+  padding: 20px;
 
   &.hidden {
     opacity: 0;

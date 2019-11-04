@@ -115,3 +115,59 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
 
   return output;
 };
+
+export let calculateIndication = (distance, departmentTime, now = new Date()) => {
+  let defaultWalkingSpeed = 4;
+  let distanceInHours = distance / 1000 / defaultWalkingSpeed;
+  let distanceInSeconds = distanceInHours * 60 * 60;
+  let remainingSeconds = departmentTime - now;
+  let preparationTime = 90;
+  let coffeeTime = 360;
+  let coffeeTimeEnd = 60;
+
+  let runningFactor = 2;
+  let fastWalkingFactor = 1.5;
+  let indication = 0;
+  let phase = 0;
+
+  // Phase 1, 0/20. Drinking coffee.
+  if (remainingSeconds > distanceInSeconds + preparationTime + coffeeTimeEnd) {
+    phase = 1;
+
+    let waitingTime = remainingSeconds - (distanceInSeconds + preparationTime);
+    if (waitingTime > coffeeTime + coffeeTimeEnd) {
+      indication = 0;
+    }
+    else {
+      indication = Math.round(20 - 20 / (coffeeTime + coffeeTimeEnd) * waitingTime);
+    }
+  }
+
+  // Phase 2, 20/40. Starting to leave the house.
+  else if (remainingSeconds > distanceInSeconds + preparationTime) {
+    phase = 2;
+
+    let fraction = remainingSeconds - distanceInSeconds;
+    let addition = 20 / 100 * (preparationTime - fraction);
+    indication = Math.round(20 + addition);
+  }
+
+  // Phase 3, 40/60. Should be walking.
+  else if (remainingSeconds * fastWalkingFactor > distanceInSeconds) {
+    phase = 3;
+
+    let marge = remainingSeconds - distanceInSeconds;
+
+    // console.log(marge)
+  }
+
+  if (phase < 4) {
+    console.log(phase, indication);
+  }
+
+  return {
+    neededHours: distanceInHours,
+    indication: indication,
+    phase: phase
+  }
+};

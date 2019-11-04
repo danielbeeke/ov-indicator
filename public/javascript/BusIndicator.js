@@ -1,11 +1,11 @@
 import {BaseElement} from './BaseElement.js';
 import {html} from './vendor/lighterhtml.js';
+import {relativeTime, calculateIndication} from './Helpers.js';
 
 customElements.define('bus-indicator', class BusIndicator extends BaseElement {
   constructor () {
     super();
     this.attachEvents();
-    this.kilometerPerHour = 4;
   }
 
   /**
@@ -18,29 +18,40 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
 
     document.body.addEventListener('selectedData', event => {
       Object.assign(this, event.detail);
-      this.calculateIndicator();
+      this.draw();
     });
   }
 
   connectedCallback () {
     this.draw();
-  }
 
-  calculateIndicator () {
-    this.neededKilometerPerHour = this.busStop.distance / 1000;
-
-    console.log(this.neededKilometerPerHour, this.kilometerPerHour)
-    console.log(this.neededKilometerPerHour / 60 / 60 * 1000, this.kilometerPerHour / 60 / 60 * 1000)
-    this.draw();
+    this.interval = setInterval(() => {
+      this.draw();
+    }, 1000);
   }
 
   draw () {
+    Object.assign(this, calculateIndication(this.busStop ? this.busStop.distance : 0, this.trip ? this.trip.ts : 0));
 
+    this.remainingTime = relativeTime(new Date() / 1000 + (this.neededHours * 60 * 60));
+    this.tripLeave = this.trip ? relativeTime(this.trip.ts) : '';
 
     return html`
 
       ${this.busStop ? html`
-        <span>${this.busStop.distance} meter</span>      
+        <div class="indicator-progress-bar">
+            <div class="wrapper">
+              <div class="indicator-progress-bar-item">1</div>        
+              <div class="indicator-progress-bar-item">2</div>        
+              <div class="indicator-progress-bar-item">3</div>        
+              <div class="indicator-progress-bar-item">4</div>        
+              <div class="indicator-progress-bar-item">5</div>        
+            </div>
+            <div class="indicator" style="left: ${this.indication}%;"></div>
+        </div>
+        
+        <div>De bus vertrekt ${this.tripLeave.toLowerCase()}</div>
+        <div>Bij gemiddelde snelheid ben je er ${this.remainingTime.toLowerCase()}</div>
       ` : ''}
     `
   }

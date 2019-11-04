@@ -1,0 +1,22 @@
+.indicator-progress-bar {
+  width: 100%;
+  position: relative;
+
+  .wrapper {
+    display: flex;
+  }
+}
+
+.indicator-progress-bar-item {
+  flex: 1 1 auto;
+  margin-right: -1px;
+  padding: 10px;
+  border: 1px dashed gray;
+}
+
+.indicator {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: black;
+}
