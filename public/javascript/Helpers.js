@@ -116,7 +116,8 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
   return output;
 };
 
-export let calculateIndication = (distance, departmentTime, now = new Date()) => {
+export let calculateIndication = (distance, departmentTime, now = new Date() / 1000) => {
+  console.log(distance, now)
   let defaultWalkingSpeed = 4;
   let distanceInHours = distance / 1000 / defaultWalkingSpeed;
   let distanceInSeconds = distanceInHours * 60 * 60;
@@ -126,12 +127,12 @@ export let calculateIndication = (distance, departmentTime, now = new Date()) =>
   let coffeeTimeEnd = 60;
 
   let runningFactor = 2;
-  let fastWalkingFactor = 1.5;
+  let fastWalkingFactor = 1.;
   let indication = 0;
   let phase = 0;
 
   // Phase 1, 0/20. Drinking coffee.
-  if (remainingSeconds > distanceInSeconds + preparationTime + coffeeTimeEnd) {
+  if (remainingSeconds >= distanceInSeconds + preparationTime + coffeeTimeEnd) {
     phase = 1;
 
     let waitingTime = remainingSeconds - (distanceInSeconds + preparationTime);
@@ -144,10 +145,10 @@ export let calculateIndication = (distance, departmentTime, now = new Date()) =>
   }
 
   // Phase 2, 20/40. Starting to leave the house.
-  else if (remainingSeconds > distanceInSeconds + preparationTime) {
+  else if (remainingSeconds >= distanceInSeconds + coffeeTimeEnd) {
     phase = 2;
 
-    let fraction = remainingSeconds - distanceInSeconds;
+    let fraction = remainingSeconds - distanceInSeconds - coffeeTimeEnd;
     let addition = 20 / 100 * (preparationTime - fraction);
     indication = Math.round(20 + addition);
   }
@@ -156,13 +157,20 @@ export let calculateIndication = (distance, departmentTime, now = new Date()) =>
   else if (remainingSeconds * fastWalkingFactor > distanceInSeconds) {
     phase = 3;
 
-    let marge = remainingSeconds - distanceInSeconds;
-
-    // console.log(marge)
+    let fraction = remainingSeconds * fastWalkingFactor - distanceInSeconds;
+    let addition = 20 / fraction;
+    indication = Math.round(40 + addition);
   }
+  else if (remainingSeconds * runningFactor > distanceInSeconds) {
+    phase = 4;
 
-  if (phase < 4) {
-    console.log(phase, indication);
+    let fraction = remainingSeconds * runningFactor - distanceInSeconds;
+    let addition = 20 / fraction;
+    indication = Math.round(60 + (addition * 2));
+  }
+  else {
+    phase = 5;
+    indication = 95;
   }
 
   return {
