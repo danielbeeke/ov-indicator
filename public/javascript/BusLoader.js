@@ -46,7 +46,7 @@ customElements.define('bus-loader', class BusLoader extends BaseElement {
        * If we know the phase, display the text and set the progressbar.
        */
       if (this.phases[event.detail]) {
-        this.text = this.phases[event.detail].texts[Math.floor(Math.random()*this.phases[event.detail].texts.length)];
+        this.text = this.phases[event.detail].texts[Math.floor(Math.random() * this.phases[event.detail].texts.length)];
         this.progress = this.phases[event.detail].percentage + '%';
         this.draw();
       }

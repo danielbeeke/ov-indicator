@@ -31,7 +31,11 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
   }
 
   draw () {
-    Object.assign(this, calculateIndication(this.busStop ? this.busStop.distance : 0, this.trip ? this.trip.ts : 0));
+    Object.assign(this, {
+      neededHours: null,
+      indication: null,
+      phase: null
+    }, calculateIndication(this.busStop ? this.busStop.distance : 0, this.trip ? this.trip.ts : 0));
 
     this.remainingTime = relativeTime(new Date() / 1000 + (this.neededHours * 60 * 60));
     this.tripLeave = this.trip ? relativeTime(this.trip.ts) : '';

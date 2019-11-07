@@ -117,7 +117,6 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
 };
 
 export let calculateIndication = (distance, departmentTime, now = new Date() / 1000) => {
-  console.log(distance, now)
   let defaultWalkingSpeed = 4;
   let distanceInHours = distance / 1000 / defaultWalkingSpeed;
   let distanceInSeconds = distanceInHours * 60 * 60;
@@ -172,6 +171,8 @@ export let calculateIndication = (distance, departmentTime, now = new Date() / 1
     phase = 5;
     indication = 95;
   }
+
+  console.log(phase, indication)
 
   return {
     neededHours: distanceInHours,
