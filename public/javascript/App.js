@@ -1,4 +1,5 @@
 import './BusLoader.js';
+import {Store} from './Store.js';
 
 /**
  * The application starts by loading the bare minimum and later on importing modules and emitting the loading status to the preloader.
@@ -6,7 +7,7 @@ import './BusLoader.js';
 
 let loader = document.createElement('bus-loader');
 document.body.appendChild(loader);
-document.body.dispatchEvent(new CustomEvent('loading', { detail: 'boot' }));
+Store.trigger('loadingPhase', 'boot');
 
 /**
  * Import the selects and finally the indicator.

@@ -3,7 +3,6 @@ import {render} from './vendor/lighterhtml.js';
 export class BaseElement extends HTMLElement {
   constructor () {
     super();
-
     this.draw = render.bind(this, this, this.draw);
 
     this.boundEventMethods().forEach(boundEventName => {

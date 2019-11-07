@@ -8,6 +8,7 @@
   transform: translateY(-50%);
   transition: width .5s ease-in-out;
   border-radius: .3em;
+  max-width: calc(100% - .8em);
 }
 
 .progress-bar-wrapper {

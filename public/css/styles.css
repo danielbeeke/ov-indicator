@@ -317,7 +317,9 @@ button {
   -o-transition: width .5s ease-in-out;
   transition: width .5s ease-in-out;
   -webkit-border-radius: .3em;
-  border-radius: .3em; }
+  border-radius: .3em;
+  max-width: -webkit-calc(100% - .8em);
+  max-width: calc(100% - .8em); }
 
 .progress-bar-wrapper {
   padding: .4em;

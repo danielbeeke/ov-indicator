@@ -1,5 +1,6 @@
 import {BaseElement} from './BaseElement.js';
 import {html} from './vendor/lighterhtml.js';
+import {Store} from './Store.js';
 
 customElements.define('bus-loader', class BusLoader extends BaseElement {
   constructor () {
@@ -7,6 +8,7 @@ customElements.define('bus-loader', class BusLoader extends BaseElement {
 
     this.progress = 0;
     this.text = '';
+    this.phase = '';
 
     /**
      * All the phases that are displayed in the loader.
@@ -38,35 +40,21 @@ customElements.define('bus-loader', class BusLoader extends BaseElement {
       }
     };
 
-    /**
-     * Other components dispatch loading events.
-     */
-    document.body.addEventListener('loading', event => {
-      /**
-       * If we know the phase, display the text and set the progressbar.
-       */
-      if (this.phases[event.detail]) {
-        this.text = this.phases[event.detail].texts[Math.floor(Math.random() * this.phases[event.detail].texts.length)];
-        this.progress = this.phases[event.detail].percentage + '%';
+    Store.watch('loadingPhase', (newPhase) => {
+      this.phase = newPhase;
+      if (this.phases[newPhase]) {
+        this.text = this.phases[newPhase].texts[Math.floor(Math.random() * this.phases[newPhase].texts.length)];
+        this.progress = this.phases[newPhase].percentage + '%';
         this.draw();
       }
 
-      /**
-       * When we get the signal done, do an animation and remove this loader.
-       */
-      if (event.detail === 'done') {
+      if (newPhase === 'done') {
         this.addEventListener('transitionend', () => {
+          Store.trigger('loadingPhase', 'destroyed');
           this.remove();
-          document.body.dispatchEvent(new CustomEvent('loading', { detail: 'destroyed' }));
         });
-
-        this.classList.add('done');
       }
-    })
-  }
-
-  connectedCallback () {
-    this.draw();
+    });
   }
 
   /**
@@ -75,7 +63,7 @@ customElements.define('bus-loader', class BusLoader extends BaseElement {
    */
   draw() {
     return html`
-      <div class="progress-bar-wrapper">
+      <div class="progress-bar-wrapper ${this.newPhase === 'done' ? 'done' : ''}">
         <div class="progress-bar" style="width: ${this.progress}"></div>
         <div class="label">${this.text}</div>
       </div>

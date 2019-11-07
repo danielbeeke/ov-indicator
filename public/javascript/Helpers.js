@@ -172,8 +172,6 @@ export let calculateIndication = (distance, departmentTime, now = new Date() / 1
     indication = 95;
   }
 
-  console.log(phase, indication)
-
   return {
     neededHours: distanceInHours,
     indication: indication,
