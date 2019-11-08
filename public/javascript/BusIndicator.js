@@ -6,25 +6,17 @@ import {Store} from "./Store.js";
 customElements.define('bus-indicator', class BusIndicator extends BaseElement {
   constructor () {
     super();
-    this.attachEvents();
-  }
-
-  /**
-   * Attaches events to events of other components.
-   */
-  attachEvents () {
     Store.watch('loadingPhase', (newPhase) => {
       if (newPhase === 'destroyed') this.classList.remove('hidden');
     });
 
-    Store.watch('selectedBusStop', () => {
+    Store.watch('selectedTrip', () => {
       this.draw();
     });
   }
 
   draw () {
     let state = Store.getState();
-
     let calculation = calculateIndication(
       state.selectedBusStop ? state.selectedBusStop.distance : 0,
       state.selectedTrip ? state.selectedTrip.ts : 0
@@ -34,19 +26,7 @@ customElements.define('bus-indicator', class BusIndicator extends BaseElement {
     let tripLeave = state.selectedTrip ? relativeTime(state.selectedTrip.ts) : '';
 
     return html`
-
-      ${state.selectedBusStop ? html`
-        <div class="indicator-progress-bar">
-            <div class="wrapper">
-              <div class="indicator-progress-bar-item">1</div>        
-              <div class="indicator-progress-bar-item">2</div>        
-              <div class="indicator-progress-bar-item">3</div>        
-              <div class="indicator-progress-bar-item">4</div>        
-              <div class="indicator-progress-bar-item">5</div>        
-            </div>
-            <div class="indicator" style="left: ${calculation.indication}%;"></div>
-        </div>
-        
+      ${state.selectedBusStop ? html`        
         <div>De bus vertrekt ${tripLeave.toLowerCase()}</div>
         <div>Bij gemiddelde snelheid ben je er ${remainingTime.toLowerCase()}</div>
       ` : ''}

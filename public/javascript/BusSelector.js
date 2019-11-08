@@ -2,6 +2,7 @@ import {getBusStops, getCurrentPosition} from './Helpers.js';
 import {BaseElement} from './BaseElement.js';
 import {html} from './vendor/lighterhtml.js';
 import {Store} from "./Store.js";
+import './OneTransitionEnd.js';
 
 customElements.define('bus-selector', class BusSelector extends BaseElement {
   constructor() {
@@ -98,26 +99,8 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
    * Makes a busStop favorite
    */
   toggleBusStopFavorite (value, button) {
-    button.addEventListener('animationend', () => {
-      Store.trigger('setAnimateToggleButtonBusStop', false);
-    }, { once: true });
-    Store.trigger('setAnimateToggleButtonBusStop', true);
-
-    let state = Store.getState();
-
-    // Remove it.
-    if (state.favoriteBusStops.includes(state.selectedBusStop.stop_id)) {
-      Store.trigger('removeFromFavoriteBusStops', state.selectedBusStop.stop_id);
-    }
-
-    // Add it.
-    else {
-      Store.trigger('addToFavoriteBusStops', state.selectedBusStop.stop_id);
-    }
-
-    // Save.
-    localStorage.setItem('favoriteBusStops', state.favoriteBusStops.join(','));
-
+    button.oneAnimationEnd(() => true, () => true, 'show-animation', button.querySelector('svg'));
+    Store.trigger('toggleItemFromFavoriteBusStops');
     Store.trigger('sortBusStops');
   }
 
@@ -125,22 +108,8 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
    * Makes a trip favorite
    */
   toggleTripFavorite (value, button) {
-    button.addEventListener('animationend', () => {
-      Store.trigger('setAnimateToggleButtonTrip', false);
-    }, { once: true });
-    Store.trigger('setAnimateToggleButtonTrip', true);
-
-    let state = Store.getState();
-
-    // Remove it.
-    if (state.favoriteTrips.includes(state.selectedTrip.route_short_name)) {
-      Store.trigger('removeFromFavoriteTrips', state.selectedTrip.route_short_name)
-    }
-
-    // Add it.
-    else {
-      Store.trigger('addToFavoriteTrips', state.selectedTrip.route_short_name)
-    }
+    button.oneAnimationEnd(() => true, () => true, 'show-animation', button.querySelector('svg'));
+    Store.trigger('toggleItemFromFavoriteTrips');
   }
 
   /**
@@ -158,12 +127,12 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
               ${busStop.name} (${busStop.distance} meter)
           </option>
         `)}
-      </select>
+      </select> 
         
       ${state.selectedBusStop ? html`
         <button class="
           ${state.favoriteBusStops.includes(state.selectedBusStop.stop_id) ? 'favorite' : ''} 
-          ${ state.animateToggleButtonBusStop ? 'show-animation' : '' } favorite-button" onclick="${this.toggleBusStopFavorite}">
+           favorite-button" onclick="${this.toggleBusStopFavorite}">
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 50 50" xml:space="preserve"><path d="M24.9 10.1c2-4.8 6.6-8.1 12-8.1 7.2 0 12.4 6.2 13.1 13.5 0 0 0.4 1.8-0.4 5.1 -1.1 4.5-3.5 8.5-6.9 11.5L24.9 48 7.4 32.2c-3.4-3-5.8-7-6.9-11.5 -0.8-3.3-0.4-5.1-0.4-5.1C0.7 8.2 5.9 2 13.2 2 18.5 2 22.8 5.3 24.9 10.1z" fill="#C03A2B"/><path d="M6 18.1c-0.6 0-1-0.4-1-1 0-5.5 4.5-10 10-10 0.6 0 1 0.4 1 1s-0.4 1-1 1c-4.4 0-8 3.6-8 8C7 17.6 6.6 18.1 6 18.1z" fill="#ED7161"/></svg>
         </button>
       ` : ''}
@@ -183,7 +152,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
       
         <button class="
           ${ state.selectedTrip && state.favoriteTrips.includes(state.selectedTrip.route_short_name) ? 'favorite' : ''} 
-          ${ state.animateToggleButtonTrip ? 'show-animation' : '' } favorite-button" 
+           favorite-button" 
           onclick="${this.toggleTripFavorite}">
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 50 50" xml:space="preserve"><path d="M24.9 10.1c2-4.8 6.6-8.1 12-8.1 7.2 0 12.4 6.2 13.1 13.5 0 0 0.4 1.8-0.4 5.1 -1.1 4.5-3.5 8.5-6.9 11.5L24.9 48 7.4 32.2c-3.4-3-5.8-7-6.9-11.5 -0.8-3.3-0.4-5.1-0.4-5.1C0.7 8.2 5.9 2 13.2 2 18.5 2 22.8 5.3 24.9 10.1z" fill="#C03A2B"/><path d="M6 18.1c-0.6 0-1-0.4-1-1 0-5.5 4.5-10 10-10 0.6 0 1 0.4 1 1s-0.4 1-1 1c-4.4 0-8 3.6-8 8C7 17.6 6.6 18.1 6 18.1z" fill="#ED7161"/></svg>
         </button>
