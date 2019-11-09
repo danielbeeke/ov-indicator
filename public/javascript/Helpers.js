@@ -57,8 +57,6 @@ export let getBusStops = (lat, lon, limit = 5) => {
 
     busStops = busStops.slice(0, limit);
 
-    document.body.dispatchEvent(new CustomEvent('loading', { detail: 'busTrips' }));
-
     let promises = busStops.map(busStop => proxy(`https://ovzoeker.nl/api/arrivals/${busStop.stop_id}`)
       .then(response => busStop.trips = response.arrivals));
 
@@ -114,67 +112,4 @@ export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
   if (pastOrFuture === 'past' && addPrefixOrSuffix) output = output + ' geleden';
 
   return output;
-};
-
-export let calculateIndication = (distance, departmentTime, now = new Date() / 1000) => {
-  let defaultWalkingSpeed = 4;
-  let distanceInHours = distance / 1000 / defaultWalkingSpeed;
-  let distanceInSeconds = distanceInHours * 60 * 60;
-  let remainingSeconds = departmentTime - now;
-  let preparationTime = 90;
-  let coffeeTime = 360;
-  let coffeeTimeEnd = 60;
-
-  let runningFactor = 2;
-  let fastWalkingFactor = 1.;
-  let indication = 0;
-  let phase = 0;
-
-  // Phase 1, 0/20. Drinking coffee.
-  if (remainingSeconds >= distanceInSeconds + preparationTime + coffeeTimeEnd) {
-    phase = 1;
-
-    let waitingTime = remainingSeconds - (distanceInSeconds + preparationTime);
-    if (waitingTime > coffeeTime + coffeeTimeEnd) {
-      indication = 0;
-    }
-    else {
-      indication = Math.round(20 - 20 / (coffeeTime + coffeeTimeEnd) * waitingTime);
-    }
-  }
-
-  // Phase 2, 20/40. Starting to leave the house.
-  else if (remainingSeconds >= distanceInSeconds + coffeeTimeEnd) {
-    phase = 2;
-
-    let fraction = remainingSeconds - distanceInSeconds - coffeeTimeEnd;
-    let addition = 20 / 100 * (preparationTime - fraction);
-    indication = Math.round(20 + addition);
-  }
-
-  // Phase 3, 40/60. Should be walking.
-  else if (remainingSeconds * fastWalkingFactor > distanceInSeconds) {
-    phase = 3;
-
-    let fraction = remainingSeconds * fastWalkingFactor - distanceInSeconds;
-    let addition = 20 / fraction;
-    indication = Math.round(40 + addition);
-  }
-  else if (remainingSeconds * runningFactor > distanceInSeconds) {
-    phase = 4;
-
-    let fraction = remainingSeconds * runningFactor - distanceInSeconds;
-    let addition = 20 / fraction;
-    indication = Math.round(60 + (addition * 2));
-  }
-  else {
-    phase = 5;
-    indication = 95;
-  }
-
-  return {
-    neededHours: distanceInHours,
-    indication: indication,
-    phase: phase
-  }
 };
