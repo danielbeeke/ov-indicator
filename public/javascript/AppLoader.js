@@ -1,14 +1,10 @@
 import {BaseElement} from './BaseElement.js';
 import {html} from './vendor/lighterhtml.js';
-import {Store} from './Store.js';
+import {State} from './State.js';
 
-customElements.define('bus-loader', class BusLoader extends BaseElement {
+customElements.define('app-loader', class AppLoader extends BaseElement {
   constructor () {
     super();
-
-    this.progress = 0;
-    this.text = '';
-    this.phase = '';
 
     /**
      * All the phases that are displayed in the loader.
@@ -40,30 +36,24 @@ customElements.define('bus-loader', class BusLoader extends BaseElement {
       }
     };
 
-    Store.watch('loadingPhase', (newPhase) => {
-      this.phase = newPhase;
+    State.watch('loadingPhase', (newPhase) => {
       if (this.phases[newPhase]) {
-        this.text = this.phases[newPhase].texts[Math.floor(Math.random() * this.phases[newPhase].texts.length)];
-        this.progress = this.phases[newPhase].percentage + '%';
-        this.draw();
-      }
-
-      if (newPhase === 'done') {
-        this.addEventListener('transitionend', () => {
-          Store.trigger('loadingPhase', 'destroyed');
-          this.remove();
-        });
+        let text = this.phases[newPhase].texts[Math.floor(Math.random() * this.phases[newPhase].texts.length)];
+        let progress = this.phases[newPhase].percentage + '%';
+        this.draw(text, progress);
       }
     });
+
+    State.transaction('updatePreLoader', nextState => nextState.loadingPhase = 'boot2');
   }
 
   /**
    * Our lighterHTML render function.
    * @returns {*}
    */
-  draw() {
+  draw(text, progress) {
     return html`
-      <div class="progress-bar-wrapper ${this.newPhase === 'done' ? 'done' : ''}">
+      <div class="progress-bar-wrapper ${this.phase === 'done' ? 'done' : ''}">
         <div class="progress-bar" style="width: ${this.progress}"></div>
         <div class="label">${this.text}</div>
       </div>

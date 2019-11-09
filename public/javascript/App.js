@@ -1,25 +1,24 @@
-import './BusLoader.js';
-import {Store} from './Store.js';
+import './vendor/polyfill.js';
 
-/**
- * The application starts by loading the bare minimum and later on importing modules and emitting the loading status to the preloader.
- */
+import './AppLoader.js';
 
-let loader = document.createElement('bus-loader');
-document.body.appendChild(loader);
-Store.trigger('loadingPhase', 'boot');
+import {BaseElement} from './BaseElement.js';
+import {State} from './State.js';
+import {html} from "./vendor/lighterhtml.js";
 
-/**
- * Import the selects and finally the indicator.
- */
-import('./BusSelector.js').then(() => {
-  let busSelector = document.createElement('bus-selector');
-  busSelector.classList.add('hidden');
-  document.body.appendChild(busSelector);
+customElements.define('ov-app', class OvApp extends BaseElement {
 
-  import('./BusIndicator.js').then(() => {
-    let busIndicator = document.createElement('bus-indicator');
-    busIndicator.classList.add('hidden');
-    document.body.appendChild(busIndicator);
-  });
+  connectedCallback () {
+    State.watch('loadingPhase', this.draw);
+    this.draw();
+  }
+
+  draw () {
+    let state = State.get();
+
+    return html`
+      <app-loader></app-loader>
+    `;
+  }
+
 });
