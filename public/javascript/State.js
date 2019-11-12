@@ -1,77 +1,38 @@
-import * as Redux from './vendor/redux.min.js';
-import {RootStoreReducer} from "./RootStoreReducer.js";
+import {produce} from './vendor/immer.js';
 
-/**
- * Redux reducer
- * @param state
- * @param action
- * @returns {{loadingPhase: string}|any}
- * @constructor
- */
+export function State (state, action = null) {
 
-
-/**
- * The store class
- * With small helpers to make redux easier.
- */
-class StoreClass {
-  constructor () {
-    this.redux = Redux.createStore(RootStoreReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-    this.oldState = this.redux.getState();
-    this.callbacks = {};
-
-    /**
-     * This monitors the state and calls subscribed callbacks.
-     */
-    this.redux.subscribe(() => {
-      let newState = this.redux.getState();
-
-      Object.keys(this.callbacks).forEach(key => {
-        if (this.oldState[key] !== newState[key]) {
-          this.callbacks[key].forEach(callback => callback(newState[key]))
-        }
-      });
-
-      this.oldState = newState;
-    });
+  /**
+   * Initial state.
+   */
+  if (typeof state === 'undefined') {
+    return {
+      page: 'loader',
+      loadingPhase: {
+        name: 'boot',
+        percentage: 5,
+        texts: ['Programma starten', 'Booting skynet...', 'Hello', 'Busje komt zo...']
+      },
+      busStops: [],
+      trips: [],
+      lat: null,
+      lng: null,
+      currentGeolocationWatcher: null,
+      selectedBusStop: null,
+      selectedTrips: null,
+      selectedTrip: null,
+      favoriteBusStops: localStorage.getItem('favoriteBusStops') ? localStorage.getItem('favoriteBusStops').split(',') : [],
+      favoriteTrips: localStorage.getItem('favoriteTrips') ? localStorage.getItem('favoriteTrips').split(',') : []
+    }
   }
 
   /**
-   * Triggers an action to redux.
-   * @param action
-   * @param args
+   * The produce function helps with immutability, it is immer.js.
    */
-  trigger (action, args) {
-    this.redux.dispatch({
-      type: action,
-      args: args
-    });
-  }
-
-  transaction (label, callback) {
-    this.redux.dispatch({
-      type: label,
-      callback: callback
-    });
-  }
-
-  /**
-   * Watches a specific key of the state.
-   * @param key
-   * @param callback
-   */
-  watch (key, callback) {
-    if (!this.callbacks[key]) this.callbacks[key] = [];
-    this.callbacks[key].push(callback);
-  }
-
-  get () {
-    return this.redux.getState();
-  }
-
+  return produce(state, draft => {
+    // Transactions in the code flow.
+    if (action.callback) {
+      action.callback(draft)
+    }
+  });
 }
-
-/**
- * Export the store as a singleton.
- */
-export const State = new StoreClass();

@@ -1,23 +1,27 @@
+import {BaseElement} from './core/BaseElement.js';
+import {State} from "./core/StateManager.js";
+import {html} from "./vendor/lighterhtml.js";
+
 import './vendor/polyfill.js';
 
 import './AppLoader.js';
-
-import {BaseElement} from './BaseElement.js';
-import {State} from './State.js';
-import {html} from "./vendor/lighterhtml.js";
+import './BusSelector.js';
 
 customElements.define('ov-app', class OvApp extends BaseElement {
 
   connectedCallback () {
-    State.watch('loadingPhase', this.draw);
-    this.draw();
+    State.watch('loadingPhase', () => this.draw());
+    navigator.serviceWorker.register('/service-worker.js');
   }
 
   draw () {
     let state = State.get();
 
     return html`
-      <app-loader></app-loader>
+      <app-loader class="page ${!['done', 'finished'].includes(state.loadingPhase.name) ? '' : 'hidden'}"></app-loader>
+      <div class="page">
+        <bus-selector class="${state.loadingPhase.name === 'finished' ? '' : 'hidden'}"></bus-selector>
+      </div>
     `;
   }
 

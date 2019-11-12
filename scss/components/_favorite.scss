@@ -23,6 +23,7 @@
 
 .favorite-button.show-animation {
   transform: translateX(0);
+  z-index: 10;
 
   &:not(.favorite) svg {
     animation: remove .7s cubic-bezier(.95,.18,.32,1.01) .1s;

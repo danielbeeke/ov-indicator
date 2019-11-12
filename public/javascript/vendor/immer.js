@@ -1705,4 +1705,3 @@ var finishDraft = immer.finishDraft.bind(immer);
 
 export default produce;
 export { Immer, applyPatches$1 as applyPatches, createDraft, finishDraft, DRAFTABLE as immerable, isDraft, isDraftable, NOTHING as nothing, original, produce, produceWithPatches, setAutoFreeze, setUseProxies };
-//# sourceMappingURL=immer.module.js.map

@@ -1,19 +1,21 @@
-import {render} from './vendor/lighterhtml.js';
+import {render} from '../vendor/lighterhtml.js';
 
 export class BaseElement extends HTMLElement {
   constructor () {
     super();
-    this.draw = render.bind(this, this, this.draw);
+    let elementDraw = this.draw;
+
+    this.draw = function () {
+      render(this, () => {
+        return elementDraw.apply(this, arguments);
+      });
+    };
 
     this.boundEventMethods().forEach(boundEventName => {
       if (this[boundEventName]) {
         this[boundEventName] = this.bindEvent(this[boundEventName]);
       }
     });
-  }
-
-  boundEventMethods () {
-     return [];
   }
 
   bindEvent = (callback) => {
@@ -24,6 +26,7 @@ export class BaseElement extends HTMLElement {
     };
   };
 
-  draw () {}
+  boundEventMethods () { return [];}
 
+  draw () {}
 }

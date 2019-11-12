@@ -1,9 +1,1648 @@
-/*! (c) Andrea Giammarchi - ISC */
-var lighterhtml=function(e){"use strict";
-var t,n="-"+Math.random().toFixed(6)+"%",r=!1;try{"content"in(t=document.createElement("template"))&&(t.innerHTML='<p tabindex="'+n+'"></p>',t.content.childNodes[0].getAttribute("tabindex")==n)||(n="_dt: "+n.slice(1,-1)+";",r=!0)}catch(e){}var o="\x3c!--"+n+"--\x3e",a=8,l=1,s=3,i=/^(?:style|textarea)$/i,c=/^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
-function u(e){return e.join(o).replace(m,x).replace(g,w)}var f=" \\f\\n\\r\\t",p="[^"+f+"\\/>\"'=]+",h="["+f+"]+"+p,d="<([A-Za-z]+[A-Za-z0-9:._-]*)((?:",v="(?:\\s*=\\s*(?:'[^']*?'|\"[^\"]*?\"|<[^>]*?>|"+p.replace("\\/","")+"))?)",g=new RegExp(d+h+v+"+)(["+f+"]*/?>)","g"),m=new RegExp(d+h+v+"*)(["+f+"]*/>)","g"),y=new RegExp("("+h+"\\s*=\\s*)(['\"]?)"+o+"\\2","gi");function w(e,t,n,r){return"<"+t+n.replace(y,b)+r}function b(e,t,r){return t+(r||'"')+n+(r||'"')}function x(e,t,n){return c.test(t)?e:"<"+t+n+"></"+t+">"}
-var N=function(e,t){return(t=n.prototype).ELEMENT_NODE=1,t.nodeType=111,t.remove=function(e){var t=this.childNodes,n=this.firstChild,r=this.lastChild;if(this._=null,e&&2===t.length)r.parentNode.removeChild(r);else{var o=this.ownerDocument.createRange();o.setStartBefore(e?t[1]:n),o.setEndAfter(r),o.deleteContents()}return n},t.valueOf=function(e){var t=this._,n=null==t;if(n&&(t=this._=this.ownerDocument.createDocumentFragment()),n||e)for(var r=this.childNodes,o=0,a=r.length;o<a;o++)t.appendChild(r[o]);return t},n;function n(t){var n=this.childNodes=e.call(t,0);this.firstChild=n[0],this.lastChild=n[n.length-1],this.ownerDocument=n[0].ownerDocument,this._=null}}([].slice);const{isArray:k}=Array,C=N.prototype.nodeType;function E(e,t){this.type=e,this.args=t}
-Object.freeze(E);var A=function(e){var t="fragment",n=function(e){var t=r("template");return t.innerHTML=e,t.content};return function(e,t){return("svg"===t?o:n)(e)};function r(n){return n===t?e.createDocumentFragment():e.createElementNS("http://www.w3.org/1999/xhtml",n)}function o(e){var n=r(t),o=r("div");return o.innerHTML='<svg xmlns="http://www.w3.org/2000/svg">'+e+"</svg>",function(e,t){for(var n=t.length;n--;)e.appendChild(t[0])}(n,o.firstChild.childNodes),n}}(document);const{indexOf:S}=[],j=(e,t,n,r,o,a)=>{const l="selectedIndex"in t;let s=l;for(;r<o;){const o=e(n[r],1);if(t.insertBefore(o,a),l&&s&&o.selected){s=!s;let{selectedIndex:e}=t;t.selectedIndex=e<0?r:S.call(t.querySelectorAll("option"),o)}r++}},T=(e,t)=>e==t,M=e=>e,L=(e,t,n,r,o,a,l)=>{const s=a-o;if(s<1)return-1;for(;n-t>=s;){let s=t,i=o;for(;s<n&&i<a&&l(e[s],r[i]);)s++,i++;if(i===a)return t;t=s+1}return-1},$=(e,t,n,r,o)=>n<r?e(t[n],0):0<n?e(t[n-1],-0).nextSibling:o,D=(e,t,n,r,o)=>{for(;r<o;)G(e(n[r++],-1),t)},O=(e,t,n)=>{let r=1,o=t;for(;r<o;){const t=(r+o)/2>>>0;n<e[t]?o=t:r=t+1}return r},_=(e,t,n,r,o,a,l,s,i,c,u,f,p)=>{((e,t,n,r,o,a,l,s,i)=>{const c=new Map,u=e.length;let f=l,p=0;for(;p<u;)switch(e[p++]){case 0:o++,f++;break;case 1:c.set(r[o],1),j(t,n,r,o++,o,f<s?t(a[f],0):i);break;case-1:f++}for(p=0;p<u;)switch(e[p++]){case 0:l++;break;case-1:c.has(a[l])?l++:D(t,n,a,l++,l)}})(((e,t,n,r,o,a,l)=>{const s=n+a,i=[];let c,u,f,p,h,d,v;e:for(c=0;c<=s;c++){if(c>50)return null;for(v=c-1,h=c?i[c-1]:[0,0],d=i[c]=[],u=-c;u<=c;u+=2){for(f=(p=u===-c||u!==c&&h[v+u-1]<h[v+u+1]?h[v+u+1]:h[v+u-1]+1)-u;p<a&&f<n&&l(r[o+p],e[t+f]);)p++,f++;if(p===a&&f===n)break e;d[c+u]=p}}const g=Array(c/2+s/2);let m=g.length-1;for(c=i.length-1;c>=0;c--){for(;p>0&&f>0&&l(r[o+p-1],e[t+f-1]);)g[m--]=0,p--,f--;if(!c)break;v=c-1,h=c?i[c-1]:[0,0],(u=p-f)===-c||u!==c&&h[v+u-1]<h[v+u+1]?(f--,g[m--]=1):(p--,g[m--]=-1)}return g})(n,r,a,l,s,c,f)||((e,t,n,r,o,a,l,s)=>{let i=0,c=r<s?r:s;const u=Array(c++),f=Array(c);f[0]=-1;for(let e=1;e<c;e++)f[e]=l;const p=new Map;for(let e=a;e<l;e++)p.set(o[e],e);for(let r=t;r<n;r++){const t=p.get(e[r]);null!=t&&-1<(i=O(f,c,t))&&(f[i]=t,u[i]={newi:r,oldi:t,prev:u[i-1]})}for(i=--c,--l;f[i]>l;)--i;c=s+r-i;const h=Array(c);let d=u[i];for(--n;d;){const{newi:e,oldi:t}=d;for(;n>e;)h[--c]=1,--n;for(;l>t;)h[--c]=-1,--l;h[--c]=0,--n,--l,d=d.prev}for(;n>=t;)h[--c]=1,--n;for(;l>=a;)h[--c]=-1,--l;return h})(n,r,o,a,l,s,i,c),e,t,n,r,l,s,u,p)};let G=(e,t)=>{(G="remove"in e?e=>{e.remove()}:(e,t)=>{e.parentNode===t&&t.removeChild(e)})(e,t)};
-/*! (c) 2018 Andrea Giammarchi (ISC) */const V=(e,t,n,r)=>{r||(r={});const o=r.compare||T,a=r.node||M,l=null==r.before?null:a(r.before,0),s=t.length;let i=s,c=0,u=n.length,f=0;for(;c<i&&f<u&&o(t[c],n[f]);)c++,f++;for(;c<i&&f<u&&o(t[i-1],n[u-1]);)i--,u--;const p=c===i,h=f===u;if(p&&h)return n;if(p&&f<u)return j(a,e,n,f,u,$(a,t,c,s,l)),n;if(h&&c<i)return D(a,e,t,c,i),n;const d=i-c,v=u-f;let g=-1;if(d<v){if(-1<(g=L(n,f,u,t,c,i,o)))return j(a,e,n,f,g,a(t[c],0)),j(a,e,n,g+d,u,$(a,t,i,s,l)),n}else if(v<d&&-1<(g=L(t,c,i,n,f,u,o)))return D(a,e,t,c,g),D(a,e,t,g+v,i),n;return d<2||v<2?(j(a,e,n,f,u,a(t[c],0)),D(a,e,t,c,i),n):d===v&&((e,t,n,r,o,a)=>{for(;r<o&&a(n[r],e[t-1]);)r++,t--;return 0===t})(n,u,t,c,i,o)?(j(a,e,n,f,u,$(a,t,i,s,l)),n):(_(a,e,n,f,u,v,t,c,i,d,s,o,l),n)};var R=String.prototype.trim;function W(e,t){for(var n=t.length,r=0;r<n;)e=e.childNodes[t[r++]];return e}function z(e,t,a,l){for(var s=new Map,i=e.attributes,c=[],u=c.slice.call(i,0),f=u.length,p=0;p<f;){var h,d=u[p++],v=d.value===n;if(v||1<(h=d.value.split(o)).length){var g=d.name;if(!s.has(g)){var m=a.shift().replace(v?/^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/:new RegExp("^(?:|[\\S\\s]*?\\s)("+g+")\\s*=\\s*('|\")[\\S\\s]*","i"),"$1"),y=i[m]||i[m.toLowerCase()];if(s.set(g,y),v)t.push(Z(y,l,m,null));else{for(var w=h.length-2;w--;)a.shift();t.push(Z(y,l,m,h))}}c.push(d)}}p=0;for(var b=(0<(f=c.length)&&r&&!("ownerSVGElement"in e));p<f;){var x=c[p++];b&&(x.value=""),e.removeAttribute(x.name)}var N=e.nodeName;if(/^script$/i.test(N)){var k=document.createElement(N);for(f=i.length,p=0;p<f;)k.setAttributeNode(i[p++].cloneNode(!0));k.textContent=e.textContent,e.parentNode.replaceChild(k,e)}}function H(e,t){return{type:"any",node:e,path:t}}function Z(e,t,n,r){return{type:"attr",node:e,path:t,name:n,sparse:r}}function F(e,t){return{type:"text",node:e,path:t}}var I=document.importNode,B=String.prototype.trim,q=new WeakMap,P=new WeakMap;function J(e,t){var r=(e.convert||u)(t),c=e.transform;c&&(r=c(r));var f=A(r,e.type);!function(e){var t=e.childNodes,n=t.length;for(;n--;){var r=t[n];1!==r.nodeType&&0===B.call(r.textContent).length&&e.removeChild(r)}}
-(f);var p=[];!function e(t,r,c,u){for(var f=t.childNodes,p=f.length,h=0;h<p;){var d=f[h];switch(d.nodeType){case l:var v=u.concat(h);z(d,r,c,v),e(d,r,c,v);break;case a:var g=d.textContent;if(g===n)c.shift(),r.push(i.test(t.nodeName)?F(t,u):H(d,u.concat(h)));else switch(g.slice(0,2)){case"/*":if("*/"!==g.slice(-2))break;case"👻":t.removeChild(d),h--,p--}break;case s:i.test(t.nodeName)&&R.call(d.textContent)===o&&(c.shift(),r.push(F(t,u)))}h++}}(f,p,t.slice(0),[]);var h={content:f,updates:function(n){for(var r=[],o=p.length,a=0,l=0;a<o;){var s=p[a++],i=W(n,s.path);switch(s.type){case"any":r.push({fn:e.any(i,[]),sparse:!1});break;case"attr":var c=s.sparse,u=e.attribute(i,s.name,s.node);null===c?r.push({fn:u,sparse:!1}):(l+=c.length-2,r.push({fn:u,sparse:!0,values:c}));break;case"text":r.push({fn:e.text(i),sparse:!1}),i.textContent=""}}return o+=l,function(){var e=arguments.length;if(o!==e-1)throw new Error(e-1+" values instead of "+o+"\n"+t.join("${value}"));for(var a=1,l=1;a<e;){var s=r[a-l];if(s.sparse){var i=s.values,c=i[0],u=1,f=i.length;for(l+=f-2;u<f;)c+=arguments[a++]+i[u++];s.fn(c)}else s.fn(arguments[a++])}return n}}};return q.set(t,h),h}function K(e,t){var n=q.get(t)||J(e,t),r=I.call(document,n.content,!0),o={content:r,template:t,updates:n.updates(r)};return P.set(e,o),o}var Q=function(){var e=/acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i,t=/([^A-Z])([A-Z]+)/g;return function(e,t){return"ownerSVGElement"in e?function(e,t){var n;t?n=t.cloneNode(!0):(e.setAttribute("style","--hyper:style;"),n=e.getAttributeNode("style"));return n.value="",e.setAttributeNode(n),r(n,!0)}(e,t):r(e.style,!1)};function n(e,t,n){return t+"-"+n.toLowerCase()}function r(r,o){var a,l;return function(s){var i,c,u,f;switch(typeof s){case"object":if(s){if("object"===a){if(!o&&l!==s)for(c in l)c in s||(r[c]="")}else o?r.value="":r.cssText="";for(c in i=o?{}:r,s)u="number"!=typeof(f=s[c])||e.test(c)?f:f+"px",!o&&/^--/.test(c)?i.setProperty(c,u):i[c]=u;a="object",o?r.value=function(e){var r,o=[];for(r in e)o.push(r.replace(t,n),":",e[r],";");return o.join("")}(l=i):l=s;break}default:l!=s&&(a="string",l=s,o?r.value=s||"":r.cssText=s||"")}}}}();const U=(e,t)=>e.nodeType===C?1/t<0?t?e.remove(!0):e.lastChild:t?e.valueOf(!0):e.firstChild:e,X=(e,t)=>{let n,r=!1;const o=t.cloneNode(!0);return t=>{n!==t&&(n=t,o.value!==t&&(null==t?(r&&(r=!1,e.removeAttributeNode(o)),o.value=t):(o.value=t,r||(r=!0,e.setAttributeNode(o)))))}},Y=(e,t)=>{let n;return r=>{n!==r&&(n=r,e[t]!==r&&(null==r?(e[t]="",e.removeAttribute(t)):e[t]=r))}},ee=/^(?:form|list)$/i,te=[].slice,ne=(e,t)=>e.ownerDocument.createTextNode(t);function re(e){return this.type=e,t=this,function(e){var n=P.get(t);return null!=n&&n.template===e||(n=K(t,e)),n.updates.apply(null,arguments),n.content};var t}function oe(e){return e(this)}re.prototype={attribute(e,t,n){switch(t){case"class":if("ownerSVGElement"in e)return X(e,n);t="className";case"data":case"props":return Y(e,t);case"style":return Q(e,n,"ownerSVGElement"in e);case"ref":return(e=>t=>{t.current=e})(e);default:return"."===t.slice(0,1)?((e,t,n)=>n?n=>{e.setAttribute(t,n)}:n=>{e[t]=n})(e,t.slice(1),"ownerSVGElement"in e):"on"===t.slice(0,2)?((e,t)=>{let n,r=t.slice(2);return t.toLowerCase()in e&&(r=r.toLowerCase()),t=>{n!==t&&(n&&e.removeEventListener(r,n,!1),n=t,t&&e.addEventListener(r,t,!1))}})(e,t):t in e&&!("ownerSVGElement"in e||ee.test(t))?Y(e,t):X(e,n)}},any(e,t){const n={node:U,before:e},r="ownerSVGElement"in e?"svg":"html";let o,a=!1;const l=s=>{switch(typeof s){case"string":case"number":case"boolean":a?o!==s&&(o=s,t[0].textContent=s):(a=!0,o=s,t=V(e.parentNode,t,[ne(e,s)],n));break;case"function":l(s(e));break;case"object":case"undefined":if(null==s){a=!1,t=V(e.parentNode,t,[],n);break}default:if(a=!1,o=s,k(s))if(0===s.length)t.length&&(t=V(e.parentNode,t,[],n));else switch(typeof s[0]){case"string":case"number":case"boolean":l(String(s));break;case"function":l(s.map(oe,e));break;case"object":k(s[0])&&(s=s.concat.apply([],s));default:t=V(e.parentNode,t,s,n)}else(e=>"ELEMENT_NODE"in e)(s)?t=V(e.parentNode,t,11===s.nodeType?te.call(s.childNodes):[s],n):"text"in s?l(String(s.text)):"any"in s?l(s.any):"html"in s?t=V(e.parentNode,t,te.call(A([].concat(s.html).join(""),r).childNodes),n):"length"in s&&l(te.call(s))}};return l},text(e){let t;const n=r=>{if(t!==r){t=r;const o=typeof r;"object"===o&&r?"text"in r?n(String(r.text)):"any"in r?n(r.any):"html"in r?n([].concat(r.html).join("")):"length"in r&&n(te.call(r).join("")):"function"===o?n(r(e)):e.textContent=null==r?"":r}};return n}};const{create:ae,keys:le}=Object,se=new WeakMap,ie=new WeakMap,ce=re.prototype;let ue=null;const fe=e=>{const t=ye("html",e),n=ye("svg",e);return{html:t,svg:n,hook:e=>({html:me(e,t),svg:me(e,n)}),render(t,n){const r=we.call(this,t,n,e);return ie.get(t)!==r&&(ie.set(t,r),function(e,t){e.textContent="",e.appendChild(t)}(t,r)),t}}},{html:pe,svg:he,render:de,hook:ve}=fe(re);function ge(e,t){return e.nodeType===C?e.valueOf(t):e}function me(e,t){return function(){const n=e(null);return null===n.current&&(n.current=t.for(n)),ge(n.current.apply(null,arguments),!1)}}function ye(e,t){const n=new WeakMap;return r.for=(r,o)=>{const a=n.get(r)||function(e){const t={$:null};return n.set(e,t),t}(r);return null==o&&(o="$"),a[o]||function(n,r){let o=[],a=null;const l=new t(e),s=()=>l.apply(null,xe(o,1,1,t));return n[r]=function(){o=arguments;const e=we(l,s,t);return a||(a=Ne(e))}}(a,o)},r;function r(){const n=arguments;return ue?new E(e,n):new t(e).apply(null,n)}}function we(e,t,n){const r=ue;(ue=se.get(e)||function(e){const t={i:0,length:0,stack:[],update:!1};return se.set(e,t),t}(e)).i=0;const o=t.call(this);let a;if(o instanceof E){a=ge(be(o,0,n),ue.update);const{i:e,length:t,stack:r,update:l}=ue;e<t&&r.splice(ue.length=e),l&&(ue.update=!1)}else a=ge(o,!1);return ue=r,a}function be(e,t,n){const{i:r,length:o,stack:a}=ue,{type:l,args:s}=e,i=r<o;ue.i++,i||(ue.length=a.push({l:t,kind:l,tag:null,tpl:s[0],wire:null})),xe(s,1,t+1,n);const c=a[r];if(i){const{l:e,kind:n,tag:r,tpl:o,wire:a}=c;if(e===t&&l===n&&o===s[0])return r.apply(null,s),a}const u=new n(l),f=Ne(u.apply(null,s));return c.l=t,c.kind=l,c.tag=u,c.tpl=s[0],c.wire=f,r<1&&(ue.update=!0),f}function xe(e,t,n,r){for(const{length:o}=e;t<o;t++){const o=e[t];"object"==typeof o&&o&&(o instanceof E?e[t]=be(o,n-1,r):k(o)&&(e[t]=xe(o,0,n++,r)))}return e}function Ne(e){const t=e.childNodes,{length:n}=t;return 1===n?t[0]:n?new N(t):e}return e.Hole=E,e.custom=e=>{const t=ae(ce);return le(e).forEach(n=>{t[n]=e[n](t[n]||("convert"===n?u:String))}),n.prototype=t,fe(n);function n(){return re.apply(this,arguments)}},e.hook=ve,e.html=pe,e.render=de,e.svg=he,e}({});
-export let html = lighterhtml.html;export let render = lighterhtml.render;export let svg = lighterhtml.svg;
+var lighterhtml = (function (document,exports) {
+  'use strict';
+
+
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var self = null ||
+    /* istanbul ignore next */
+    {};
+
+  try {
+    self.WeakMap = WeakMap;
+  } catch (WeakMap) {
+    // this could be better but 90% of the time
+    // it's everything developers need as fallback
+    self.WeakMap = function (id, Object) {
+
+      var dP = Object.defineProperty;
+      var hOP = Object.hasOwnProperty;
+      var proto = WeakMap.prototype;
+
+      proto["delete"] = function (key) {
+        return this.has(key) && delete key[this._];
+      };
+
+      proto.get = function (key) {
+        return this.has(key) ? key[this._] : void 0;
+      };
+
+      proto.has = function (key) {
+        return hOP.call(key, this._);
+      };
+
+      proto.set = function (key, value) {
+        dP(key, this._, {
+          configurable: true,
+          value: value
+        });
+        return this;
+      };
+
+      return WeakMap;
+
+      function WeakMap(iterable) {
+        dP(this, '_', {
+          value: '_@ungap/weakmap' + id++
+        });
+        if (iterable) iterable.forEach(add, this);
+      }
+
+      function add(pair) {
+        this.set(pair[0], pair[1]);
+      }
+    }(Math.random(), Object);
+  }
+
+  var WeakMap$1 = self.WeakMap;
+
+  /*! (c) Andrea Giammarchi - ISC */
+  // Custom
+  var UID = '-' + Math.random().toFixed(6) + '%'; //                           Edge issue!
+
+  var UID_IE = false;
+
+  try {
+    if (!function (template, content, tabindex) {
+      return content in template && (template.innerHTML = '<p ' + tabindex + '="' + UID + '"></p>', template[content].childNodes[0].getAttribute(tabindex) == UID);
+    }(document.createElement('template'), 'content', 'tabindex')) {
+      UID = '_dt: ' + UID.slice(1, -1) + ';';
+      UID_IE = true;
+    }
+  } catch (meh) {}
+
+  var UIDC = '<!--' + UID + '-->'; // DOM
+
+  var COMMENT_NODE = 8;
+  var ELEMENT_NODE = 1;
+  var TEXT_NODE = 3;
+  var SHOULD_USE_TEXT_CONTENT = /^(?:style|textarea)$/i;
+  var VOID_ELEMENTS = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
+
+  /*! (c) Andrea Giammarchi - ISC */
+  function domsanitizer (template) {
+    return template.join(UIDC).replace(selfClosing, fullClosing).replace(attrSeeker, attrReplacer);
+  }
+  var spaces = ' \\f\\n\\r\\t';
+  var almostEverything = '[^' + spaces + '\\/>"\'=]+';
+  var attrName = '[' + spaces + ']+' + almostEverything;
+  var tagName = '<([A-Za-z]+[A-Za-z0-9:._-]*)((?:';
+  var attrPartials = '(?:\\s*=\\s*(?:\'[^\']*?\'|"[^"]*?"|<[^>]*?>|' + almostEverything.replace('\\/', '') + '))?)';
+  var attrSeeker = new RegExp(tagName + attrName + attrPartials + '+)([' + spaces + ']*/?>)', 'g');
+  var selfClosing = new RegExp(tagName + attrName + attrPartials + '*)([' + spaces + ']*/>)', 'g');
+  var findAttributes = new RegExp('(' + attrName + '\\s*=\\s*)([\'"]?)' + UIDC + '\\2', 'gi');
+
+  function attrReplacer($0, $1, $2, $3) {
+    return '<' + $1 + $2.replace(findAttributes, replaceAttributes) + $3;
+  }
+
+  function replaceAttributes($0, $1, $2) {
+    return $1 + ($2 || '"') + UID + ($2 || '"');
+  }
+
+  function fullClosing($0, $1, $2) {
+    return VOID_ELEMENTS.test($1) ? $0 : '<' + $1 + $2 + '></' + $1 + '>';
+  }
+
+  var isNoOp = false;
+
+  var _templateLiteral = function templateLiteral(tl) {
+    var RAW = 'raw';
+
+    var isBroken = function isBroken(UA) {
+      return /(Firefox|Safari)\/(\d+)/.test(UA) && !/(Chrom[eium]+|Android)\/(\d+)/.test(UA);
+    };
+
+    var broken = isBroken((document.defaultView.navigator || {}).userAgent);
+    var FTS = !(RAW in tl) || tl.propertyIsEnumerable(RAW) || !Object.isFrozen(tl[RAW]);
+
+    if (broken || FTS) {
+      var forever = {};
+
+      var foreverCache = function foreverCache(tl) {
+        for (var key = '.', i = 0; i < tl.length; i++) {
+          key += tl[i].length + '.' + tl[i];
+        }
+
+        return forever[key] || (forever[key] = tl);
+      }; // Fallback TypeScript shenanigans
+
+
+      if (FTS) _templateLiteral = foreverCache; // try fast path for other browsers:
+      // store the template as WeakMap key
+      // and forever cache it only when it's not there.
+      // this way performance is still optimal,
+      // penalized only when there are GC issues
+      else {
+        var wm = new WeakMap$1();
+
+        var set = function set(tl, unique) {
+          wm.set(tl, unique);
+          return unique;
+        };
+
+        _templateLiteral = function templateLiteral(tl) {
+          return wm.get(tl) || set(tl, foreverCache(tl));
+        };
+      }
+    } else {
+      isNoOp = true;
+    }
+
+    return TL(tl);
+  };
+
+  function TL(tl) {
+    return isNoOp ? tl : _templateLiteral(tl);
+  }
+
+  function tta (template) {
+    var length = arguments.length;
+    var args = [TL(template)];
+    var i = 1;
+
+    while (i < length) {
+      args.push(arguments[i++]);
+    }
+
+    return args;
+  }
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var Wire = function (slice, proto) {
+    proto = Wire.prototype;
+    proto.ELEMENT_NODE = 1;
+    proto.nodeType = 111;
+
+    proto.remove = function (keepFirst) {
+      var childNodes = this.childNodes;
+      var first = this.firstChild;
+      var last = this.lastChild;
+      this._ = null;
+
+      if (keepFirst && childNodes.length === 2) {
+        last.parentNode.removeChild(last);
+      } else {
+        var range = this.ownerDocument.createRange();
+        range.setStartBefore(keepFirst ? childNodes[1] : first);
+        range.setEndAfter(last);
+        range.deleteContents();
+      }
+
+      return first;
+    };
+
+    proto.valueOf = function (forceAppend) {
+      var fragment = this._;
+      var noFragment = fragment == null;
+      if (noFragment) fragment = this._ = this.ownerDocument.createDocumentFragment();
+
+      if (noFragment || forceAppend) {
+        for (var n = this.childNodes, i = 0, l = n.length; i < l; i++) {
+          fragment.appendChild(n[i]);
+        }
+      }
+
+      return fragment;
+    };
+
+    return Wire;
+
+    function Wire(childNodes) {
+      var nodes = this.childNodes = slice.call(childNodes, 0);
+      this.firstChild = nodes[0];
+      this.lastChild = nodes[nodes.length - 1];
+      this.ownerDocument = nodes[0].ownerDocument;
+      this._ = null;
+    }
+  }([].slice);
+
+  var isArray = Array.isArray;
+  var wireType = Wire.prototype.nodeType;
+  Object.freeze(Hole);
+
+  function Hole(type, args) {
+    this.type = type;
+    this.args = args;
+  }
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var createContent = function (document) {
+
+    var FRAGMENT = 'fragment';
+    var TEMPLATE = 'template';
+    var HAS_CONTENT = 'content' in create(TEMPLATE);
+    var createHTML = HAS_CONTENT ? function (html) {
+      var template = create(TEMPLATE);
+      template.innerHTML = html;
+      return template.content;
+    } : function (html) {
+      var content = create(FRAGMENT);
+      var template = create(TEMPLATE);
+      var childNodes = null;
+
+      if (/^[^\S]*?<(col(?:group)?|t(?:head|body|foot|r|d|h))/i.test(html)) {
+        var selector = RegExp.$1;
+        template.innerHTML = '<table>' + html + '</table>';
+        childNodes = template.querySelectorAll(selector);
+      } else {
+        template.innerHTML = html;
+        childNodes = template.childNodes;
+      }
+
+      append(content, childNodes);
+      return content;
+    };
+    return function createContent(markup, type) {
+      return (type === 'svg' ? createSVG : createHTML)(markup);
+    };
+
+    function append(root, childNodes) {
+      var length = childNodes.length;
+
+      while (length--) {
+        root.appendChild(childNodes[0]);
+      }
+    }
+
+    function create(element) {
+      return element === FRAGMENT ? document.createDocumentFragment() : document.createElementNS('http://www.w3.org/1999/xhtml', element);
+    } // it could use createElementNS when hasNode is there
+    // but this fallback is equally fast and easier to maintain
+    // it is also battle tested already in all IE
+
+
+    function createSVG(svg) {
+      var content = create(FRAGMENT);
+      var template = create('div');
+      template.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + svg + '</svg>';
+      append(content, template.firstChild.childNodes);
+      return content;
+    }
+  }(document);
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var self$1 = null ||
+    /* istanbul ignore next */
+    {};
+
+  try {
+    self$1.Map = Map;
+  } catch (Map) {
+    self$1.Map = function Map() {
+      var i = 0;
+      var k = [];
+      var v = [];
+      return {
+        "delete": function _delete(key) {
+          var had = contains(key);
+
+          if (had) {
+            k.splice(i, 1);
+            v.splice(i, 1);
+          }
+
+          return had;
+        },
+        forEach: function forEach(callback, context) {
+          k.forEach(function (key, i) {
+            callback.call(context, v[i], key, this);
+          }, this);
+        },
+        get: function get(key) {
+          return contains(key) ? v[i] : void 0;
+        },
+        has: function has(key) {
+          return contains(key);
+        },
+        set: function set(key, value) {
+          v[contains(key) ? i : k.push(key) - 1] = value;
+          return this;
+        }
+      };
+
+      function contains(v) {
+        i = k.indexOf(v);
+        return -1 < i;
+      }
+    };
+  }
+
+  var Map$1 = self$1.Map;
+
+  var iOF = [].indexOf;
+  var append = function append(get, parent, children, start, end, before) {
+    var isSelect = 'selectedIndex' in parent;
+    var noSelection = isSelect;
+
+    while (start < end) {
+      var child = get(children[start], 1);
+      parent.insertBefore(child, before);
+
+      if (isSelect && noSelection && child.selected) {
+        noSelection = !noSelection;
+        var selectedIndex = parent.selectedIndex;
+        parent.selectedIndex = selectedIndex < 0 ? start : iOF.call(parent.querySelectorAll('option'), child);
+      }
+
+      start++;
+    }
+  };
+  var eqeq = function eqeq(a, b) {
+    return a == b;
+  };
+  var identity = function identity(O) {
+    return O;
+  };
+  var indexOf = function indexOf(moreNodes, moreStart, moreEnd, lessNodes, lessStart, lessEnd, compare) {
+    var length = lessEnd - lessStart;
+    /* istanbul ignore if */
+
+    if (length < 1) return -1;
+
+    while (moreEnd - moreStart >= length) {
+      var m = moreStart;
+      var l = lessStart;
+
+      while (m < moreEnd && l < lessEnd && compare(moreNodes[m], lessNodes[l])) {
+        m++;
+        l++;
+      }
+
+      if (l === lessEnd) return moreStart;
+      moreStart = m + 1;
+    }
+
+    return -1;
+  };
+  var isReversed = function isReversed(futureNodes, futureEnd, currentNodes, currentStart, currentEnd, compare) {
+    while (currentStart < currentEnd && compare(currentNodes[currentStart], futureNodes[futureEnd - 1])) {
+      currentStart++;
+      futureEnd--;
+    }
+    return futureEnd === 0;
+  };
+  var next = function next(get, list, i, length, before) {
+    return i < length ? get(list[i], 0) : 0 < i ? get(list[i - 1], -0).nextSibling : before;
+  };
+  var remove = function remove(get, parent, children, start, end) {
+    while (start < end) {
+      _removeChild(get(children[start++], -1), parent);
+    }
+  }; // - - - - - - - - - - - - - - - - - - -
+  // diff related constants and utilities
+  // - - - - - - - - - - - - - - - - - - -
+
+  var DELETION = -1;
+  var INSERTION = 1;
+  var SKIP = 0;
+  var SKIP_OND = 50;
+
+  var HS = function HS(futureNodes, futureStart, futureEnd, futureChanges, currentNodes, currentStart, currentEnd, currentChanges) {
+    var k = 0;
+    /* istanbul ignore next */
+
+    var minLen = futureChanges < currentChanges ? futureChanges : currentChanges;
+    var link = Array(minLen++);
+    var tresh = Array(minLen);
+    tresh[0] = -1;
+
+    for (var i = 1; i < minLen; i++) {
+      tresh[i] = currentEnd;
+    }
+
+    var keymap = new Map$1();
+
+    for (var _i = currentStart; _i < currentEnd; _i++) {
+      keymap.set(currentNodes[_i], _i);
+    }
+
+    for (var _i2 = futureStart; _i2 < futureEnd; _i2++) {
+      var idxInOld = keymap.get(futureNodes[_i2]);
+
+      if (idxInOld != null) {
+        k = findK(tresh, minLen, idxInOld);
+        /* istanbul ignore else */
+
+        if (-1 < k) {
+          tresh[k] = idxInOld;
+          link[k] = {
+            newi: _i2,
+            oldi: idxInOld,
+            prev: link[k - 1]
+          };
+        }
+      }
+    }
+
+    k = --minLen;
+    --currentEnd;
+
+    while (tresh[k] > currentEnd) {
+      --k;
+    }
+
+    minLen = currentChanges + futureChanges - k;
+    var diff = Array(minLen);
+    var ptr = link[k];
+    --futureEnd;
+
+    while (ptr) {
+      var _ptr = ptr,
+        newi = _ptr.newi,
+        oldi = _ptr.oldi;
+
+      while (futureEnd > newi) {
+        diff[--minLen] = INSERTION;
+        --futureEnd;
+      }
+
+      while (currentEnd > oldi) {
+        diff[--minLen] = DELETION;
+        --currentEnd;
+      }
+
+      diff[--minLen] = SKIP;
+      --futureEnd;
+      --currentEnd;
+      ptr = ptr.prev;
+    }
+
+    while (futureEnd >= futureStart) {
+      diff[--minLen] = INSERTION;
+      --futureEnd;
+    }
+
+    while (currentEnd >= currentStart) {
+      diff[--minLen] = DELETION;
+      --currentEnd;
+    }
+
+    return diff;
+  }; // this is pretty much the same petit-dom code without the delete map part
+  // https://github.com/yelouafi/petit-dom/blob/bd6f5c919b5ae5297be01612c524c40be45f14a7/src/vdom.js#L556-L561
+
+
+  var OND = function OND(futureNodes, futureStart, rows, currentNodes, currentStart, cols, compare) {
+    var length = rows + cols;
+    var v = [];
+    var d, k, r, c, pv, cv, pd;
+
+    outer: for (d = 0; d <= length; d++) {
+      /* istanbul ignore if */
+      if (d > SKIP_OND) return null;
+      pd = d - 1;
+      /* istanbul ignore next */
+
+      pv = d ? v[d - 1] : [0, 0];
+      cv = v[d] = [];
+
+      for (k = -d; k <= d; k += 2) {
+        if (k === -d || k !== d && pv[pd + k - 1] < pv[pd + k + 1]) {
+          c = pv[pd + k + 1];
+        } else {
+          c = pv[pd + k - 1] + 1;
+        }
+
+        r = c - k;
+
+        while (c < cols && r < rows && compare(currentNodes[currentStart + c], futureNodes[futureStart + r])) {
+          c++;
+          r++;
+        }
+
+        if (c === cols && r === rows) {
+          break outer;
+        }
+
+        cv[d + k] = c;
+      }
+    }
+
+    var diff = Array(d / 2 + length / 2);
+    var diffIdx = diff.length - 1;
+
+    for (d = v.length - 1; d >= 0; d--) {
+      while (c > 0 && r > 0 && compare(currentNodes[currentStart + c - 1], futureNodes[futureStart + r - 1])) {
+        // diagonal edge = equality
+        diff[diffIdx--] = SKIP;
+        c--;
+        r--;
+      }
+
+      if (!d) break;
+      pd = d - 1;
+      /* istanbul ignore next */
+
+      pv = d ? v[d - 1] : [0, 0];
+      k = c - r;
+
+      if (k === -d || k !== d && pv[pd + k - 1] < pv[pd + k + 1]) {
+        // vertical edge = insertion
+        r--;
+        diff[diffIdx--] = INSERTION;
+      } else {
+        // horizontal edge = deletion
+        c--;
+        diff[diffIdx--] = DELETION;
+      }
+    }
+
+    return diff;
+  };
+
+  var applyDiff = function applyDiff(diff, get, parentNode, futureNodes, futureStart, currentNodes, currentStart, currentLength, before) {
+    var live = new Map$1();
+    var length = diff.length;
+    var currentIndex = currentStart;
+    var i = 0;
+
+    while (i < length) {
+      switch (diff[i++]) {
+        case SKIP:
+          futureStart++;
+          currentIndex++;
+          break;
+
+        case INSERTION:
+          // TODO: bulk appends for sequential nodes
+          live.set(futureNodes[futureStart], 1);
+          append(get, parentNode, futureNodes, futureStart++, futureStart, currentIndex < currentLength ? get(currentNodes[currentIndex], 0) : before);
+          break;
+
+        case DELETION:
+          currentIndex++;
+          break;
+      }
+    }
+
+    i = 0;
+
+    while (i < length) {
+      switch (diff[i++]) {
+        case SKIP:
+          currentStart++;
+          break;
+
+        case DELETION:
+          // TODO: bulk removes for sequential nodes
+          if (live.has(currentNodes[currentStart])) currentStart++;else remove(get, parentNode, currentNodes, currentStart++, currentStart);
+          break;
+      }
+    }
+  };
+
+  var findK = function findK(ktr, length, j) {
+    var lo = 1;
+    var hi = length;
+
+    while (lo < hi) {
+      var mid = (lo + hi) / 2 >>> 0;
+      if (j < ktr[mid]) hi = mid;else lo = mid + 1;
+    }
+
+    return lo;
+  };
+
+  var smartDiff = function smartDiff(get, parentNode, futureNodes, futureStart, futureEnd, futureChanges, currentNodes, currentStart, currentEnd, currentChanges, currentLength, compare, before) {
+    applyDiff(OND(futureNodes, futureStart, futureChanges, currentNodes, currentStart, currentChanges, compare) || HS(futureNodes, futureStart, futureEnd, futureChanges, currentNodes, currentStart, currentEnd, currentChanges), get, parentNode, futureNodes, futureStart, currentNodes, currentStart, currentLength, before);
+  };
+
+  var _removeChild = function removeChild(child, parentNode) {
+    /* istanbul ignore if */
+    if ('remove' in child) {
+      _removeChild = function removeChild(child) {
+        child.remove();
+      };
+    } else {
+      _removeChild = function removeChild(child, parentNode) {
+        /* istanbul ignore else */
+        if (child.parentNode === parentNode) parentNode.removeChild(child);
+      };
+    }
+
+    _removeChild(child, parentNode);
+  };
+
+  /*! (c) 2018 Andrea Giammarchi (ISC) */
+
+  var domdiff = function domdiff(parentNode, // where changes happen
+                                 currentNodes, // Array of current items/nodes
+                                 futureNodes, // Array of future items/nodes
+                                 options // optional object with one of the following properties
+                                 //  before: domNode
+                                 //  compare(generic, generic) => true if same generic
+                                 //  node(generic) => Node
+  ) {
+    if (!options) options = {};
+    var compare = options.compare || eqeq;
+    var get = options.node || identity;
+    var before = options.before == null ? null : get(options.before, 0);
+    var currentLength = currentNodes.length;
+    var currentEnd = currentLength;
+    var currentStart = 0;
+    var futureEnd = futureNodes.length;
+    var futureStart = 0; // common prefix
+
+    while (currentStart < currentEnd && futureStart < futureEnd && compare(currentNodes[currentStart], futureNodes[futureStart])) {
+      currentStart++;
+      futureStart++;
+    } // common suffix
+
+
+    while (currentStart < currentEnd && futureStart < futureEnd && compare(currentNodes[currentEnd - 1], futureNodes[futureEnd - 1])) {
+      currentEnd--;
+      futureEnd--;
+    }
+
+    var currentSame = currentStart === currentEnd;
+    var futureSame = futureStart === futureEnd; // same list
+
+    if (currentSame && futureSame) return futureNodes; // only stuff to add
+
+    if (currentSame && futureStart < futureEnd) {
+      append(get, parentNode, futureNodes, futureStart, futureEnd, next(get, currentNodes, currentStart, currentLength, before));
+      return futureNodes;
+    } // only stuff to remove
+
+
+    if (futureSame && currentStart < currentEnd) {
+      remove(get, parentNode, currentNodes, currentStart, currentEnd);
+      return futureNodes;
+    }
+
+    var currentChanges = currentEnd - currentStart;
+    var futureChanges = futureEnd - futureStart;
+    var i = -1; // 2 simple indels: the shortest sequence is a subsequence of the longest
+
+    if (currentChanges < futureChanges) {
+      i = indexOf(futureNodes, futureStart, futureEnd, currentNodes, currentStart, currentEnd, compare); // inner diff
+
+      if (-1 < i) {
+        append(get, parentNode, futureNodes, futureStart, i, get(currentNodes[currentStart], 0));
+        append(get, parentNode, futureNodes, i + currentChanges, futureEnd, next(get, currentNodes, currentEnd, currentLength, before));
+        return futureNodes;
+      }
+    }
+    /* istanbul ignore else */
+    else if (futureChanges < currentChanges) {
+      i = indexOf(currentNodes, currentStart, currentEnd, futureNodes, futureStart, futureEnd, compare); // outer diff
+
+      if (-1 < i) {
+        remove(get, parentNode, currentNodes, currentStart, i);
+        remove(get, parentNode, currentNodes, i + futureChanges, currentEnd);
+        return futureNodes;
+      }
+    } // common case with one replacement for many nodes
+    // or many nodes replaced for a single one
+
+    /* istanbul ignore else */
+
+
+    if (currentChanges < 2 || futureChanges < 2) {
+      append(get, parentNode, futureNodes, futureStart, futureEnd, get(currentNodes[currentStart], 0));
+      remove(get, parentNode, currentNodes, currentStart, currentEnd);
+      return futureNodes;
+    } // the half match diff part has been skipped in petit-dom
+    // https://github.com/yelouafi/petit-dom/blob/bd6f5c919b5ae5297be01612c524c40be45f14a7/src/vdom.js#L391-L397
+    // accordingly, I think it's safe to skip in here too
+    // if one day it'll come out like the speediest thing ever to do
+    // then I might add it in here too
+    // Extra: before going too fancy, what about reversed lists ?
+    //        This should bail out pretty quickly if that's not the case.
+
+
+    if (currentChanges === futureChanges && isReversed(futureNodes, futureEnd, currentNodes, currentStart, currentEnd, compare)) {
+      append(get, parentNode, futureNodes, futureStart, futureEnd, next(get, currentNodes, currentEnd, currentLength, before));
+      return futureNodes;
+    } // last resort through a smart diff
+
+
+    smartDiff(get, parentNode, futureNodes, futureStart, futureEnd, futureChanges, currentNodes, currentStart, currentEnd, currentChanges, currentLength, compare, before);
+    return futureNodes;
+  };
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var importNode = function (document, appendChild, cloneNode, createTextNode, importNode) {
+    var _native = importNode in document; // IE 11 has problems with cloning templates:
+    // it "forgets" empty childNodes. This feature-detects that.
+
+
+    var fragment = document.createDocumentFragment();
+    fragment[appendChild](document[createTextNode]('g'));
+    fragment[appendChild](document[createTextNode](''));
+    var content = _native ? document[importNode](fragment, true) : fragment[cloneNode](true);
+    return content.childNodes.length < 2 ? function importNode(node, deep) {
+      var clone = node[cloneNode]();
+
+      for (var childNodes = node.childNodes || [], length = childNodes.length, i = 0; deep && i < length; i++) {
+        clone[appendChild](importNode(childNodes[i], deep));
+      }
+
+      return clone;
+    } : _native ? document[importNode] : function (node, deep) {
+      return node[cloneNode](!!deep);
+    };
+  }(document, 'appendChild', 'cloneNode', 'createTextNode', 'importNode');
+
+  var trim = ''.trim || function () {
+    return String(this).replace(/^\s+|\s+/g, '');
+  };
+
+  function find(node, path) {
+    var length = path.length;
+    var i = 0;
+
+    while (i < length) {
+      node = node.childNodes[path[i++]];
+    }
+
+    return node;
+  }
+
+  function parse(node, holes, parts, path) {
+    var childNodes = node.childNodes;
+    var length = childNodes.length;
+    var i = 0;
+
+    while (i < length) {
+      var child = childNodes[i];
+
+      switch (child.nodeType) {
+        case ELEMENT_NODE:
+          var childPath = path.concat(i);
+          parseAttributes(child, holes, parts, childPath);
+          parse(child, holes, parts, childPath);
+          break;
+
+        case COMMENT_NODE:
+          var textContent = child.textContent;
+
+          if (textContent === UID) {
+            parts.shift();
+            holes.push( // basicHTML or other non standard engines
+              // might end up having comments in nodes
+              // where they shouldn't, hence this check.
+              SHOULD_USE_TEXT_CONTENT.test(node.nodeName) ? Text(node, path) : Any(child, path.concat(i)));
+          } else {
+            switch (textContent.slice(0, 2)) {
+              case '/*':
+                if (textContent.slice(-2) !== '*/') break;
+
+              case "\uD83D\uDC7B":
+                // ghost
+                node.removeChild(child);
+                i--;
+                length--;
+            }
+          }
+
+          break;
+
+        case TEXT_NODE:
+          // the following ignore is actually covered by browsers
+          // only basicHTML ends up on previous COMMENT_NODE case
+          // instead of TEXT_NODE because it knows nothing about
+          // special style or textarea behavior
+
+          /* istanbul ignore if */
+          if (SHOULD_USE_TEXT_CONTENT.test(node.nodeName) && trim.call(child.textContent) === UIDC) {
+            parts.shift();
+            holes.push(Text(node, path));
+          }
+
+          break;
+      }
+
+      i++;
+    }
+  }
+
+  function parseAttributes(node, holes, parts, path) {
+    var cache = new Map$1();
+    var attributes = node.attributes;
+    var remove = [];
+    var array = remove.slice.call(attributes, 0);
+    var length = array.length;
+    var i = 0;
+
+    while (i < length) {
+      var attribute = array[i++];
+      var direct = attribute.value === UID;
+      var sparse;
+
+      if (direct || 1 < (sparse = attribute.value.split(UIDC)).length) {
+        var name = attribute.name; // the following ignore is covered by IE
+        // and the IE9 double viewBox test
+
+        /* istanbul ignore else */
+
+        if (!cache.has(name)) {
+          var realName = parts.shift().replace(direct ? /^(?:|[\S\s]*?\s)(\S+?)\s*=\s*('|")?$/ : // TODO: while working on yet another IE/Edge bug I've realized
+            //        the current not direct logic easily breaks there
+            //        because the `name` might not be the real needed one.
+            //        Use a better RegExp to find last attribute instead
+            //        of trusting `name` is what we are looking for.
+            //        Thanks IE/Edge, I hate you both.
+            new RegExp('^(?:|[\\S\\s]*?\\s)(' + name + ')\\s*=\\s*(\'|")[\\S\\s]*', 'i'), '$1');
+          var value = attributes[realName] || // the following ignore is covered by browsers
+            // while basicHTML is already case-sensitive
+
+            /* istanbul ignore next */
+            attributes[realName.toLowerCase()];
+          cache.set(name, value);
+          if (direct) holes.push(Attr(value, path, realName, null));else {
+            var skip = sparse.length - 2;
+
+            while (skip--) {
+              parts.shift();
+            }
+
+            holes.push(Attr(value, path, realName, sparse));
+          }
+        }
+
+        remove.push(attribute);
+      }
+    }
+
+    length = remove.length;
+    i = 0;
+    /* istanbul ignore next */
+
+    var cleanValue = 0 < length && UID_IE && !('ownerSVGElement' in node);
+
+    while (i < length) {
+      // Edge HTML bug #16878726
+      var attr = remove[i++]; // IE/Edge bug lighterhtml#63 - clean the value or it'll persist
+
+      /* istanbul ignore next */
+
+      if (cleanValue) attr.value = ''; // IE/Edge bug lighterhtml#64 - don't use removeAttributeNode
+
+      node.removeAttribute(attr.name);
+    } // This is a very specific Firefox/Safari issue
+    // but since it should be a not so common pattern,
+    // it's probably worth patching regardless.
+    // Basically, scripts created through strings are death.
+    // You need to create fresh new scripts instead.
+    // TODO: is there any other node that needs such nonsense?
+
+
+    var nodeName = node.nodeName;
+
+    if (/^script$/i.test(nodeName)) {
+      // this used to be like that
+      // var script = createElement(node, nodeName);
+      // then Edge arrived and decided that scripts created
+      // through template documents aren't worth executing
+      // so it became this ... hopefully it won't hurt in the wild
+      var script = document.createElement(nodeName);
+      length = attributes.length;
+      i = 0;
+
+      while (i < length) {
+        script.setAttributeNode(attributes[i++].cloneNode(true));
+      }
+
+      script.textContent = node.textContent;
+      node.parentNode.replaceChild(script, node);
+    }
+  }
+
+  function Any(node, path) {
+    return {
+      type: 'any',
+      node: node,
+      path: path
+    };
+  }
+
+  function Attr(node, path, name, sparse) {
+    return {
+      type: 'attr',
+      node: node,
+      path: path,
+      name: name,
+      sparse: sparse
+    };
+  }
+
+  function Text(node, path) {
+    return {
+      type: 'text',
+      node: node,
+      path: path
+    };
+  }
+
+  // globals
+  var parsed = new WeakMap$1();
+  var referenced = new WeakMap$1();
+
+  function createInfo(options, template) {
+    var markup = (options.convert || domsanitizer)(template);
+    var transform = options.transform;
+    if (transform) markup = transform(markup);
+    var content = createContent(markup, options.type);
+    cleanContent(content);
+    var holes = [];
+    parse(content, holes, template.slice(0), []);
+    var info = {
+      content: content,
+      updates: function updates(content) {
+        var updates = [];
+        var len = holes.length;
+        var i = 0;
+        var off = 0;
+
+        while (i < len) {
+          var info = holes[i++];
+          var node = find(content, info.path);
+
+          switch (info.type) {
+            case 'any':
+              updates.push({
+                fn: options.any(node, []),
+                sparse: false
+              });
+              break;
+
+            case 'attr':
+              var sparse = info.sparse;
+              var fn = options.attribute(node, info.name, info.node);
+              if (sparse === null) updates.push({
+                fn: fn,
+                sparse: false
+              });else {
+                off += sparse.length - 2;
+                updates.push({
+                  fn: fn,
+                  sparse: true,
+                  values: sparse
+                });
+              }
+              break;
+
+            case 'text':
+              updates.push({
+                fn: options.text(node),
+                sparse: false
+              });
+              node.textContent = '';
+              break;
+          }
+        }
+
+        len += off;
+        return function () {
+          var length = arguments.length;
+
+          if (len !== length - 1) {
+            throw new Error(length - 1 + ' values instead of ' + len + '\n' + template.join('${value}'));
+          }
+
+          var i = 1;
+          var off = 1;
+
+          while (i < length) {
+            var update = updates[i - off];
+
+            if (update.sparse) {
+              var values = update.values;
+              var value = values[0];
+              var j = 1;
+              var l = values.length;
+              off += l - 2;
+
+              while (j < l) {
+                value += arguments[i++] + values[j++];
+              }
+
+              update.fn(value);
+            } else update.fn(arguments[i++]);
+          }
+
+          return content;
+        };
+      }
+    };
+    parsed.set(template, info);
+    return info;
+  }
+
+  function createDetails(options, template) {
+    var info = parsed.get(template) || createInfo(options, template);
+    var content = importNode.call(document, info.content, true);
+    var details = {
+      content: content,
+      template: template,
+      updates: info.updates(content)
+    };
+    referenced.set(options, details);
+    return details;
+  }
+
+  function domtagger(options) {
+    return function (template) {
+      var details = referenced.get(options);
+      if (details == null || details.template !== template) details = createDetails(options, template);
+      details.updates.apply(null, arguments);
+      return details.content;
+    };
+  }
+
+  function cleanContent(fragment) {
+    var childNodes = fragment.childNodes;
+    var i = childNodes.length;
+
+    while (i--) {
+      var child = childNodes[i];
+
+      if (child.nodeType !== 1 && trim.call(child.textContent).length === 0) {
+        fragment.removeChild(child);
+      }
+    }
+  }
+
+  /*! (c) Andrea Giammarchi - ISC */
+  var hyperStyle = function () {
+
+    var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+    var hyphen = /([^A-Z])([A-Z]+)/g;
+    return function hyperStyle(node, original) {
+      return 'ownerSVGElement' in node ? svg(node, original) : update(node.style, false);
+    };
+
+    function ized($0, $1, $2) {
+      return $1 + '-' + $2.toLowerCase();
+    }
+
+    function svg(node, original) {
+      var style;
+      if (original) style = original.cloneNode(true);else {
+        node.setAttribute('style', '--hyper:style;');
+        style = node.getAttributeNode('style');
+      }
+      style.value = '';
+      node.setAttributeNode(style);
+      return update(style, true);
+    }
+
+    function toStyle(object) {
+      var key,
+        css = [];
+
+      for (key in object) {
+        css.push(key.replace(hyphen, ized), ':', object[key], ';');
+      }
+
+      return css.join('');
+    }
+
+    function update(style, isSVG) {
+      var oldType, oldValue;
+      return function (newValue) {
+        var info, key, styleValue, value;
+
+        switch (typeof(newValue)) {
+          case 'object':
+            if (newValue) {
+              if (oldType === 'object') {
+                if (!isSVG) {
+                  if (oldValue !== newValue) {
+                    for (key in oldValue) {
+                      if (!(key in newValue)) {
+                        style[key] = '';
+                      }
+                    }
+                  }
+                }
+              } else {
+                if (isSVG) style.value = '';else style.cssText = '';
+              }
+
+              info = isSVG ? {} : style;
+
+              for (key in newValue) {
+                value = newValue[key];
+                styleValue = typeof value === 'number' && !IS_NON_DIMENSIONAL.test(key) ? value + 'px' : value;
+                if (!isSVG && /^--/.test(key)) info.setProperty(key, styleValue);else info[key] = styleValue;
+              }
+
+              oldType = 'object';
+              if (isSVG) style.value = toStyle(oldValue = info);else oldValue = newValue;
+              break;
+            }
+
+          default:
+            if (oldValue != newValue) {
+              oldType = 'string';
+              oldValue = newValue;
+              if (isSVG) style.value = newValue || '';else style.cssText = newValue || '';
+            }
+
+            break;
+        }
+      };
+    }
+  }();
+
+  var OWNER_SVG_ELEMENT = 'ownerSVGElement'; // returns nodes from wires and components
+
+  var asNode = function asNode(item, i) {
+    return item.nodeType === wireType ? 1 / i < 0 ? i ? item.remove(true) : item.lastChild : i ? item.valueOf(true) : item.firstChild : item;
+  }; // returns true if domdiff can handle the value
+
+
+  var canDiff = function canDiff(value) {
+    return 'ELEMENT_NODE' in value;
+  }; // generic attributes helpers
+
+
+  var hyperAttribute = function hyperAttribute(node, original) {
+    var oldValue;
+    var owner = false;
+    var attribute = original.cloneNode(true);
+    return function (newValue) {
+      if (oldValue !== newValue) {
+        oldValue = newValue;
+
+        if (attribute.value !== newValue) {
+          if (newValue == null) {
+            if (owner) {
+              owner = false;
+              node.removeAttributeNode(attribute);
+            }
+
+            attribute.value = newValue;
+          } else {
+            attribute.value = newValue;
+
+            if (!owner) {
+              owner = true;
+              node.setAttributeNode(attribute);
+            }
+          }
+        }
+      }
+    };
+  }; // events attributes helpers
+
+
+  var hyperEvent = function hyperEvent(node, name) {
+    var oldValue;
+    var type = name.slice(2);
+    if (name.toLowerCase() in node) type = type.toLowerCase();
+    return function (newValue) {
+      if (oldValue !== newValue) {
+        if (oldValue) node.removeEventListener(type, oldValue, false);
+        oldValue = newValue;
+        if (newValue) node.addEventListener(type, newValue, false);
+      }
+    };
+  }; // special attributes helpers
+
+
+  var hyperProperty = function hyperProperty(node, name) {
+    var oldValue;
+    return function (newValue) {
+      if (oldValue !== newValue) {
+        oldValue = newValue;
+
+        if (node[name] !== newValue) {
+          if (newValue == null) {
+            // cleanup before dropping the attribute to fix IE/Edge gotcha
+            node[name] = '';
+            node.removeAttribute(name);
+          } else node[name] = newValue;
+        }
+      }
+    };
+  }; // special hooks helpers
+
+
+  var hyperRef = function hyperRef(node) {
+    return function (ref) {
+      ref.current = node;
+    };
+  };
+
+  var hyperSetter = function hyperSetter(node, name, svg) {
+    return svg ? function (value) {
+      node.setAttribute(name, value);
+    } : function (value) {
+      node[name] = value;
+    };
+  }; // list of attributes that should not be directly assigned
+
+
+  var readOnly = /^(?:form|list)$/i; // reused every slice time
+
+  var slice = [].slice; // simplifies text node creation
+
+  var text = function text(node, _text) {
+    return node.ownerDocument.createTextNode(_text);
+  };
+
+  function Tagger(type) {
+    this.type = type;
+    return domtagger(this);
+  }
+  Tagger.prototype = {
+    // there are four kind of attributes, and related behavior:
+    //  * events, with a name starting with `on`, to add/remove event listeners
+    //  * special, with a name present in their inherited prototype, accessed directly
+    //  * regular, accessed through get/setAttribute standard DOM methods
+    //  * style, the only regular attribute that also accepts an object as value
+    //    so that you can style=${{width: 120}}. In this case, the behavior has been
+    //    fully inspired by Preact library and its simplicity.
+    attribute: function attribute(node, name, original) {
+      switch (name) {
+        case 'class':
+          if (OWNER_SVG_ELEMENT in node) return hyperAttribute(node, original);
+          name = 'className';
+
+        case 'data':
+        case 'props':
+          return hyperProperty(node, name);
+
+        case 'style':
+          return hyperStyle(node, original, OWNER_SVG_ELEMENT in node);
+
+        case 'ref':
+          return hyperRef(node);
+
+        default:
+          if (name.slice(0, 1) === '.') return hyperSetter(node, name.slice(1), OWNER_SVG_ELEMENT in node);
+          if (name.slice(0, 2) === 'on') return hyperEvent(node, name);
+          if (name in node && !(OWNER_SVG_ELEMENT in node || readOnly.test(name))) return hyperProperty(node, name);
+          return hyperAttribute(node, original);
+      }
+    },
+    // in a hyper(node)`<div>${content}</div>` case
+    // everything could happen:
+    //  * it's a JS primitive, stored as text
+    //  * it's null or undefined, the node should be cleaned
+    //  * it's a promise, update the content once resolved
+    //  * it's an explicit intent, perform the desired operation
+    //  * it's an Array, resolve all values if Promises and/or
+    //    update the node with the resulting list of content
+    any: function any(node, childNodes) {
+      var diffOptions = {
+        node: asNode,
+        before: node
+      };
+      var nodeType = OWNER_SVG_ELEMENT in node ?
+        /* istanbul ignore next */
+        'svg' : 'html';
+      var fastPath = false;
+      var oldValue;
+
+      var anyContent = function anyContent(value) {
+        switch (typeof(value)) {
+          case 'string':
+          case 'number':
+          case 'boolean':
+            if (fastPath) {
+              if (oldValue !== value) {
+                oldValue = value;
+                childNodes[0].textContent = value;
+              }
+            } else {
+              fastPath = true;
+              oldValue = value;
+              childNodes = domdiff(node.parentNode, childNodes, [text(node, value)], diffOptions);
+            }
+
+            break;
+
+          case 'function':
+            anyContent(value(node));
+            break;
+
+          case 'object':
+          case 'undefined':
+            if (value == null) {
+              fastPath = false;
+              childNodes = domdiff(node.parentNode, childNodes, [], diffOptions);
+              break;
+            }
+
+          default:
+            fastPath = false;
+            oldValue = value;
+
+            if (isArray(value)) {
+              if (value.length === 0) {
+                if (childNodes.length) {
+                  childNodes = domdiff(node.parentNode, childNodes, [], diffOptions);
+                }
+              } else {
+                switch (typeof(value[0])) {
+                  case 'string':
+                  case 'number':
+                  case 'boolean':
+                    anyContent(String(value));
+                    break;
+
+                  case 'function':
+                    anyContent(value.map(invoke, node));
+                    break;
+
+                  case 'object':
+                    if (isArray(value[0])) {
+                      value = value.concat.apply([], value);
+                    }
+
+                  default:
+                    childNodes = domdiff(node.parentNode, childNodes, value, diffOptions);
+                    break;
+                }
+              }
+            } else if (canDiff(value)) {
+              childNodes = domdiff(node.parentNode, childNodes, value.nodeType === 11 ? slice.call(value.childNodes) : [value], diffOptions);
+            } else if ('text' in value) {
+              anyContent(String(value.text));
+            } else if ('any' in value) {
+              anyContent(value.any);
+            } else if ('html' in value) {
+              childNodes = domdiff(node.parentNode, childNodes, slice.call(createContent([].concat(value.html).join(''), nodeType).childNodes), diffOptions);
+            } else if ('length' in value) {
+              anyContent(slice.call(value));
+            }
+
+            break;
+        }
+      };
+
+      return anyContent;
+    },
+    // style or textareas don't accept HTML as content
+    // it's pointless to transform or analyze anything
+    // different from text there but it's worth checking
+    // for possible defined intents.
+    text: function text(node) {
+      var oldValue;
+
+      var textContent = function textContent(value) {
+        if (oldValue !== value) {
+          oldValue = value;
+
+          var type = typeof(value);
+
+          if (type === 'object' && value) {
+            if ('text' in value) {
+              textContent(String(value.text));
+            } else if ('any' in value) {
+              textContent(value.any);
+            } else if ('html' in value) {
+              textContent([].concat(value.html).join(''));
+            } else if ('length' in value) {
+              textContent(slice.call(value).join(''));
+            }
+          } else if (type === 'function') {
+            textContent(value(node));
+          } else {
+            node.textContent = value == null ? '' : value;
+          }
+        }
+      };
+
+      return textContent;
+    }
+  };
+
+  function invoke(callback) {
+    return callback(this);
+  }
+
+  var create = Object.create,
+    keys = Object.keys;
+  var wm = new WeakMap$1();
+  var container = new WeakMap$1();
+  var dtPrototype = Tagger.prototype;
+  var current = null;
+
+  var lighterhtml = function lighterhtml(Tagger) {
+    var html = outer('html', Tagger);
+    var svg = outer('svg', Tagger);
+    return {
+      html: html,
+      svg: svg,
+      hook: function hook(useRef) {
+        return {
+          html: createHook(useRef, html),
+          svg: createHook(useRef, svg)
+        };
+      },
+      render: function render(node, callback) {
+        var value = update.call(this, node, callback, Tagger);
+
+        if (container.get(node) !== value) {
+          container.set(node, value);
+          appendClean(node, value);
+        }
+
+        return node;
+      }
+    };
+  };
+
+  var custom = function custom(overrides) {
+    var prototype = create(dtPrototype);
+    keys(overrides).forEach(function (key) {
+      // assign the method after passing along the previous one
+      // `convert` exposes the original domsanitizer while
+      // all other unknown methods, including `transform`,
+      // fallbacks to generic String
+      prototype[key] = overrides[key](prototype[key] || (key === 'convert' ? domsanitizer : String));
+    });
+    Tagger$1.prototype = prototype;
+    return lighterhtml(Tagger$1);
+
+    function Tagger$1() {
+      return Tagger.apply(this, arguments);
+    }
+  };
+
+  var _lighterhtml = lighterhtml(Tagger),
+    html = _lighterhtml.html,
+    svg = _lighterhtml.svg,
+    render = _lighterhtml.render,
+    hook = _lighterhtml.hook;
+
+  function appendClean(node, fragment) {
+    node.textContent = '';
+    node.appendChild(fragment);
+  }
+
+  function asNode$1(result, forceFragment) {
+    return result.nodeType === wireType ? result.valueOf(forceFragment) : result;
+  }
+
+  function createHook(useRef, view) {
+    return function () {
+      var ref = useRef(null);
+      if (ref.current === null) ref.current = view["for"](ref);
+      return asNode$1(ref.current.apply(null, arguments), false);
+    };
+  }
+
+  function outer(type, Tagger) {
+    var wm = new WeakMap$1();
+
+    tag["for"] = function (identity, id) {
+      var ref = wm.get(identity) || set(identity);
+      if (id == null) id = '$';
+      return ref[id] || create(ref, id);
+    };
+
+    return tag;
+
+    function create(ref, id) {
+      var args = [];
+      var wire = null;
+      var tagger = new Tagger(type);
+
+      var callback = function callback() {
+        return tagger.apply(null, unrollArray(args, 1, 1, Tagger));
+      };
+
+      return ref[id] = function () {
+        args = tta.apply(null, arguments);
+        var result = update(tagger, callback, Tagger);
+        return wire || (wire = wiredContent(result));
+      };
+    }
+
+    function set(identity) {
+      var ref = {
+        '$': null
+      };
+      wm.set(identity, ref);
+      return ref;
+    }
+
+    function tag() {
+      var args = tta.apply(null, arguments);
+      return current ? new Hole(type, args) : new Tagger(type).apply(null, args);
+    }
+  }
+
+  function set(node) {
+    var info = {
+      i: 0,
+      length: 0,
+      stack: [],
+      update: false
+    };
+    wm.set(node, info);
+    return info;
+  }
+
+  function update(reference, callback, Tagger) {
+    var prev = current;
+    current = wm.get(reference) || set(reference);
+    current.i = 0;
+    var ret = callback.call(this);
+    var value;
+
+    if (ret instanceof Hole) {
+      value = asNode$1(unroll(ret, 0, Tagger), current.update);
+      var _current = current,
+        i = _current.i,
+        length = _current.length,
+        stack = _current.stack,
+        _update = _current.update;
+      if (i < length) stack.splice(current.length = i);
+      if (_update) current.update = false;
+    } else {
+      value = asNode$1(ret, false);
+    }
+
+    current = prev;
+    return value;
+  }
+
+  function unroll(hole, level, Tagger) {
+    var _current2 = current,
+      i = _current2.i,
+      length = _current2.length,
+      stack = _current2.stack;
+    var type = hole.type,
+      args = hole.args;
+    var stacked = i < length;
+    current.i++;
+    if (!stacked) current.length = stack.push({
+      l: level,
+      kind: type,
+      tag: null,
+      tpl: args[0],
+      wire: null
+    });
+    unrollArray(args, 1, level + 1, Tagger);
+    var info = stack[i];
+
+    if (stacked) {
+      var control = info.l,
+        kind = info.kind,
+        _tag = info.tag,
+        tpl = info.tpl,
+        _wire = info.wire;
+
+      if (control === level && type === kind && tpl === args[0]) {
+        _tag.apply(null, args);
+
+        return _wire;
+      }
+    }
+
+    var tag = new Tagger(type);
+    var wire = wiredContent(tag.apply(null, args));
+    info.l = level;
+    info.kind = type;
+    info.tag = tag;
+    info.tpl = args[0];
+    info.wire = wire;
+    if (i < 1) current.update = true;
+    return wire;
+  }
+
+  function unrollArray(arr, i, level, Tagger) {
+    for (var length = arr.length; i < length; i++) {
+      var value = arr[i];
+
+      if (typeof(value) === 'object' && value) {
+        if (value instanceof Hole) {
+          arr[i] = unroll(value, level - 1, Tagger);
+        } else if (isArray(value)) {
+          arr[i] = unrollArray(value, 0, level++, Tagger);
+        }
+      }
+    }
+
+    return arr;
+  }
+
+  function wiredContent(node) {
+    var childNodes = node.childNodes;
+    var length = childNodes.length;
+    return length === 1 ? childNodes[0] : length ? new Wire(childNodes) : node;
+  }
+
+  exports.Hole = Hole;
+  exports.custom = custom;
+  exports.hook = hook;
+  exports.html = html;
+  exports.render = render;
+  exports.svg = svg;
+
+  return exports;
+
+}(document,{}));
+
+export let svg = lighterhtml.svg;
+export let html = lighterhtml.html;
+export let render = lighterhtml.render;
+export let custom = lighterhtml.custom;

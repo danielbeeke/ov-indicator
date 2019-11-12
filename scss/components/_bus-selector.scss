@@ -3,16 +3,13 @@ bus-selector {
   flex: 0 1 auto;
   width: 100%;
   max-width: $max-width;
-  display: flex;
   flex-direction: column;
   opacity: 1;
   transition: opacity $speed $easing;
+  display: flex;
 
-  .bus-selector {
-    display: flex;
-  }
-
-  .trip-selector {
+  .bus-select,
+  .trip-select {
     display: flex;
   }
 
@@ -29,7 +26,5 @@ bus-selector {
 
   &.hidden {
     opacity: 0;
-    height: 0;
-    position: absolute;
   }
 }

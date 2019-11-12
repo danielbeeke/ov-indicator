@@ -1,23 +1,23 @@
 'use strict';
 
-const proxy = require('proxy-middleware');
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 global.reload = browserSync.reload;
 global.stream = browserSync.stream;
-const url = require('url');
-const fs = require('fs');
 
 process.setMaxListeners(0);
 
 gulp.task('browsersync', () => {
 
   browserSync.init({
-    port: 4000,
+    port: 443,
     server: {
       baseDir: 'public',
     },
-    https: true,
+    https: {
+      key: "certs/localhost.key",
+      cert: "certs/localhost.crt"
+    },
     ghostMode: false,
   });
 
