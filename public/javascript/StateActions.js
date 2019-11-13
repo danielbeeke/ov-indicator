@@ -78,14 +78,14 @@ export async function getDataForCurrentLocation () {
 
 /**
  * Toggles a busStop or a trip.
- * @param object
+ * @param component
  * @param semaphoreKey
  * @param localStorageKey
  * @param value
  * @param button
  */
-export function toggleFavorite (object, semaphoreKey, localStorageKey, value, button) {
-  object[semaphoreKey] = true;
+export function toggleFavorite (component, semaphoreKey, localStorageKey, value, button) {
+  component[semaphoreKey] = true;
   let state = State.get();
 
   if (state[localStorageKey].includes(value)) {
@@ -103,7 +103,7 @@ export function toggleFavorite (object, semaphoreKey, localStorageKey, value, bu
   localStorage.setItem(localStorageKey, state[localStorageKey].join(','));
 
   button.oneAnimationEnd(() => true, () => {
-    object[semaphoreKey] = false;
+    component[semaphoreKey] = false;
   }, 'show-animation', button.querySelector('svg'));
 }
 
