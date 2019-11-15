@@ -21,6 +21,7 @@ customElements.define('ov-app', class OvApp extends BaseElement {
       <app-loader class="page ${!['done', 'finished'].includes(state.loadingPhase.name) ? '' : 'hidden'}"></app-loader>
       <div class="page">
         <bus-selector class="${state.loadingPhase.name === 'finished' ? '' : 'hidden'}"></bus-selector>
+        ${state.currentIndication === 'coffee' ? html`<indication-coffee />` : ''}
       </div>
     `;
   }

@@ -2,7 +2,7 @@ import {BaseElement} from './core/BaseElement.js';
 import {html} from './vendor/lighterhtml.js';
 import {State} from "./core/StateManager.js";
 import './core/OneTransitionEnd.js';
-import {heartIconAnimation} from './Icons.js';
+import {heartIcon} from './HeartIcon.js';
 import {debounce, sortBusStopsByFavoritesAndDistance} from './Helpers.js';
 
 customElements.define('bus-selector', class BusSelector extends BaseElement {
@@ -102,7 +102,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
           <button class="
             ${state.favoriteBusStops.includes(state.selectedBusStop.stop_id) ? 'favorite' : ''} 
              favorite-button" onclick="${this.toggleBusStopFavorite}">
-             ${heartIconAnimation(this.isTogglingBusStopFavorite)}
+             ${heartIcon(this.isTogglingBusStopFavorite)}
           </button>
         ` : ''}
       </div>
@@ -122,7 +122,7 @@ customElements.define('bus-selector', class BusSelector extends BaseElement {
             ${ state.selectedTrip && state.favoriteTrips.includes(state.selectedTrip.route_short_name) ? 'favorite' : ''} 
              favorite-button" 
             onclick="${this.toggleTripFavorite}">
-             ${heartIconAnimation(this.isTogglingTripFavorite)}
+             ${heartIcon(this.isTogglingTripFavorite)}
           </button>
         </div>
       ` : ''} 

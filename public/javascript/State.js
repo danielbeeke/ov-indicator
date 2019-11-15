@@ -17,6 +17,7 @@ export function State (state, action = null) {
       trips: [],
       lat: null,
       lng: null,
+      currentIndication: null,
       currentGeolocationWatcher: null,
       selectedBusStop: null,
       selectedTrips: null,

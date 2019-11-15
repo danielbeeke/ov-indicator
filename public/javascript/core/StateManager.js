@@ -1,6 +1,6 @@
 import * as Redux from '../vendor/redux.min.js';
 import {State as DefaultState} from '../State.js';
-import {index} from '../Helpers.js';
+import {index, logger} from '../Helpers.js';
 import * as StateActions from '../StateActions.js';
 /**
  * The StateManager class
@@ -8,10 +8,11 @@ import * as StateActions from '../StateActions.js';
  */
 class StateManager {
   constructor () {
-    this.redux = Redux.createStore(
-      DefaultState,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    );
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
+    this.redux = Redux.createStore(DefaultState, composeEnhancers(
+      Redux.applyMiddleware(logger)
+    ));
+
     this.oldState = this.redux.getState();
     this.callbacks = {};
 

@@ -101,10 +101,7 @@ export function toggleFavorite (component, semaphoreKey, localStorageKey, value,
 
   state = State.get();
   localStorage.setItem(localStorageKey, state[localStorageKey].join(','));
-
-  button.oneAnimationEnd(() => true, () => {
-    component[semaphoreKey] = false;
-  }, 'show-animation', button.querySelector('svg'));
+  button.oneAnimationEnd(() => true, () => {}, 'show-animation', button.querySelector('svg'));
 }
 
 export function setBusStop(busStopId) {
