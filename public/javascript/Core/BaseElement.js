@@ -1,9 +1,11 @@
 import {render} from '../vendor/lighterhtml.js';
+import {wrappedWatch as watch} from '../vendor/ReduxWatch.js';
 
 export class BaseElement extends HTMLElement {
   constructor () {
     super();
     let elementDraw = this.draw;
+    this.subscribers = [];
 
     this.draw = function () {
       render(this, () => {
@@ -29,4 +31,12 @@ export class BaseElement extends HTMLElement {
   boundEventMethods () { return [];}
 
   draw () {}
+
+  watch (objectPath, callback) {
+    this.subscribers.push(watch(objectPath, callback))
+  }
+
+  disconnectedCallback () {
+    this.subscribers.forEach(unsubscribe => unsubscribe());
+  }
 }
