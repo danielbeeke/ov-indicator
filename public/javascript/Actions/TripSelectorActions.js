@@ -56,25 +56,43 @@ export const getTrips = (stopIds) => {
 };
 
 /**
- * Sets the trip
- */
-export const setTrip = (tripId) => {
-  Store.dispatch({
-    type: 'set-trip',
-    payload: {
-      trip: tripId
-    }
-  });
-};
-
-/**
  * Sets the stop
  */
 export const setStop = (stopId) => {
   Store.dispatch({
     type: 'set-stop',
     payload: {
-      trip: stopId
+      stopId: stopId
     }
+  });
+};
+
+/**
+ * Sets the trip
+ */
+export const setTrip = (tripId) => {
+  Store.dispatch({
+    type: 'set-trip',
+    payload: {
+      tripId: tripId
+    }
+  });
+};
+
+/**
+ * Toggle stop favorite
+ */
+export const toggleStopFavorite = () => {
+  Store.dispatch({
+    type: 'toggle-stop-favorite'
+  });
+};
+
+/**
+ * Toggle trip favorite
+ */
+export const toggleTripFavorite = () => {
+  Store.dispatch({
+    type: 'toggle-trip-favorite'
   });
 };

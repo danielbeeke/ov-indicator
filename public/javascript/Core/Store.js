@@ -5,6 +5,7 @@ import {tripSelectorReducer} from '../StoreReducers/TripSelectorReducer.js';
 import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancerMiddleware.js';
 import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
 import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
+import persistState from '../vendor/redux-localstorage/persistState.js';
 
 const initialState = {};
 
@@ -22,4 +23,4 @@ const middleware = applyMiddleware(
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const Store = createStore(reducers, initialState, composeEnhancers(middleware));
+export const Store = createStore(reducers, initialState, composeEnhancers(middleware, persistState()));

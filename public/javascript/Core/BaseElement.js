@@ -15,33 +15,7 @@ export class BaseElement extends HTMLElement {
     this.draw = function () {
       render(this, () => elementDraw.apply(this, arguments));
     };
-
-    // Binds all the methods of the view to the element.
-    this.boundEventMethods().forEach(boundEventName => {
-      if (this[boundEventName]) {
-        this[boundEventName] = this.bindEvent(this[boundEventName]);
-      }
-    });
   }
-
-  /**
-   * Binds one method to the element.
-   * @param callback
-   * @returns {Function}
-   */
-  bindEvent = (callback) => {
-    const that = this;
-    return function () {
-      callback.apply(that, [this.value, this]);
-      that.draw();
-    };
-  };
-
-  /**
-   * API, needs to be implemented by the child element.
-   * @returns {Array}
-   */
-  boundEventMethods () { return [];}
 
   /**
    * API, needs to be implemented by the child element.

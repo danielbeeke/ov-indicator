@@ -13,10 +13,14 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
    */
   connectedCallback() {
     this.watch('loadingScreen.phase', () => this.draw());
-    getGeolocation().then(() => {
-      const {lat, lng} = Store.getState().device;
-      getStops(lat, lng, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
-    });
+    const {selectedStop} = Store.getState().tripSelector;
+
+    if (!selectedStop) {
+      getGeolocation().then(() => {
+        const {lat, lng} = Store.getState().device;
+        getStops(lat, lng, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
+      });
+    }
   }
 
   /**
