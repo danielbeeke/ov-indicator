@@ -630,7 +630,7 @@ this.workbox.expiration = (function (exports, assert_js, dontWaitFor_js, logger_
 
       async deleteCacheAndMetadata() {
         // Do this one at a time instead of all at once via `Promise.all()` to
-        // reduce the chance of inconsistency if a promise rejects.
+        // reduce the chance of inconsistency if a promiseMiddleware rejects.
         for (const [cacheName, cacheExpiration] of this._cacheExpirations) {
           await caches.delete(cacheName);
           await cacheExpiration.delete();

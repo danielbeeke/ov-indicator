@@ -1,11 +1,14 @@
 /**
  * This file is a CustomElement but for convenience it is placed in the root of the application.
+ * This is the starting file of this application.
+ *
+ * Created by Daniël Beeke
  */
 
 import {BaseElement} from './Core/BaseElement.js';
 import {Store} from './Core/Store.js';
 import {html} from "./vendor/lighterhtml.js";
-import {goOnline, goOffline} from './Actions/Global.js';
+import {goOnline, goOffline} from './Actions/DeviceActions.js';
 
 import './vendor/polyfill.js';
 
@@ -22,7 +25,7 @@ customElements.define('ov-app', class OvApp extends BaseElement {
   }
 
   draw () {
-    let s = Store.getState().loadingScreen;
+    const s = Store.getState().loadingScreen;
 
     return html`
       <app-loader class="page ${s.isLoading ? '' : 'hidden'}"></app-loader>

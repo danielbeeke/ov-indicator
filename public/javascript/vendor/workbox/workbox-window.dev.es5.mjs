@@ -14,8 +14,8 @@ try {
  * a response (if any).
  *
  * A response can be set in a message handler in the service worker by
- * calling `event.ports[0].postMessage(...)`, which will resolve the promise
- * returned by `messageSW()`. If no response is set, the promise will not
+ * calling `event.ports[0].postMessage(...)`, which will resolve the promiseMiddleware
+ * returned by `messageSW()`. If no response is set, the promiseMiddleware will not
  * resolve.
  *
  * @param {ServiceWorker} sw The service worker to send the message to.
@@ -74,14 +74,14 @@ try {
  * The Deferred class composes Promises in a way that allows for them to be
  * resolved or rejected from outside the constructor. In most cases promises
  * should be used directly, but Deferreds can be necessary when the logic to
- * resolve a promise must be separate.
+ * resolve a promiseMiddleware must be separate.
  *
  * @private
  */
 
 var Deferred =
 /**
- * Creates a promise and exposes its resolve and reject functions as methods.
+ * Creates a promiseMiddleware and exposes its resolve and reject functions as methods.
  */
 function Deferred() {
   var _this = this;
@@ -99,7 +99,7 @@ function Deferred() {
   https://opensource.org/licenses/MIT.
 */
 /**
- * A helper function that prevents a promise from being flagged as unused.
+ * A helper function that prevents a promiseMiddleware from being flagged as unused.
  *
  * @private
  **/
@@ -768,7 +768,7 @@ function (_WorkboxEventTarget) {
    * match, since the waiting service worker would have been registered more
    * recently).
    * If there's no matching active or waiting service worker at registration
-   * time then the promise will not resolve until an update is found and starts
+   * time then the promiseMiddleware will not resolve until an update is found and starts
    * installing, at which point the installing service worker is used.
    *
    * @return {Promise<ServiceWorker>}
@@ -786,8 +786,8 @@ function (_WorkboxEventTarget) {
    * with a response (if any).
    *
    * A response can be set in a message handler in the service worker by
-   * calling `event.ports[0].postMessage(...)`, which will resolve the promise
-   * returned by `messageSW()`. If no response is set, the promise will never
+   * calling `event.ports[0].postMessage(...)`, which will resolve the promiseMiddleware
+   * returned by `messageSW()`. If no response is set, the promiseMiddleware will never
    * resolve.
    *
    * @param {Object} data An object to send to the service worker

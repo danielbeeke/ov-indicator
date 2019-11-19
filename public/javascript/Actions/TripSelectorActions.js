@@ -6,7 +6,7 @@ import {getCurrentPosition, proxy, calculateDistance} from "../Core/Helpers.js";
  * @returns {Promise<position>}
  */
 export const getGeolocation = () => {
-  let promise = getCurrentPosition();
+  const promise = getCurrentPosition();
   Store.dispatch({
     type: 'get-geolocation',
     payload: promise
@@ -22,9 +22,9 @@ export const getGeolocation = () => {
  * @returns []
  */
 export const getStops = (lat, lng, limit = 5) => {
-  let sortStops = (stops) => stops.sort((a, b) => a.distance - b.distance);
-  let addDistances = (stops) => stops.forEach(stop => stop.distance = calculateDistance(stop.stop_lat, stop.stop_lon, lat, lng));
-  let promise = proxy(`https://ovzoeker.nl/api/stops/${lat},${lng}`).then(stops => {
+  const sortStops = (stops) => stops.sort((a, b) => a.distance - b.distance);
+  const addDistances = (stops) => stops.forEach(stop => stop.distance = calculateDistance(stop.stop_lat, stop.stop_lon, lat, lng));
+  const promise = proxy(`https://ovzoeker.nl/api/stops/${lat},${lng}`).then(stops => {
     addDistances(stops);
     stops = sortStops(stops);
     return stops.slice(0, limit);
@@ -44,8 +44,8 @@ export const getStops = (lat, lng, limit = 5) => {
  * @returns {Promise<[]>}
  */
 export const getTrips = (stopIds) => {
-  let promises = stopIds.map(stopId => proxy(`https://ovzoeker.nl/api/arrivals/${stopId}`));
-  let allPromises = Promise.all(promises);
+  const promises = stopIds.map(stopId => proxy(`https://ovzoeker.nl/api/arrivals/${stopId}`));
+  const allPromises = Promise.all(promises);
 
   Store.dispatch({
     type: 'get-trips',
@@ -53,4 +53,28 @@ export const getTrips = (stopIds) => {
   });
 
   return allPromises;
+};
+
+/**
+ * Sets the trip
+ */
+export const setTrip = (tripId) => {
+  Store.dispatch({
+    type: 'set-trip',
+    payload: {
+      trip: tripId
+    }
+  });
+};
+
+/**
+ * Sets the stop
+ */
+export const setStop = (stopId) => {
+  Store.dispatch({
+    type: 'set-stop',
+    payload: {
+      trip: stopId
+    }
+  });
 };

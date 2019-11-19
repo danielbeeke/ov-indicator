@@ -1033,7 +1033,7 @@ this.workbox.core = (function (exports) {
       https://opensource.org/licenses/MIT.
     */
     /**
-     * A helper function that prevents a promise from being flagged as unused.
+     * A helper function that prevents a promiseMiddleware from being flagged as unused.
      *
      * @private
      **/
@@ -1051,7 +1051,7 @@ this.workbox.core = (function (exports) {
       https://opensource.org/licenses/MIT.
     */
     /**
-     * A class that wraps common IndexedDB functionality in a promise-based API.
+     * A class that wraps common IndexedDB functionality in a promiseMiddleware-based API.
      * It exposes all the underlying power and functionality of IndexedDB, but
      * wraps the most commonly used features in a way that's much simpler to use.
      *
@@ -1242,12 +1242,12 @@ this.workbox.core = (function (exports) {
       }
       /**
        * Accepts a list of stores, a transaction type, and a callback and
-       * performs a transaction. A promise is returned that resolves to whatever
+       * performs a transaction. A promiseMiddleware is returned that resolves to whatever
        * value the callback chooses. The callback holds all the transaction logic
        * and is invoked with two arguments:
        *   1. The IDBTransaction object
-       *   2. A `done` function, that's used to resolve the promise when
-       *      when the transaction is done, if passed a value, the promise is
+       *   2. A `done` function, that's used to resolve the promiseMiddleware when
+       *      when the transaction is done, if passed a value, the promiseMiddleware is
        *      resolved to that value.
        *
        * @param {Array<string>} storeNames An array of object store names
@@ -1350,14 +1350,14 @@ this.workbox.core = (function (exports) {
      * The Deferred class composes Promises in a way that allows for them to be
      * resolved or rejected from outside the constructor. In most cases promises
      * should be used directly, but Deferreds can be necessary when the logic to
-     * resolve a promise must be separate.
+     * resolve a promiseMiddleware must be separate.
      *
      * @private
      */
 
     class Deferred {
       /**
-       * Creates a promise and exposes its resolve and reject functions as methods.
+       * Creates a promiseMiddleware and exposes its resolve and reject functions as methods.
        */
       constructor() {
         this.promise = new Promise((resolve, reject) => {
@@ -1578,7 +1578,7 @@ this.workbox.core = (function (exports) {
       https://opensource.org/licenses/MIT.
     */
     /**
-     * Returns a promise that resolves and the passed number of milliseconds.
+     * Returns a promiseMiddleware that resolves and the passed number of milliseconds.
      * This utility is an async/await-friendly version of `setTimeout`.
      *
      * @param {number} ms
@@ -1598,7 +1598,7 @@ this.workbox.core = (function (exports) {
     */
     const MAX_RETRY_TIME = 2000;
     /**
-     * Returns a promise that resolves to a window client matching the passed
+     * Returns a promiseMiddleware that resolves to a window client matching the passed
      * `resultingClientId`. For browsers that don't support `resultingClientId`
      * or if waiting for the resulting client to apper takes too long, resolve to
      * `undefined`.

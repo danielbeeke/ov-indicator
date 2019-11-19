@@ -428,12 +428,12 @@ this.workbox.strategies = (function (exports, logger_js, assert_js, cacheNames_j
           logs
         });
 
-        promises.push(networkPromise); // Promise.race() will resolve as soon as the first promise resolves.
+        promises.push(networkPromise); // Promise.race() will resolve as soon as the first promiseMiddleware resolves.
 
         let response = await Promise.race(promises); // If Promise.race() resolved with null, it might be due to a network
         // timeout + a cache miss. If that were to happen, we'd rather wait until
         // the networkPromise resolves instead of returning null.
-        // Note that it's fine to await an already-resolved promise, so we don't
+        // Note that it's fine to await an already-resolved promiseMiddleware, so we don't
         // have to check to see if it's still "in flight".
 
         if (!response) {

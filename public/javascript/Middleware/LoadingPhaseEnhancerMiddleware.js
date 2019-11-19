@@ -29,9 +29,12 @@ const phaseInformation = {
   }
 };
 
-export const loadingPhaseEnhancer = () => next => action => {
+/**
+ * Adds loading phase information to the actions, so we can display a nice progressbar.
+ */
+export const loadingPhaseEnhancerMiddleware = () => next => action => {
   if (action.type === 'change-loading-phase') {
-    let newPhase = action.payload.phase;
+    const newPhase = action.payload.phase;
 
     if (phaseInformation[newPhase]) {
       action.payload.text = phaseInformation[newPhase].texts[Math.floor(Math.random() * phaseInformation[newPhase].texts.length)];

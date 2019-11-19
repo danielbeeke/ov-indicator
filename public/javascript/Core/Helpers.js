@@ -2,7 +2,7 @@
  * Proxy for fetching data
  * @returns {Promise}
  */
-export let proxy = function () {
+export const proxy = function () {
   arguments[0] = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(arguments[0])}`;
   return fetch(...arguments)
     .then(response => response.json())
@@ -12,7 +12,7 @@ export let proxy = function () {
  * Returns the geolocation in a Promise
  * @returns {Promise<position>}
  */
-export let getCurrentPosition = () => {
+export const getCurrentPosition = () => {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(position => {
       resolve({
@@ -46,14 +46,24 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
   return Math.round(dist * 1000);
 }
 
+/**
+ * Returns wheter the thing given is a Promise
+ * @param obj
+ * @returns {boolean}
+ */
 export function isPromise(obj) {
   return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
 }
 
+/**
+ * Selects the arrivals from the tripSelector state.
+ * @param tripSelector
+ * @returns {*}
+ */
 export function currentArrivals (tripSelector) {
   if (tripSelector.selectedStop) {
-    let currentTrips = tripSelector.trips.find(trip => trip.stop.stop_id === tripSelector.selectedStop.stop_id);
-    if (currentTrips) {
+    const currentTrips = tripSelector.trips.find(trip => trip.stop.stop_id === tripSelector.selectedStop.stop_id);
+    if (currentTrips && currentTrips.arrivals) {
       return currentTrips.arrivals;
     }
   }

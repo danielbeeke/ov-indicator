@@ -1,8 +1,11 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {html} from '../vendor/lighterhtml.js';
 import {Store} from '../Core/Store.js';
-import {getGeolocation, getStops, getTrips} from "../Actions/StopSelector.js";
+import {getGeolocation, getStops, getTrips} from "../Actions/TripSelectorActions.js";
 
+/**
+ * Shows a progressbar showing the loading progress of the app.
+ */
 customElements.define('app-loader', class AppLoader extends BaseElement {
 
   /**
@@ -11,10 +14,8 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
   connectedCallback() {
     this.watch('loadingScreen.phase', () => this.draw());
     getGeolocation().then(() => {
-      let {lat, lng} = Store.getState().device;
-      getStops(lat, lng, 5).then(stops => {
-        getTrips(stops.map(stop => stop.stop_id));
-      });
+      const {lat, lng} = Store.getState().device;
+      getStops(lat, lng, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
     });
   }
 
@@ -23,7 +24,7 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
    * @returns {*}
    */
   draw() {
-    let s = Store.getState().loadingScreen;
+    const s = Store.getState().loadingScreen;
 
     return html`
       <div class="progress-bar-wrapper${s.phase === ' done' ? 'done' : ''}">

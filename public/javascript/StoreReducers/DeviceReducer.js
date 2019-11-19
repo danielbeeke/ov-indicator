@@ -1,6 +1,9 @@
 import {produce} from "../vendor/immer.js";
 
-export function device (state = {
+/**
+ * Holds information about the device, is a Redux reducer
+ */
+export function deviceReducer (state = {
   isOnline: navigator.onLine,
   lat: null,
   lng: null,

@@ -1,8 +1,11 @@
-import {changeLoadingPhase, finishLoading} from "../Actions/LoadingScreen.js";
+import {changeLoadingPhase, finishLoading} from "../Actions/LoadingScreenActions.js";
 import {isPromise} from "../Core/Helpers.js";
 
-export const loadingPhaseWatcher = store => next => action => {
-  let state = store.getState();
+/**
+ * Watches the actions on the state an if needed updates the app loading progress.
+ */
+export const loadingPhaseWatcherMiddleware = store => next => action => {
+  const state = store.getState();
 
   if (state.loadingScreen.isLoading) {
     if (isPromise(action.payload)) {

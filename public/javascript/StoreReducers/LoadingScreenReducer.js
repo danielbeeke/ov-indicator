@@ -1,6 +1,9 @@
 import {produce} from "../vendor/immer.js";
 
-export function loadingScreen (state = {
+/**
+ * Holds information about the loading screen, is a Redux reducer
+ */
+export function loadingScreenReducer (state = {
   phase: 'boot',
   progress: 0,
   text: 'App loading',

@@ -453,7 +453,7 @@ this.workbox.routing = (function (exports, assert_js, logger_js, WorkboxError_js
        *     from a fetch event, but it does not have to be).
        * @param {FetchEvent} [options.event] The event that triggered the request,
        *     if applicable.
-       * @return {Promise<Response>|undefined} A promise is returned if a
+       * @return {Promise<Response>|undefined} A promiseMiddleware is returned if a
        *     registered route can handle the request. If there is no matching
        *     route and there's no `defaultHandler`, `undefined` is returned.
        */

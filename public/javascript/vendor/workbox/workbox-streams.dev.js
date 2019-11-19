@@ -256,7 +256,7 @@ this.workbox.streams = (function (exports, logger_js, assert_js, Deferred_js, ca
         params
       }) => {
         const sourcePromises = sourceFunctions.map(fn => {
-          // Ensure the return value of the function is always a promise.
+          // Ensure the return value of the function is always a promiseMiddleware.
           return Promise.resolve(fn({
             event,
             request,

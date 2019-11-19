@@ -3,37 +3,48 @@ import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
 import {currentArrivals} from '../Core/Helpers.js';
 import {heartIcon} from '../Icons/HeartIcon.js';
+import {setStop, setTrip} from "../Actions/TripSelectorActions.js";
 
+/**
+ * Defines two selects, a stop and a trip select.
+ * Also defines two buttons to make a stop or a trip favorite.
+ */
 customElements.define('trip-selector', class TripSelector extends BaseElement {
 
   /**
    * Binds the event so we can use it with lighterHTML, it also calls draw after using the event.
    */
   boundEventMethods() {
-    return ['changeStop', 'changeTrip', 'toggleStopFavorite', 'toggleTripFavorite'];
+    return [
+      'changeStop',
+      'changeTrip',
+      'toggleStopFavorite',
+      'toggleTripFavorite'
+    ];
   }
 
-  /**
-   * When our custom element is placed inside the DOM.
-   */
   connectedCallback() {
     this.draw();
-    this.watch('tripSelector.stops', () => this.draw());
-    this.watch('tripSelector.trips', () => this.draw());
-    this.watch('tripSelector.selectedTrip', () => this.draw());
-    this.watch('tripSelector.selectedTrip', () => this.draw());
+    this.watch([
+      'tripSelector.stops',
+      'tripSelector.trips',
+      'tripSelector.selectedStop',
+      'tripSelector.selectedTrip'
+    ], () => this.draw());
   }
 
   /**
    * Changes the stop
    */
   changeStop(value) {
+    setStop(value);
   }
 
   /**
    * Changes the trip
    */
   changeTrip(value) {
+    setTrip(value);
   }
 
   /**
@@ -53,7 +64,7 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
    * The lighterHTML render method.
    */
   draw() {
-    let s = Store.getState().tripSelector;
+    const s = Store.getState().tripSelector;
 
     return html`
     ${s.selectedStop ? html`

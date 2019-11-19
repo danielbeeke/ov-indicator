@@ -1285,7 +1285,7 @@ var lighterhtml = (function (document,exports) {
     // everything could happen:
     //  * it's a JS primitive, stored as text
     //  * it's null or undefined, the node should be cleaned
-    //  * it's a promise, update the content once resolved
+    //  * it's a promiseMiddleware, update the content once resolved
     //  * it's an explicit intent, perform the desired operation
     //  * it's an Array, resolve all values if Promises and/or
     //    update the node with the resulting list of content

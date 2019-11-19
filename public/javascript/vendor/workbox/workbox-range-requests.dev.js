@@ -129,7 +129,7 @@ this.workbox.rangeRequests = (function (exports, WorkboxError_js, assert_js, log
     */
     /**
      * Given a `Request` and `Response` objects as input, this will return a
-     * promise for a new `Response`.
+     * promiseMiddleware for a new `Response`.
      *
      * If the original `Response` already contains partial content (i.e. it has
      * a status of 206), then this assumes it already fulfills the `Range:`

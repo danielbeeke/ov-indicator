@@ -1,6 +1,9 @@
 import {produce} from "../vendor/immer.js";
 
-export function tripSelector (state = {
+/**
+ * Holds information about the stops and trips, is a Redux reducer
+ */
+export function tripSelectorReducer (state = {
   stops: [],
   trips: [],
   selectedStop: null,
@@ -11,7 +14,7 @@ export function tripSelector (state = {
   return produce(state, nextState => {
 
     if (action.type === 'get-stops') {
-      let stops = action.payload;
+      const stops = action.payload;
       nextState.stops = stops;
 
       if (!state.selectedStop || !stops.find(stop => stop.stop_id === state.selectedStop.stop_id)) {
@@ -20,10 +23,10 @@ export function tripSelector (state = {
     }
 
     if (action.type === 'get-trips') {
-      let trips = action.payload;
+      const trips = action.payload;
       nextState.trips = trips;
 
-      let currentArrivals = trips.find(trip => trip.stop.stop_id === state.selectedStop.stop_id).arrivals;
+      const currentArrivals = trips.find(trip => trip.stop.stop_id === state.selectedStop.stop_id).arrivals;
       if (!state.selectedTrip || !currentArrivals.find(arrival => arrival.trip_id === state.selectedTrip.trip_id)) {
         nextState.selectedTrip = currentArrivals[0];
       }

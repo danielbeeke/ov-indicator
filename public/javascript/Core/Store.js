@@ -1,24 +1,25 @@
-import {createStore, combineReducers, applyMiddleware} from '../vendor/Redux.js';
-import {loadingScreen} from '../StoreReducers/LoadingScreenReducer.js';
-import {device} from '../StoreReducers/DeviceReducer.js';
-import {tripSelector} from '../StoreReducers/TripSelectorReducer.js';
-import {loadingPhaseEnhancer} from '../Middleware/LoadingPhaseEnhancer.js';
-import {promise} from '../Middleware/Promise.js';
-import {loadingPhaseWatcher} from '../Middleware/LoadingPhaseWatcher.js';
+import {createStore, combineReducers, applyMiddleware, compose} from '../vendor/Redux.js';
+import {loadingScreenReducer} from '../StoreReducers/LoadingScreenReducer.js';
+import {deviceReducer} from '../StoreReducers/DeviceReducer.js';
+import {tripSelectorReducer} from '../StoreReducers/TripSelectorReducer.js';
+import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancerMiddleware.js';
+import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
+import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
 
-let initialState = {};
+const initialState = {};
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let reducers = combineReducers({
-  loadingScreen,
-  tripSelector,
-  device
+const reducers = combineReducers({
+  loadingScreen: loadingScreenReducer,
+  tripSelector: tripSelectorReducer,
+  device: deviceReducer
 });
 
-let middleware = applyMiddleware(
-  loadingPhaseWatcher,
-  promise,
-  loadingPhaseEnhancer,
+const middleware = applyMiddleware(
+  loadingPhaseWatcherMiddleware,
+  promiseMiddleware,
+  loadingPhaseEnhancerMiddleware,
 );
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const Store = createStore(reducers, initialState, composeEnhancers(middleware));

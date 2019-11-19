@@ -1,6 +1,9 @@
 import {isPromise} from '../Core/Helpers.js';
 
-export function promise({ dispatch }) {
+/**
+ * Resolves promises in the middleware chain.
+ */
+export function promiseMiddleware({ dispatch }) {
   return next => action => {
     return isPromise(action.payload) && typeof action.promiseResult === 'undefined'
       ? action.payload
