@@ -1,5 +1,5 @@
 import {produce} from "../vendor/immer.js";
-import {currentArrivals} from '../Core/Helpers.js';
+import {currentArrivals, tripKey} from '../Core/Helpers.js';
 
 /**
  * Holds information about the stops and trips, is a Redux reducer
@@ -49,7 +49,14 @@ export function tripSelectorReducer (state = {
     }
 
     if (action.type === 'toggle-trip-favorite') {
-      console.log(action)
+      const currentTripKey = tripKey(state.selectedTrip);
+
+      if (state.favoriteTrips.includes(currentTripKey)) {
+        nextState.favoriteTrips = state.favoriteTrips.filter(favoriteTripKey => favoriteTripKey !== currentTripKey)
+      }
+      else {
+        nextState.favoriteTrips.push(currentTripKey);
+      }
     }
 
   });

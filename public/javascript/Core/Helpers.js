@@ -68,3 +68,7 @@ export function currentArrivals (tripSelector) {
     }
   }
 }
+
+export const tripKey = (trip) => {
+  return trip.route_short_name + '-' + trip.trip_headsign
+};

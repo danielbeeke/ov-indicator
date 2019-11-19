@@ -1,7 +1,7 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
-import {currentArrivals} from '../Core/Helpers.js';
+import {currentArrivals, tripKey} from '../Core/Helpers.js';
 import {heartIcon} from '../Icons/HeartIcon.js';
 import {setStop, setTrip, toggleStopFavorite, toggleTripFavorite} from "../Actions/TripSelectorActions.js";
 
@@ -60,7 +60,7 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
         </select>
       
         <button 
-          class="${s.selectedTrip && s.favoriteTrips.includes(s.selectedTrip.route_short_name) ? 'favorite' : ''} favorite-button" 
+          class="${s.selectedTrip && s.favoriteTrips.includes(tripKey(s.selectedTrip)) ? 'favorite' : ''} favorite-button" 
           onclick="${toggleTripFavorite}">
           ${heartIcon()}
         </button>
