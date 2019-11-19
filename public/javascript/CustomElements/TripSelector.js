@@ -40,8 +40,8 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
           
         ${s.selectedStop ? html`
           <button 
-            class="${s.favoriteStops.includes(s.selectedStop.stop_id) ? 'favorite' : ''} favorite-button" 
-            onclick="${toggleStopFavorite}">
+            class="${s.favoriteStops.includes(s.selectedStop.stop_id) ? 'favorite' : ''} favorite-button ${s.favoriteStopToggleShouldAnimate ? 'show-animation' : ''}"
+            onclick="${e => toggleStopFavorite(e.target)}">
             ${heartIcon()}
           </button>
         ` : ''}
@@ -60,8 +60,8 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
         </select>
       
         <button 
-          class="${s.selectedTrip && s.favoriteTrips.includes(tripKey(s.selectedTrip)) ? 'favorite' : ''} favorite-button" 
-          onclick="${toggleTripFavorite}">
+          class="${s.selectedTrip && s.favoriteTrips.includes(tripKey(s.selectedTrip)) ? 'favorite' : ''} favorite-button ${s.favoriteTripToggleShouldAnimate ? 'show-animation' : ''}" 
+          onclick="${e => toggleTripFavorite(e.target)}">
           ${heartIcon()}
         </button>
       </div>

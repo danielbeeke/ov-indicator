@@ -17,8 +17,9 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
 
     if (!selectedStop) {
       getGeolocation().then(() => {
+        const {favoriteStops} = Store.getState().tripSelector;
         const {lat, lng} = Store.getState().device;
-        getStops(lat, lng, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
+        getStops(lat, lng, favoriteStops, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
       });
     }
   }

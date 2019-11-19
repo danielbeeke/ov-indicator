@@ -18,11 +18,18 @@ export const getGeolocation = () => {
  * Returns bus or train stops that are near.
  * @param lat
  * @param lng
+ * @param favoriteStops
  * @param limit
  * @returns []
  */
-export const getStops = (lat, lng, limit = 5) => {
-  const sortStops = (stops) => stops.sort((a, b) => a.distance - b.distance);
+export const getStops = (lat, lng, favoriteStops, limit = 5) => {
+  const sortStops = (stops) => {
+    return stops.sort((a, b) => {
+      let firstSort = favoriteStops.includes(b.stop_id) - favoriteStops.includes(a.stop_id);
+      if (firstSort !== 0) { return firstSort }
+      return a.distance - b.distance
+    });
+  };
   const addDistances = (stops) => stops.forEach(stop => stop.distance = calculateDistance(stop.stop_lat, stop.stop_lon, lat, lng));
   const promise = proxy(`https://ovzoeker.nl/api/stops/${lat},${lng}`).then(stops => {
     addDistances(stops);
@@ -82,17 +89,31 @@ export const setTrip = (tripId) => {
 /**
  * Toggle stop favorite
  */
-export const toggleStopFavorite = () => {
+export const toggleStopFavorite = (target) => {
   Store.dispatch({
     type: 'toggle-stop-favorite'
   });
+
+  const button = target.closest('button');
+  button.addEventListener('animationend', () => {
+    Store.dispatch({
+      type: 'toggle-stop-favorite-animation-end'
+    });
+  }, {once: true});
 };
 
 /**
  * Toggle trip favorite
  */
-export const toggleTripFavorite = () => {
+export const toggleTripFavorite = (target) => {
   Store.dispatch({
     type: 'toggle-trip-favorite'
   });
+
+  const button = target.closest('button');
+  button.addEventListener('animationend', () => {
+    Store.dispatch({
+      type: 'toggle-trip-favorite-animation-end'
+    });
+  }, {once: true});
 };

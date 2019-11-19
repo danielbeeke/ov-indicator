@@ -61,7 +61,7 @@ export function isPromise(obj) {
  * @returns {*}
  */
 export function currentArrivals (tripSelector) {
-  if (tripSelector.selectedStop) {
+  if (tripSelector.selectedStop && tripSelector.trips) {
     const currentTrips = tripSelector.trips.find(trip => trip.stop.stop_id === tripSelector.selectedStop.stop_id);
     if (currentTrips && currentTrips.arrivals) {
       return currentTrips.arrivals;

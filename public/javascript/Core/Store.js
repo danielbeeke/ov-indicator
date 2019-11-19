@@ -6,6 +6,7 @@ import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancer
 import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
 import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
 import persistState from '../vendor/redux-localstorage/persistState.js';
+import {savableSlicer} from './SavableSlicer.js';
 
 const initialState = {};
 
@@ -23,4 +24,6 @@ const middleware = applyMiddleware(
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const Store = createStore(reducers, initialState, composeEnhancers(middleware, persistState()));
+export const Store = createStore(reducers, initialState, composeEnhancers(middleware, persistState(null, {
+  slicer: savableSlicer
+})));

@@ -10,7 +10,9 @@ export function tripSelectorReducer (state = {
   selectedStop: null,
   selectedTrip: null,
   favoriteStops: [],
-  favoriteTrips: []
+  favoriteStopToggleShouldAnimate: false,
+  favoriteTrips: [],
+  favoriteTripToggleShouldAnimate: false
 }, action) {
   return produce(state, nextState => {
 
@@ -40,6 +42,7 @@ export function tripSelectorReducer (state = {
     }
 
     if (action.type === 'toggle-stop-favorite') {
+      nextState.favoriteStopToggleShouldAnimate = true;
       if (state.favoriteStops.includes(state.selectedStop.stop_id)) {
         nextState.favoriteStops = state.favoriteStops.filter(favoriteStop => favoriteStop !== state.selectedStop.stop_id)
       }
@@ -49,6 +52,7 @@ export function tripSelectorReducer (state = {
     }
 
     if (action.type === 'toggle-trip-favorite') {
+      nextState.favoriteTripToggleShouldAnimate = true;
       const currentTripKey = tripKey(state.selectedTrip);
 
       if (state.favoriteTrips.includes(currentTripKey)) {
@@ -57,6 +61,14 @@ export function tripSelectorReducer (state = {
       else {
         nextState.favoriteTrips.push(currentTripKey);
       }
+    }
+
+    if (action.type === 'toggle-trip-favorite-animation-end') {
+      nextState.favoriteTripToggleShouldAnimate = false;
+    }
+
+    if (action.type === 'toggle-stop-favorite-animation-end') {
+      nextState.favoriteStopToggleShouldAnimate = false;
     }
 
   });
