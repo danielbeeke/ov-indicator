@@ -1,7 +1,7 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {html} from '../vendor/lighterhtml.js';
 import {Store} from '../Core/Store.js';
-import {changeLoadingPhase} from "../Actions/LoadingScreen.js";
+import {getGeolocation, getStops, getTrips} from "../Actions/StopSelector.js";
 
 customElements.define('app-loader', class AppLoader extends BaseElement {
 
@@ -10,7 +10,12 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
    */
   connectedCallback() {
     this.watch('loadingScreen.phase', () => this.draw());
-    changeLoadingPhase('boot');
+    getGeolocation().then(() => {
+      let {lat, lng} = Store.getState().device;
+      getStops(lat, lng, 5).then(stops => {
+        getTrips(stops.map(stop => stop.stop_id));
+      });
+    });
   }
 
   /**
@@ -22,7 +27,7 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
 
     return html`
       <div class="progress-bar-wrapper${s.phase === ' done' ? 'done' : ''}">
-        <div class="progress-bar" style="width: ${s.progress}%"></div>
+        <div class="progress-bar" style="width: ${s.percentage}%"></div>
         <div class="label">${s.text}</div>
       </div>
     `

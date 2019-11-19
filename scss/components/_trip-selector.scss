@@ -1,4 +1,4 @@
-bus-selector {
+trip-selector {
   padding: 20px;
   flex: 0 1 auto;
   width: 100%;
@@ -8,20 +8,13 @@ bus-selector {
   transition: opacity $speed $easing;
   display: flex;
 
-  .bus-select,
-  .trip-select {
+  .stop-selector,
+  .trip-selector {
     display: flex;
   }
 
   .relative-time {
     float: left;
-  }
-
-  .punctuality {
-    color: red;
-    float: left;
-    clear: both;
-    font-style: italic;
   }
 
   &.hidden {

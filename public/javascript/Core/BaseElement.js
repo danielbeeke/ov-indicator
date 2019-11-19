@@ -1,5 +1,6 @@
 import {render} from '../vendor/lighterhtml.js';
-import {wrappedWatch as watch} from '../vendor/ReduxWatch.js';
+import {watch} from '../vendor/ReduxWatch.js';
+import {Store} from "./Store.js";
 
 export class BaseElement extends HTMLElement {
   constructor () {
@@ -33,7 +34,14 @@ export class BaseElement extends HTMLElement {
   draw () {}
 
   watch (objectPath, callback) {
-    this.subscribers.push(watch(objectPath, callback))
+
+    let wrappedWatch = function(objectPath, callback) {
+      return Store.subscribe(watch(Store.getState, objectPath)((newVal, oldVal, objectPath) => {
+        callback(newVal.get(objectPath), oldVal.get(objectPath));
+      }));
+    };
+
+    this.subscribers.push(wrappedWatch(objectPath, callback))
   }
 
   disconnectedCallback () {
