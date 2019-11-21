@@ -14,6 +14,7 @@ import './vendor/polyfill.js';
 
 import './CustomElements/AppLoader.js';
 import './CustomElements/TripSelector.js';
+import './CustomElements/TripInfo.js';
 
 customElements.define('ov-app', class OvApp extends BaseElement {
 
@@ -28,10 +29,11 @@ customElements.define('ov-app', class OvApp extends BaseElement {
     const s = Store.getState().loadingScreen;
 
     return html`
-      <app-loader class="page ${s.isLoading ? '' : 'hidden'}"></app-loader>
-      <div class="page">
-        <trip-selector class="${s.isLoading ? 'hidden' : ''}"></trip-selector>      
-        <trip-indicator class="${s.isLoading ? 'hidden' : ''}"></trip-indicator>
+      <app-loader class="page ${s.isLoading ? '' : 'hidden'}" />
+      <div class="page ${s.isLoading ? 'hidden' : ''}">
+        <trip-selector />      
+        <trip-info />
+        <trip-indicator />
       </div>
     `;
   }

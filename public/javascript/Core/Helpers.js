@@ -1,3 +1,6 @@
+import {getGeolocation, getStops, getTrips} from "../Actions/TripSelectorActions.js";
+import {Store} from "./Store.js";
+
 /**
  * Proxy for fetching data
  * @returns {Promise}
@@ -69,6 +72,62 @@ export function currentArrivals (tripSelector) {
   }
 }
 
+/**
+ * Returns a trip identifier
+ * @param trip
+ * @returns {string}
+ */
 export const tripKey = (trip) => {
   return trip.route_short_name + '-' + trip.trip_headsign
+};
+
+/**
+ * Triggers the main data loading action.
+ * It fetches geolocation, stops and trips.
+ */
+export const loadGeolocationStopsAndTrips = () => {
+  getGeolocation().then(() => {
+    const {favoriteStops} = Store.getState().tripSelector;
+    const {lat, lng} = Store.getState().device;
+    getStops(lat, lng, favoriteStops, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
+  });
+};
+
+/**
+ * Returns a relative time string.
+ * @param epoch
+ * @param addPrefixOrSuffix
+ * @param style
+ * @returns {string}
+ */
+export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
+  const cleaner = (string) => string.replace('over ', '').replace(' geleden', '').trim();
+  const pastOrFuture = epoch > new Date() / 1000 ? 'future' : 'past';
+
+  const lf = new Intl.ListFormat('nl', { style: 'long', type: 'conjunction' });
+  const rtf = new Intl.RelativeTimeFormat('nl', {
+    localeMatcher: "best fit",
+    numeric: "auto",
+    style: style,
+  });
+
+  const totalSeconds = Math.abs(epoch - (new Date() / 1000));
+
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor((totalSeconds % 3600) % 60);
+
+  let timeParts = [];
+  if (hours) timeParts.push(cleaner(rtf.format(hours, 'hour')));
+  if (minutes) timeParts.push(cleaner(rtf.format(minutes, 'minutes')));
+
+  if (style !== 'short') {
+    if (seconds) timeParts.push(cleaner(rtf.format(seconds, 'seconds')));
+  }
+
+  let output = lf.format(timeParts);
+  if (pastOrFuture === 'future' && addPrefixOrSuffix) output = 'Over ' + output;
+  if (pastOrFuture === 'past' && addPrefixOrSuffix) output = output + ' geleden';
+
+  return output;
 };

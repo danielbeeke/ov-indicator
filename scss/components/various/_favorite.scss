@@ -1,15 +1,13 @@
 .favorite-button {
   color: #b4b4b4;
-  margin-left: 10px;
   transform: translateZ(-1);
-  margin-bottom: 10px;
   transition: color $speed $easing, text-shadow $speed $easing, filter $speed $easing;
 
   svg {
     display: block;
-    transform: scale(2);
-    max-width: 10px;
-    width: 10px;
+    transform: scale(1);
+    max-width: 20px;
+    width: 20px;
   }
 
   &:focus {
@@ -26,24 +24,24 @@
   z-index: 10;
 
   &:not(.favorite) svg {
-    animation: remove .7s cubic-bezier(.95,.18,.32,1.01) .1s;
+    animation: remove .7s cubic-bezier(.95,.18,.32,1.01);
   }
 
   &.favorite {
     svg {
-      animation: zoom .9s cubic-bezier(.95,.18,.32,1.01) .1s;
+      animation: zoom .9s cubic-bezier(.95,.18,.32,1.01);
     }
   }
 }
 
 @keyframes zoom {
-  0% { transform: scale(2) rotate(0); }
-  50% { transform: scale(9) rotate(-10deg); }
-  100% { transform: scale(2) rotate(0); }
+  0% { transform: scale(1) rotate(0); }
+  50% { transform: scale(4) rotate(-10deg); }
+  100% { transform: scale(1) rotate(0); }
 }
 
 @keyframes remove {
-  0% { transform: scale(2) translateY(0); opacity: 1; }
-  30% { transform: scale(1) translateY(0); opacity: 0; }
-  100% { transform: scale(2) translateY(0); opacity: 1; }
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  30% { transform: scale(.5) translateY(0); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
 }

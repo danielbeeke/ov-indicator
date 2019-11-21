@@ -25,5 +25,5 @@ const middleware = applyMiddleware(
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const Store = createStore(reducers, initialState, composeEnhancers(middleware, persistState(null, {
-  slicer: savableSlicer
+  // slicer: savableSlicer
 })));

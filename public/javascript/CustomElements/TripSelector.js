@@ -33,7 +33,7 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
         <select id="selected-stop" onchange="${e => setStop(e.target.value)}" class="${s.stops.length === 0 ? 'hidden' : ''}">
           ${s.stops.map(stop => html`
             <option selected="${s.selectedStop && s.selectedStop.stop_id === stop.stop_id}" value="${stop.stop_id}">
-                ${stop.stop_name} (${stop.distance} meter)
+                ${stop.stop_name}
             </option>
           `)}
         </select> 
