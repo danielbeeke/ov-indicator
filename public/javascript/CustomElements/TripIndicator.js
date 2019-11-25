@@ -1,9 +1,10 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
+import {relativeTime} from "../Core/Helpers.js";
 
 /**
- * Returns an illustration if you can catch the current trip at the current stop.
+ * Returns an illustration which tells you, if you can wait, need to prepare, travel or that you have missed the trip.
  */
 customElements.define('trip-indicator', class TripIndicator extends BaseElement {
 
@@ -12,7 +13,7 @@ customElements.define('trip-indicator', class TripIndicator extends BaseElement 
    */
   connectedCallback() {
     this.draw();
-    // this.watch('', () => this.draw());
+    this.watch('indicator.phase', () => this.draw());
   }
 
   /**
@@ -20,10 +21,15 @@ customElements.define('trip-indicator', class TripIndicator extends BaseElement 
    * @returns {*}
    */
   draw() {
-    const s = Store.getState().loadingScreen;
+    const s = Store.getState().indicator;
 
     return html`
-
+      
+      <h1>${s.phase}</h1>
+    
+      ${s.phase === 'wait' ? html`
+        <p>Je kunt nog ${relativeTime(s.leaveTimestamp, false)} wachten.</p>
+      ` : ''}
     `
   }
 });

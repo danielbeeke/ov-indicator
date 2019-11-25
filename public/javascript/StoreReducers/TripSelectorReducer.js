@@ -16,7 +16,7 @@ export function tripSelectorReducer (state = {
 }, action) {
   return produce(state, nextState => {
 
-    if (action.type === 'get-stops') {
+    if (action.type === 'fetch-stops') {
       const stops = action.payload;
       nextState.stops = stops;
 
@@ -25,10 +25,10 @@ export function tripSelectorReducer (state = {
       }
     }
 
-    if (action.type === 'get-trips') {
+    if (action.type === 'fetch-trips') {
       nextState.trips = action.payload;
 
-      if (!state.selectedTrip || !currentArrivals(nextState).find(arrival => arrival.trip_id === state.selectedTrip.trip_id)) {
+      if (currentArrivals(nextState) && (!state.selectedTrip || !currentArrivals(nextState).find(arrival => arrival.trip_id === state.selectedTrip.trip_id))) {
         nextState.selectedTrip = currentArrivals(nextState)[0];
       }
     }

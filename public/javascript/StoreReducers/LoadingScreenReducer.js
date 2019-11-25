@@ -7,7 +7,6 @@ export function loadingScreenReducer (state = {
   phase: 'boot',
   progress: 0,
   text: 'App loading',
-  error: '',
   isLoading: true,
 }, action) {
   return produce(state, nextState => {
@@ -16,10 +15,6 @@ export function loadingScreenReducer (state = {
       nextState.phase = action.payload.phase;
       nextState.percentage = action.payload.percentage;
       nextState.text = action.payload.text;
-      nextState.error = action.payload.error ? action.payload.error : '';
-    }
-    else {
-      nextState.error = '';
     }
 
     if (action.type === 'finish-loading') {

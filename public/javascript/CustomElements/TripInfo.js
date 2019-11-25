@@ -25,18 +25,29 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
    */
   draw() {
     const s = Store.getState().tripSelector;
-    const departureTime = new Date(s.selectedTrip.ts);
+    const i = Store.getState().indicator;
 
     return html`
-      <div class="distance info-field">
-        <label class="label">Afstand</label>
-        <span class="value">${s.selectedStop.distance}m</span>
-      </div>
+      ${s.selectedStop ? html`
+        <div class="distance info-field">
+          <label class="label">Afstand to halte</label>
+          <span class="value">${s.selectedStop.distance} meter</span>
+        </div>
+      ` : ''}
       
-      <div class="departure info-field">
-        <label class="label">Vertrektijd</label>
-        <span class="value">${relativeTime(s.selectedTrip.ts, true, 'short')}</span>
-      </div>
+      ${s.selectedTrip ? html`
+        <div class="departure info-field">
+          <label class="label">Vertrektijd van bus of trein</label>
+          <span class="value">${relativeTime(s.selectedTrip.ts)}</span>
+        </div>
+      ` : ''}
+      
+      ${i.averageWalkInHours ? html`
+        <div class="departure info-field">
+          <label class="label">Gemiddelde wandeltijd</label>
+          <span class="value">${Math.round(i.averageWalkInHours * 60)} minuten</span>
+        </div>
+      ` : ''}
     `
   }
 });

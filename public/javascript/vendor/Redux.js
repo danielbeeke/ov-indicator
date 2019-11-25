@@ -345,7 +345,7 @@ export function createStore(reducer, preloadedState, enhancer) {
  * @param {String} message The warning message.
  * @returns {void}
  */
-function warning(message) {
+export function warning(message) {
   /* eslint-disable no-console */
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
     console.error(message);
@@ -362,13 +362,13 @@ function warning(message) {
 
 }
 
-function getUndefinedStateErrorMessage(key, action) {
+export function getUndefinedStateErrorMessage(key, action) {
   var actionType = action && action.type;
   var actionDescription = actionType && "action \"" + String(actionType) + "\"" || 'an action';
   return "Given " + actionDescription + ", reducer \"" + key + "\" returned undefined. " + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.";
 }
 
-function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+export function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
   var reducerKeys = Object.keys(reducers);
   var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
 

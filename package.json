@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "test": "ava"
+  },
   "devDependencies": {
+    "ava": "^1.0.0",
     "browser-sync": "^2.26.5",
     "browser-sync-ui": "^1.0.1",
     "gulp": "^4.0.2",
@@ -10,6 +14,12 @@
     "nodemon": "^1.19.0",
     "proxy-middleware": "^0.15.0",
     "require-dir": "^0.3.2",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "esm": "^3.2.25"
+  },
+  "ava": {
+    "require": [
+      "esm"
+    ]
   }
 }

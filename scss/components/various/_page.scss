@@ -7,4 +7,10 @@
   width: 100%;
   max-width: $max-width;
   padding: $padding;
+  opacity: 1;
+  transition: opacity $speed $easing;
+
+  &.hidden {
+    opacity: 0;
+  }
 }

@@ -18,14 +18,6 @@ const phaseInformation = {
   done: {
     percentage: 100,
     texts: ['Woehoe...', 'Daar gaan we!', 'Rijden maar, buschauffeur!']
-  },
-  error: {
-    percentage: 0,
-    texts: ['Er ging iets mis, heb je wel internet?']
-  },
-  geoError: {
-    percentage: 0,
-    texts: ['Je moet nog even toestemming voor geolocatie verlenen.']
   }
 };
 

@@ -65,7 +65,9 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
           ${heartIcon()}
         </button>
       </div>
-    ` : ''} 
+    ` : html`
+      <p>Er zijn geen trips gevonden voor de geselecteerde halte. Misschien dat er weer morgen bussen of treinen rijden.</p>
+    `} 
     `;
   }
 });

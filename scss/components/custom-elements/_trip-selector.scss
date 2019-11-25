@@ -3,8 +3,6 @@ trip-selector {
   width: 100%;
   max-width: $max-width;
   flex-direction: column;
-  opacity: 1;
-  transition: opacity $speed $easing;
   display: flex;
 
   .stop-selector,
@@ -19,9 +17,5 @@ trip-selector {
 
   button {
     margin-left: $padding * 2;
-  }
-
-  &.hidden {
-    opacity: 0;
   }
 }

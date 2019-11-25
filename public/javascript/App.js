@@ -13,8 +13,10 @@ import {goOnline, goOffline} from './Actions/DeviceActions.js';
 import './vendor/polyfill.js';
 
 import './CustomElements/AppLoader.js';
+import './CustomElements/AppError.js';
 import './CustomElements/TripSelector.js';
 import './CustomElements/TripInfo.js';
+import './CustomElements/TripIndicator.js';
 
 customElements.define('ov-app', class OvApp extends BaseElement {
 
@@ -27,14 +29,16 @@ customElements.define('ov-app', class OvApp extends BaseElement {
 
   draw () {
     const s = Store.getState().loadingScreen;
+    const e = Store.getState().error;
 
     return html`
-      <app-loader class="page ${s.isLoading ? '' : 'hidden'}" />
-      <div class="page ${s.isLoading ? 'hidden' : ''}">
+      <app-loader class="page ${s.isLoading && !e.message ? '' : 'hidden'}" />
+      <div class="page ${s.isLoading || e.message ? 'hidden' : ''}">
         <trip-selector />      
         <trip-info />
         <trip-indicator />
       </div>
+      <app-error class="page ${e.message ? '' : 'hidden'}" />
     `;
   }
 

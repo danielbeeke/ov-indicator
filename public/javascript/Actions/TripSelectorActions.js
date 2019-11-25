@@ -8,7 +8,7 @@ import {getCurrentPosition, proxy, calculateDistance} from "../Core/Helpers.js";
 export const getGeolocation = () => {
   const promise = getCurrentPosition();
   Store.dispatch({
-    type: 'get-geolocation',
+    type: 'request-geolocation',
     payload: promise
   });
   return promise;
@@ -38,7 +38,7 @@ export const getStops = (lat, lng, favoriteStops, limit = 5) => {
   });
 
   Store.dispatch({
-    type: 'get-stops',
+    type: 'fetch-stops',
     payload: promise
   });
 
@@ -55,7 +55,7 @@ export const getTrips = (stopIds) => {
   const allPromises = Promise.all(promises);
 
   Store.dispatch({
-    type: 'get-trips',
+    type: 'fetch-trips',
     payload: allPromises
   });
 
@@ -116,4 +116,13 @@ export const toggleTripFavorite = (target) => {
       type: 'toggle-trip-favorite-animation-end'
     });
   }, {once: true});
+};
+
+/**
+ * Recalculates
+ */
+export const recalculate = () => {
+  Store.dispatch({
+    type: 'recalculate'
+  });
 };
