@@ -8,7 +8,7 @@ import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancer
 import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
 import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
 import persistState from '../vendor/redux-localstorage/persistState.js';
-import {sharedCombineReducers} from './Helpers.js';
+import {sharedCombineReducers} from '../Helpers/Various.js';
 import {savableSlicer} from './SavableSlicer.js';
 
 const initialState = {};

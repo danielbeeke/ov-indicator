@@ -1,7 +1,7 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {html} from '../vendor/lighterhtml.js';
 import {Store} from '../Core/Store.js';
-import {loadGeolocationStopsAndTrips} from '../Core/Helpers.js';
+import {loadGeolocationStopsAndTrips} from '../Helpers/Various.js';
 
 /**
  * Shows a progressbar showing the loading progress of the app.

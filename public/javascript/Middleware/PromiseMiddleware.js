@@ -1,4 +1,4 @@
-import {isPromise} from '../Core/Helpers.js';
+import {isPromise} from '../Helpers/Various.js';
 
 /**
  * Resolves promises in the middleware chain.

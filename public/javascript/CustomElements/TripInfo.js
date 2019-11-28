@@ -1,7 +1,8 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
-import {relativeTime} from '../Core/Helpers.js';
+import {relativeTime} from '../Helpers/relativeTime.js';
+import {recalculate} from "../Actions/TripSelectorActions.js";
 
 /**
  * Returns a bit of information about the stop and the trip.
@@ -17,6 +18,16 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
       'tripSelector.selectedStop',
       'tripSelector.selectedTrip'
     ], () => this.draw());
+
+    this.interval = setInterval(() => {
+      this.draw();
+      recalculate();
+    }, 1000)
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    clearInterval(this.interval)
   }
 
   /**

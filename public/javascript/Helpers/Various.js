@@ -50,7 +50,7 @@ export function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 /**
- * Returns wheter the thing given is a Promise
+ * Returns whether the thing given is a Promise
  * @param obj
  * @returns {boolean}
  */
@@ -89,45 +89,6 @@ export const loadGeolocationStopsAndTrips = (favoriteStops) => {
   getGeolocation().then(({lat, lng}) => {
     getStops(lat, lng, favoriteStops, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
   });
-};
-
-/**
- * Returns a relative time string.
- * @param epoch
- * @param addPrefixOrSuffix
- * @param style
- * @returns {string}
- */
-export let relativeTime = (epoch, addPrefixOrSuffix = true, style = 'long') => {
-  const cleaner = (string) => string.replace('over ', '').replace(' geleden', '').trim();
-  const pastOrFuture = epoch > new Date() / 1000 ? 'future' : 'past';
-
-  const lf = new Intl.ListFormat('nl', { style: 'long', type: 'conjunction' });
-  const rtf = new Intl.RelativeTimeFormat('nl', {
-    localeMatcher: "best fit",
-    numeric: "auto",
-    style: style,
-  });
-
-  const totalSeconds = Math.abs(epoch - (new Date() / 1000));
-
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = Math.floor((totalSeconds % 3600) % 60);
-
-  let timeParts = [];
-  if (hours) timeParts.push(cleaner(rtf.format(hours, 'hour')));
-  if (minutes) timeParts.push(cleaner(rtf.format(minutes, 'minutes')));
-
-  if (style !== 'short') {
-    if (seconds) timeParts.push(cleaner(rtf.format(seconds, 'seconds')));
-  }
-
-  let output = lf.format(timeParts);
-  if (pastOrFuture === 'future' && addPrefixOrSuffix) output = 'Over ' + output;
-  if (pastOrFuture === 'past' && addPrefixOrSuffix) output = output + ' geleden';
-
-  return output;
 };
 
 /**
@@ -207,14 +168,17 @@ export function sharedCombineReducers(reducers) {
   };
 }
 
-export function createIndication(state) {
-  if (!state.tripSelector.selectedTrip) {
-    throw 'Missing a trip';
-  }
+/**
+ * Creates the indication.
+ * @param state
+ * @param now
+ */
+export function createIndication(state, now) {
+  if (!state.tripSelector.selectedStop) { throw 'Missing selected stop' }
+  if (!state.tripSelector.selectedTrip) { throw 'Missing selected trip' }
 
   const departureTime = state.tripSelector.selectedTrip.ts;
   const distance = state.tripSelector.selectedStop.distance;
-  const now = state.now;
 
   const averageWalkingSpeed = 5000;
   const fastWalkingSpeed = averageWalkingSpeed * 1.4;

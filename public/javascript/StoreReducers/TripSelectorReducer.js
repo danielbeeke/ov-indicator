@@ -1,5 +1,5 @@
 import {produce} from "../vendor/immer.js";
-import {currentArrivals, tripKey} from '../Core/Helpers.js';
+import {currentArrivals, tripKey} from '../Helpers/Various.js';
 
 /**
  * Holds information about the stops and trips, is a Redux reducer

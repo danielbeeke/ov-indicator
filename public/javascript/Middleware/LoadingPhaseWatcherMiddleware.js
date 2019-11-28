@@ -1,5 +1,5 @@
 import {changeLoadingPhase, finishLoading} from "../Actions/LoadingScreenActions.js";
-import {isPromise} from "../Core/Helpers.js";
+import {isPromise} from "../Helpers/Various.js";
 
 /**
  * Watches the actions on the state an if needed updates the app loading progress.

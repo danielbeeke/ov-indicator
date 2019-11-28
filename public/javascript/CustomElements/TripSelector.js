@@ -1,7 +1,7 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
-import {currentArrivals, tripKey} from '../Core/Helpers.js';
+import {currentArrivals, tripKey} from '../Helpers/Various.js';
 import {heartIcon} from '../Icons/HeartIcon.js';
 import {setStop, setTrip, toggleStopFavorite, toggleTripFavorite} from "../Actions/TripSelectorActions.js";
 

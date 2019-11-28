@@ -1,5 +1,5 @@
 import {produce} from "../vendor/immer.js";
-import {createIndication} from '../Core/Helpers.js';
+import {createIndication} from '../Helpers/Various.js';
 
 /**
  * Prepares indicator information, is a Redux reducer
@@ -16,8 +16,7 @@ export function indicatorReducer (state = {
   return produce(state, nextState => {
 
     if (['recalculate'].includes(action.type)) {
-      fullState.now = Date.now() / 1000;
-      Object.assign(nextState, createIndication(fullState));
+      Object.assign(nextState, createIndication(fullState, Date.now() / 1000));
     }
 
   });
