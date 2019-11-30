@@ -28,7 +28,10 @@ export function tripSelectorReducer (state = {
     if (action.type === 'fetch-trips') {
       nextState.trips = action.payload;
 
-      if (currentArrivals(nextState) && (!state.selectedTrip || !currentArrivals(nextState).find(arrival => arrival.trip_id === state.selectedTrip.trip_id))) {
+      if (
+        currentArrivals(nextState) && (!state.selectedTrip ||
+        !currentArrivals(nextState).find(arrival => arrival.trip_id === state.selectedTrip.trip_id))
+      ) {
         nextState.selectedTrip = currentArrivals(nextState)[0];
       }
     }

@@ -8,8 +8,8 @@ import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancer
 import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
 import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
 import persistState from '../vendor/redux-localstorage/persistState.js';
-import {sharedCombineReducers} from '../Helpers/Various.js';
-import {savableSlicer} from './SavableSlicer.js';
+import {sharedCombineReducers} from '../Helpers/SharedCombineReducers.js';
+import {savableSlicer} from '../Helpers/SavableSlicer.js';
 
 const initialState = {};
 
@@ -31,7 +31,7 @@ const composeEnhancers = typeof window !== 'undefined' && window.__REDUX_DEVTOOL
 
 let enhancers = typeof navigator !== 'undefined' ?
 composeEnhancers(middleware, persistState(null, {
-  // slicer: savableSlicer
+  slicer: savableSlicer
 })) : middleware;
 
 export const Store = createStore(reducers, initialState, enhancers);

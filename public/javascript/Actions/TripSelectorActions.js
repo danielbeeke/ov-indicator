@@ -1,5 +1,6 @@
 import {Store} from '../Core/Store.js';
-import {getCurrentPosition, proxy, calculateDistance} from "../Helpers/Various.js";
+import {getCurrentPosition, proxy} from "../Helpers/Various.js";
+import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
 /**
  * Returns the current location

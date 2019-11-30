@@ -1,6 +1,7 @@
 import test from 'ava';
-import {proxy, calculateDistance, isPromise} from './Various.js';
-import {fetchMock, busStops} from '../Core/FetcherTestHelper.js';
+import {proxy, isPromise} from './Various.js';
+import {fetchMock, busStops} from './FetcherTestHelper.js';
+import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
 test('proxy', async t => {
   global.fetch = fetchMock;
