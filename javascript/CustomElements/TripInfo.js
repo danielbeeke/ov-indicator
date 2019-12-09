@@ -1,7 +1,7 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
-import {relativeTime} from '../Helpers/relativeTime.js';
+import {relativeTime} from '../Helpers/RelativeTime.js';
 
 /**
  * Returns a bit of information about the stop and the trip.
