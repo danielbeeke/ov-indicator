@@ -2,8 +2,8 @@ select {
   display: block;
   font-size: 16px;
   line-height: 1;
-  padding: $padding / 2;
-  padding-right: 20px;
+  padding: $padding;
+  padding-right: 30px;
   width: 100%;
   cursor: pointer;
   max-width: 100%;
@@ -23,6 +23,8 @@ select {
   background-size: .65em auto, 100%;
   text-overflow: ellipsis;
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
 
   &::-ms-expand {
     display: none;

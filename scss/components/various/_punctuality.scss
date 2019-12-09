@@ -1,0 +1,9 @@
+.punctuality {
+  &.early .value {
+    color: #ED7161;
+  }
+
+  &.negative .value {
+    color: #C03A2B;
+  }
+}
