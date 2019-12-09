@@ -13,7 +13,7 @@ export function indicatorReducer (state = {
 }, action, fullState) {
   return produce(state, nextState => {
 
-    if (fullState) {
+    if (fullState && fullState.tripSelector) {
       const t = fullState.tripSelector;
       const d = fullState.device;
       const i = fullState.indicator;
