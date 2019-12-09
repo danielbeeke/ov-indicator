@@ -84,9 +84,6 @@ app-loader {
     pointer-events: none; }
 
 app-menu {
-  -webkit-transition: all 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
-  -o-transition: all 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
-  transition: all 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
   opacity: 1;
   height: 100vh;
   width: 100vw;
@@ -502,9 +499,10 @@ select {
   background-color: #e1f4fc;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  -webkit-transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s;
-  -o-transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s;
-  transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s; }
+  -webkit-transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s, opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
+  -o-transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s, opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
+  transition: background-color 0s cubic-bezier(0.67, -0.07, 0.49, 0.93) 0.5s, opacity 0.5s cubic-bezier(0.67, -0.07, 0.49, 0.93);
+  opacity: 1; }
   .menu-toggle .bar {
     width: 20px;
     height: 2px;
@@ -532,6 +530,9 @@ select {
       -webkit-transform: translateY(-9px) rotate(-135deg);
       -ms-transform: translateY(-9px) rotate(-135deg);
       transform: translateY(-9px) rotate(-135deg); }
+
+.hidden > .menu-toggle {
+  opacity: 0; }
 
 @media all and (min-width: 620px) {
   .menu-toggle {
