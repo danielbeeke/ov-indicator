@@ -8,6 +8,7 @@ import {Store} from "./Store.js";
 export class BaseElement extends HTMLElement {
   constructor () {
     super();
+    this.interval = false;
     this.subscribers = [];
 
     // Binds draw to the element.
@@ -20,7 +21,6 @@ export class BaseElement extends HTMLElement {
   /**
    * API, needs to be implemented by the child element.
    * Holds the lighterHTML template.
-   * @returns {Array}
    */
   draw () {}
 
@@ -48,5 +48,9 @@ export class BaseElement extends HTMLElement {
    */
   disconnectedCallback () {
     this.subscribers.forEach(unsubscribe => unsubscribe());
+
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
   }
 }

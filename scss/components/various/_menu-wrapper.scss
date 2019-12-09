@@ -1,0 +1,41 @@
+.menu-wrapper {
+  background-color: $color-tertiary;
+  width: 100%;
+  height: 100%;
+  max-width: $max-width;
+  padding: 50px $padding;
+  clip-path: circle(0px at calc(100% - 24px) calc(0% + 23px));
+  transition: clip-path $speed $easing;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+  will-change: auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  .menu-link {
+    padding: $padding;
+    color: $color-secondary;
+    transition: transform $speed $easing, opacity $speed $easing;
+    transform: translateY(-20px);
+    opacity: 0;
+    font-weight: 100;
+  }
+
+  &.expanded {
+    pointer-events: auto;
+    clip-path: circle(120vmin at 50vw 50vh);
+
+    .menu-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media all and (min-width: 620px) {
+  .menu-wrapper {
+    clip-path: circle(0px at calc(50% + #{$max-width / 2} - 32px) calc(0% + 23px));
+  }
+}

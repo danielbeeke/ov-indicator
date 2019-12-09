@@ -1,8 +1,6 @@
 import {BaseElement} from '../Core/BaseElement.js';
 import {html} from '../vendor/lighterhtml.js';
 import {Store} from '../Core/Store.js';
-import {loadGeolocationStopsAndTrips} from '../Helpers/Various.js';
-import {recalculate} from '../Actions/TripSelectorActions.js';
 
 /**
  * Shows a progressbar showing the loading progress of the app.
@@ -14,11 +12,6 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
    */
   connectedCallback() {
     this.watch('loadingScreen.phase', () => this.draw());
-
-    // The next line/check is added for when the state is hydrated.
-    const {selectedStop} = Store.getState().tripSelector;
-    const {favoriteStops} = Store.getState().tripSelector;
-    selectedStop ? recalculate() : loadGeolocationStopsAndTrips(favoriteStops);
   }
 
   /**

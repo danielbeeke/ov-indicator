@@ -51,6 +51,25 @@ export function currentArrivals (tripSelector) {
 }
 
 /**
+ * Returns the stops grouped.
+ * @param tripSelector
+ * @returns {[]}
+ */
+export function groupedStops(tripSelector) {
+  if (!tripSelector.trips) { return tripSelector.stops }
+
+  let stops = {};
+
+  tripSelector.trips.forEach(trip => {
+    if (!stops[trip.stop.parent_station]) {
+      stops[trip.stop.parent_station] = trip.stop;
+    }
+  });
+
+  return Object.values(stops);
+}
+
+/**
  * Returns a trip identifier
  * @param trip
  * @returns {string}
@@ -65,7 +84,7 @@ export const tripKey = (trip) => {
  */
 export const loadGeolocationStopsAndTrips = (favoriteStops) => {
   getGeolocation().then(({lat, lng}) => {
-    getStops(lat, lng, favoriteStops, 5).then(stops => getTrips(stops.map(stop => stop.stop_id)));
+    getStops(lat, lng, favoriteStops, 5).then(stops => getTrips(stops.map(stop => stop.stop_id), lat, lng));
   });
 };
 

@@ -1,0 +1,33 @@
+app-menu {
+  transition: all $speed $easing;
+  opacity: 1;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  pointer-events: none;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    background-color: black;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity $speed $easing;
+  }
+
+  &.expanded:after {
+    opacity: 1;
+  }
+}

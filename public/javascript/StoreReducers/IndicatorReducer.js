@@ -1,25 +1,30 @@
 import {produce} from "../vendor/immer.js";
-import {createIndication} from '../Helpers/CreateIndication.js';
+import {getPhase} from '../Helpers/GetPhase.js';
+import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
 /**
  * Prepares indicator information, is a Redux reducer
  */
 export function indicatorReducer (state = {
   phase: null,
-  timeLeft: null,
   distance: null,
-  prepareMarge: null,
-  departureTime: null,
-  leaveTimestamp: null,
-  averageWalkInHours: null,
+  walkInMinutes: null,
+  averageWalkingSpeed: 5000,
 }, action, fullState) {
   return produce(state, nextState => {
 
-    if (['recalculate'].includes(action.type)) {
-      if (fullState.tripSelector.selectedStop && fullState.tripSelector.selectedTrip) {
-        Object.assign(nextState, createIndication(fullState, Date.now() / 1000));
+    if (fullState) {
+      const t = fullState.tripSelector;
+      const d = fullState.device;
+      const i = fullState.indicator;
+
+      if (t.selectedTrip && t.selectedStop) {
+        nextState.distance = calculateDistance(t.selectedStop.stop_lat, t.selectedStop.stop_lon, d.lat, d.lng);
+        nextState.phase = getPhase(t.selectedTrip.ts, nextState.distance, i.averageWalkingSpeed);
+        nextState.walkInMinutes = Math.round(nextState.distance / i.averageWalkingSpeed * 60);
       }
     }
 
+    return nextState;
   });
 }

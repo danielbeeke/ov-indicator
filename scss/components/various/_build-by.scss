@@ -1,0 +1,21 @@
+.build-by {
+  padding: $padding;
+  color: $color-secondary;
+  transition: transform $speed $easing, opacity $speed $easing;
+  transform: translateY(-20px);
+  font-weight: 100;
+  opacity: 0;
+  position: absolute;
+  bottom: $padding;
+  font-size: 12px;
+  line-height: 1.3;
+
+  a {
+    color: $color-secondary;
+  }
+}
+
+.expanded .build-by {
+  opacity: .5;
+  transform: translateY(0);
+}

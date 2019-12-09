@@ -8,6 +8,7 @@ button {
   border: 1px solid $color-gray;
   box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
   border-radius: $border-radius;
+  position: relative;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -24,9 +25,11 @@ button {
 
   &:hover {
     border-color: #888;
+    z-index: 2;
   }
 
   &:focus {
+    z-index: 2;
     border-color: #aaa;
     box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
     box-shadow: 0 0 0 3px -moz-mac-focusring;

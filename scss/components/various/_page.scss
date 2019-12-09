@@ -3,14 +3,23 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: auto;
+  height: 100vh;
   width: 100%;
   max-width: $max-width;
   padding: $padding;
   opacity: 1;
-  transition: opacity $speed $easing;
+  transition: opacity $speed $easing, transform $speed $easing, filter $speed $easing;
+  overflow-y: auto;
+  scrollbar-width: none;
+  filter: none;
+  overflow-x: hidden;
 
   &.hidden {
+    opacity: 0;
+  }
+
+  &.menu-expanded {
+    transform: translate(-50%, 270px);
     opacity: 0;
   }
 }

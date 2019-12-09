@@ -3,6 +3,9 @@ app-loader {
   transition: all $speed $easing;
   opacity: 1;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   &.hidden {
     opacity: 0;

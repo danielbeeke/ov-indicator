@@ -4,11 +4,22 @@ trip-selector {
   max-width: $max-width;
   flex-direction: column;
   display: flex;
+  margin-top: 34px;
+
+  .label {
+    flex: 0 0 100%;
+  }
 
   .stop-selector,
   .trip-selector {
     display: flex;
     margin: $padding;
+    flex: 1 1 50%;
+    flex-wrap: wrap;
+  }
+
+  .trip-selector {
+    margin-top: 0;
   }
 
   .stop-selector {
@@ -16,6 +27,21 @@ trip-selector {
   }
 
   button {
-    margin-left: $padding * 2;
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    flex: 0 1 auto;
+  }
+
+  select {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    flex: 1 1 80%;
+  }
+}
+
+@media all and (min-width: 500px) {
+  trip-selector {
+    flex-direction: row;
   }
 }

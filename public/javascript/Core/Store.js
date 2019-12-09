@@ -4,6 +4,7 @@ import {deviceReducer} from '../StoreReducers/DeviceReducer.js';
 import {tripSelectorReducer} from '../StoreReducers/TripSelectorReducer.js';
 import {errorReducer} from '../StoreReducers/ErrorReducer.js';
 import {indicatorReducer} from '../StoreReducers/IndicatorReducer.js';
+import {menuReducer} from '../StoreReducers/MenuReducer.js';
 import {loadingPhaseEnhancerMiddleware} from '../Middleware/LoadingPhaseEnhancerMiddleware.js';
 import {promiseMiddleware} from '../Middleware/PromiseMiddleware.js';
 import {loadingPhaseWatcherMiddleware} from '../Middleware/LoadingPhaseWatcherMiddleware.js';
@@ -19,6 +20,7 @@ const reducers = sharedCombineReducers({
   tripSelector: tripSelectorReducer,
   device: deviceReducer,
   error: errorReducer,
+  menu: menuReducer,
 });
 
 const middleware = applyMiddleware(

@@ -2,6 +2,7 @@ import {Store} from '../Core/Store.js';
 import {getCurrentPosition, proxy} from "../Helpers/Various.js";
 import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
+
 /**
  * Returns the current location
  * @returns {Promise<position>}
@@ -28,12 +29,16 @@ export const getStops = (lat, lng, favoriteStops, limit = 5) => {
     return stops.sort((a, b) => {
       let firstSort = favoriteStops.includes(b.stop_id) - favoriteStops.includes(a.stop_id);
       if (firstSort !== 0) { return firstSort }
-      return a.distance - b.distance
+
+      let distanceA = calculateDistance(a.stop_lat, a.stop_lon, lat, lng);
+      let distanceB = calculateDistance(b.stop_lat, b.stop_lon, lat, lng);
+
+      return distanceA - distanceB
     });
   };
-  const addDistances = (stops) => stops.forEach(stop => stop.distance = calculateDistance(stop.stop_lat, stop.stop_lon, lat, lng));
+  const onlyActive = (stops) => stops.filter(stop => stop.active_stop);
   const promise = proxy(`https://ovzoeker.nl/api/stops/${lat},${lng}`).then(stops => {
-    addDistances(stops);
+    stops = onlyActive(stops);
     stops = sortStops(stops);
     return stops.slice(0, limit);
   });
@@ -117,13 +122,4 @@ export const toggleTripFavorite = (target) => {
       type: 'toggle-trip-favorite-animation-end'
     });
   }, {once: true});
-};
-
-/**
- * Recalculates
- */
-export const recalculate = () => {
-  Store.dispatch({
-    type: 'recalculate'
-  });
 };

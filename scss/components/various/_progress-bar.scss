@@ -12,10 +12,11 @@
 }
 
 .progress-bar-wrapper {
+  text-align: center;
   padding: .4em;
+  margin: $padding;
   position: relative;
   border-radius: .5em;
-  margin-top: 20px;
   background-color: $color-tertiary;
 
   .label {
@@ -23,7 +24,7 @@
     filter: invert(1) contrast(9);
     z-index: 2;
     font-weight: 100;
-    font-size: 14px;
+    font-size: 11px;
     color: $color-tertiary;
   }
 }
