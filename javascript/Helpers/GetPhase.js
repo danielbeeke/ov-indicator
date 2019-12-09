@@ -2,36 +2,44 @@
  * Calculates the current phase.
  * @param departureTime
  * @param distance
+ * @param punctuality
  * @param averageWalkingSpeed
+ * @param prepareMinutes
  * @param now
- * @returns {null}
+ * @returns string
  */
-export function getPhase(departureTime, distance, averageWalkingSpeed = 5000, now = Date.now() / 1000) {
+export function getPhase(
+  departureTime,
+  distance,
+  punctuality,
+  averageWalkingSpeed = 5000,
+  prepareMinutes = 1,
+  now = Date.now() / 1000
+) {
   const fastWalkingSpeed = averageWalkingSpeed * 1.4;
   const slowWalkingSpeed = averageWalkingSpeed * 0.6;
 
-  const slowWalkInHours = distance / slowWalkingSpeed;
-  const averageWalkInHours = distance / averageWalkingSpeed;
-  const fastWalkInHours = distance / fastWalkingSpeed;
+  const slowWalkInSeconds = distance / slowWalkingSpeed * 60 * 60;
+  const averageWalkInSeconds = distance / averageWalkingSpeed * 60 * 60;
+  const fastWalkInSeconds = distance / fastWalkingSpeed * 60 * 60;
 
   const timeLeft = departureTime - now;
-  const prepareMarge = 60;
 
-  let phase = null;
+  let phase = '';
 
-  if (timeLeft > slowWalkInHours + prepareMarge) {
+  if (timeLeft > slowWalkInSeconds + (prepareMinutes * 60)) {
     // You can wait a little longer.
     phase = 'wait';
   }
-  else if (timeLeft > slowWalkInHours) {
+  else if (timeLeft > slowWalkInSeconds) {
     // You should be preparing now, leave in 30 sec.
     phase = 'prepare';
   }
-  else if (timeLeft > averageWalkInHours + 30 || timeLeft > fastWalkInHours) {
+  else if (timeLeft > averageWalkInSeconds + ((slowWalkInSeconds - averageWalkInSeconds) / 2) || timeLeft > fastWalkInSeconds) {
     // You should be walking or running now.
     phase = 'traveling';
   }
-  else if (timeLeft < fastWalkInHours) {
+  else {
     // You have missed the trip.
     phase = 'missed';
   }
