@@ -27,7 +27,10 @@ export function getPhase(
 
   let phase = '';
 
-  if (timeLeft > slowWalkInSeconds + (prepareMinutes * 60)) {
+  if (distance < 50) {
+    phase = 'arrived';
+  }
+  else if (timeLeft > slowWalkInSeconds + (prepareMinutes * 60)) {
     // You can wait a little longer.
     phase = 'wait';
   }

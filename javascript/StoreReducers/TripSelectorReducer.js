@@ -38,6 +38,9 @@ export function tripSelectorReducer (state = {
 
     if (action.type === 'set-stop') {
       nextState.selectedStop = state.stops.find(stop => stop.stop_id === action.payload.stopId);
+
+      // Also set the trip
+      nextState.selectedTrip = currentArrivals(state, action.payload.stopId) && currentArrivals(state, action.payload.stopId)[0] ? currentArrivals(state, action.payload.stopId)[0] : null;
     }
 
     if (action.type === 'set-trip') {

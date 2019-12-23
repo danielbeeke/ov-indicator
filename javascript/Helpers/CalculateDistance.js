@@ -1,4 +1,3 @@
-
 /**
  * Calculates distance in KM between two LatLng's
  * @param lat1

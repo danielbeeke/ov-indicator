@@ -7,6 +7,7 @@ export function deviceReducer (state = {
   isOnline: typeof navigator !== 'undefined' ? navigator.onLine : null,
   lat: null,
   lng: null,
+  geoPermission: null,
 }, action) {
   return produce(state, nextState => {
 
@@ -15,6 +16,10 @@ export function deviceReducer (state = {
 
     if (action.type === 'request-geolocation') {
       Object.assign(nextState, action.payload)
+    }
+
+    if (action.type === 'get-geo-permission' && action.success) {
+      nextState.geoPermission = action.payload;
     }
 
   });

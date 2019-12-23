@@ -24,7 +24,9 @@ customElements.define('app-error', class AppError extends BaseElement {
     const s = Store.getState().error;
 
     return html`
-      <p>${s.message}</p>
+      ${s.message ? html`
+          <p>${s.message}</p>
+      ` : ''}
     `
   }
 });

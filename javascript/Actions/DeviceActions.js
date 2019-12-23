@@ -11,3 +11,12 @@ export const goOffline = () => {
     type: 'go-offline',
   })
 };
+
+export const getGeoPermission = () => {
+  Store.dispatch({
+    type: 'get-geo-permission',
+    payload: navigator.permissions.query({name:'geolocation'}).then(result => {
+      return result.state ? result.state : (result.status ? result.status : null);
+    })
+  })
+};

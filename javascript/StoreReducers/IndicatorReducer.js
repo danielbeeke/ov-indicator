@@ -4,6 +4,9 @@ import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
 /**
  * Prepares indicator information, is a Redux reducer
+ *
+ * A bit different than the rest. We use the nextFullState here to calculate the indication.
+ *
  */
 export function indicatorReducer (state = {
   phase: null,
@@ -11,29 +14,34 @@ export function indicatorReducer (state = {
   walkInMinutes: null,
   averageWalkingSpeed: 5000,
   prepareMinutes: 1
-}, action, fullState) {
-  return produce(state, nextState => {
+}, action, fullState, nextFullState) {
+  return produce(state, nextPartialState => {
 
     if (action.type === 'set-average-walking-speed') {
-      nextState.averageWalkingSpeed = action.payload.averageWalkingSpeed;
+      nextPartialState.averageWalkingSpeed = action.payload.averageWalkingSpeed;
     }
 
     if (action.type === 'set-prepare-minutes') {
-      nextState.prepareMinutes = action.payload.prepareMinutes;
+      nextPartialState.prepareMinutes = action.payload.prepareMinutes;
     }
 
-    if (fullState && fullState.tripSelector) {
-      const t = fullState.tripSelector;
-      const d = fullState.device;
+    if (fullState) {
+      const t = nextFullState.tripSelector;
+      const d = nextFullState.device;
       const i = fullState.indicator;
 
-      if (t.selectedTrip && t.selectedStop) {
-        nextState.distance = calculateDistance(t.selectedStop.stop_lat, t.selectedStop.stop_lon, d.lat, d.lng);
-        nextState.phase = getPhase(t.selectedTrip.ts, nextState.distance, t.selectedTrip.punctuality, i.averageWalkingSpeed, i.prepareMinutes);
-        nextState.walkInMinutes = Math.round(nextState.distance / i.averageWalkingSpeed * 60);
+      if (t.selectedStop && t.selectedTrip) {
+        nextPartialState.distance = calculateDistance(t.selectedStop.stop_lat, t.selectedStop.stop_lon, d.lat, d.lng);
+        nextPartialState.phase = getPhase(t.selectedTrip.ts, nextPartialState.distance, t.selectedTrip.punctuality, i.averageWalkingSpeed, i.prepareMinutes);
+        nextPartialState.walkInMinutes = Math.round(nextPartialState.distance / i.averageWalkingSpeed * 60);
+      }
+      else {
+        nextPartialState.distance = null;
+        nextPartialState.phase = null;
+        nextPartialState.walkInMinutes = null;
       }
     }
 
-    return nextState;
+    return nextPartialState;
   });
 }

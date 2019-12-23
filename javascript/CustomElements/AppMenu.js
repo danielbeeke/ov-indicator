@@ -3,6 +3,7 @@ import {html} from '../vendor/lighterhtml.js';
 import {Store} from '../Core/Store.js';
 import {toggleMenu} from '../Actions/MenuActions.js';
 import {setAverageWalkingSpeed, setPrepareMinutes} from '../Actions/IndicatorActions.js';
+import {Translate as t} from '../Helpers/Translate.js';
 
 /**
  * Shows the menu.
@@ -38,7 +39,7 @@ customElements.define('app-menu', class AppMenu extends BaseElement {
         <div class="settings">
 
           <div class="form-item">
-            <span class="label">Mijn voorbereid tijd: ${i.prepareMinutes} minuten</span>
+            <span class="label">${t(`Mijn voorbereid tijd: ${i.prepareMinutes} minuten`)}</span>
             <input type="range" oninput="${e => setPrepareMinutes(e.target.value)}" value="${i.prepareMinutes}" min="0" step="1" max="30">                  
           </div>
       
@@ -49,7 +50,10 @@ customElements.define('app-menu', class AppMenu extends BaseElement {
 
         </div>
 
-        <div class="build-by">Ontwikkeld door <a href="https://danielbeeke.nl" target="_blank">Daniël Beeke</a>,<br>Open source project, code op <a href="https://github.com/danielbeeke/ov-indicator" target="_blank">github</a></div>
+        <div class="build-by">
+          Ontwikkeld door <a href="https://danielbeeke.nl" target="_blank">Daniël Beeke</a>,
+          <br>Open source project, code op <a href="https://github.com/danielbeeke/ov-indicator" target="_blank">github</a>
+        </div>
       </div>
     `
   }

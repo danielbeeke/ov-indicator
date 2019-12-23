@@ -15,6 +15,10 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
 
   connectedCallback() {
     this.draw();
+    this.watch([
+      'tripSelector.selectedStop',
+      'tripSelector.selectedTrip'
+    ], () => {this.draw()});
     this.interval = setInterval(() => {
       this.draw();
     }, 1000);
@@ -69,7 +73,10 @@ customElements.define('trip-selector', class TripSelector extends BaseElement {
         </button>
       </div>
     ` : html`
-      <p>Er zijn geen trips gevonden voor de geselecteerde halte. Misschien dat er weer morgen bussen of treinen rijden.</p>
+      <div class="trip-selector">
+        <label class="label">Reis</label>
+        <span class="no-trips">Er zijn geen reizen gevonden voor de geselecteerde halte.</span>
+      </div>
     `} 
     `;
   }

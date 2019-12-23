@@ -39,11 +39,13 @@ export function isPromise(obj) {
 /**
  * Selects the arrivals from the tripSelector state.
  * @param tripSelector
+ * @param stopId
  * @returns {*}
  */
-export function currentArrivals (tripSelector) {
+export function currentArrivals (tripSelector, stopId = false) {
+  if (!stopId) { stopId = tripSelector.selectedStop ? tripSelector.selectedStop.stop_id : false }
   if (tripSelector.selectedStop && tripSelector.trips) {
-    const currentTrips = tripSelector.trips.find ? tripSelector.trips.find(trip => trip.stop.stop_id === tripSelector.selectedStop.stop_id) : false;
+    const currentTrips = tripSelector.trips.find ? tripSelector.trips.find(trip => trip.stop.stop_id === stopId) : false;
     if (currentTrips && currentTrips.arrivals.length) {
       return currentTrips.arrivals;
     }
@@ -75,7 +77,7 @@ export function groupedStops(tripSelector) {
  * @returns {string}
  */
 export const tripKey = (trip) => {
-  return trip.route_short_name + '-' + trip.trip_headsign
+  return trip ? trip.route_short_name + '-' + trip.trip_headsign : ''
 };
 
 /**

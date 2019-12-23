@@ -1,7 +1,7 @@
 import {Store} from '../Core/Store.js';
 import {getCurrentPosition, proxy} from "../Helpers/Various.js";
 import {calculateDistance} from '../Helpers/CalculateDistance.js';
-
+import {getGeoPermission} from './DeviceActions.js';
 
 /**
  * Returns the current location
@@ -11,8 +11,12 @@ export const getGeolocation = () => {
   const promise = getCurrentPosition();
   Store.dispatch({
     type: 'request-geolocation',
-    payload: promise
+    payload: promise.then(result => {
+      getGeoPermission();
+      return result;
+    })
   });
+
   return promise;
 };
 

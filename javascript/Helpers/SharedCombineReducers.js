@@ -62,7 +62,7 @@ export function sharedCombineReducers(reducers) {
       let _key = finalReducerKeys[_i];
       let reducer = finalReducers[_key];
       let previousStateForKey = state[_key];
-      let nextStateForKey = reducer(previousStateForKey, action, state);
+      let nextStateForKey = reducer(previousStateForKey, action, state, nextState);
 
       if (typeof nextStateForKey === 'undefined') {
         let errorMessage = getUndefinedStateErrorMessage(_key, action);

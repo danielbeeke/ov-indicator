@@ -8,7 +8,7 @@
 import {BaseElement} from './Core/BaseElement.js';
 import {Store} from './Core/Store.js';
 import {html} from "./vendor/lighterhtml.js";
-import {goOnline, goOffline} from './Actions/DeviceActions.js';
+import {goOnline, goOffline, getGeoPermission} from './Actions/DeviceActions.js';
 import {loadGeolocationStopsAndTrips} from './Helpers/Various.js';
 
 import './vendor/polyfill.js';
@@ -28,6 +28,8 @@ customElements.define('ov-app', class OvApp extends BaseElement {
   connectedCallback () {
     window.addEventListener('online',  goOnline);
     window.addEventListener('offline',  goOffline);
+
+    getGeoPermission();
 
     // The next line/check is added for when the state is hydrated.
     const {selectedStop} = Store.getState().tripSelector;
@@ -54,7 +56,7 @@ customElements.define('ov-app', class OvApp extends BaseElement {
         <trip-indicator />
       </div>
       <app-error class="page ${e.message ? '' : 'hidden'}" />
-      <app-menu class="${m.expanded ? 'expanded' : ''}  ${s.isLoading ? 'hidden' : '' }" />
+      <app-menu class="${m.expanded ? 'expanded' : ''}  ${s.isLoading || e.message ? 'hidden' : '' }" />
     `;
   }
 
