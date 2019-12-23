@@ -23,6 +23,7 @@ customElements.define('app-loader', class AppLoader extends BaseElement {
     const s = Store.getState().loadingScreen;
 
     return html`
+      <img src="/img/jogging.svg" class="illustration jogging">
       <div class="progress-bar-wrapper${s.phase === ' done' ? 'done' : ''}">
         <div class="progress-bar" style="width: ${s.percentage}%"></div>
         <div class="label">${s.text}</div>

@@ -2,6 +2,7 @@ import {BaseElement} from '../Core/BaseElement.js';
 import {Store} from "../Core/Store.js";
 import {html} from "../vendor/lighterhtml.js";
 import {relativeTime} from '../Helpers/RelativeTime.js';
+import {calculateDistance} from '../Helpers/CalculateDistance.js';
 
 /**
  * Returns a bit of information about the stop and the trip.
@@ -16,6 +17,10 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
       'tripSelector.selectedStop',
       'tripSelector.selectedTrip'
     ], () => {this.draw()})
+
+    this.interval = setInterval(() => {
+      this.draw();
+    }, 1000);
   }
 
   /**
@@ -23,27 +28,31 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
    * @returns {*}
    */
   draw() {
-    const s = Store.getState().tripSelector;
+    const t = Store.getState().tripSelector;
     const i = Store.getState().indicator;
-    const punctuality = s.selectedTrip && s.selectedTrip.punctuality ? s.selectedTrip.punctuality : false;
+    const d = Store.getState().device;
+
+    const punctuality = t.selectedTrip && t.selectedTrip.punctuality ? t.selectedTrip.punctuality : false;
+    let distance = t.selectedStop ? calculateDistance(t.selectedStop.stop_lat, t.selectedStop.stop_lon, d.lat, d.lng) : null;
+    let walkInMinutes = Math.round(distance / i.averageWalkingSpeed * 60);
 
     return html`
-      ${i.distance ? html`
+      ${distance ? html`
         <div class="distance info-field">
           <label class="label">Afstand</label>
-          <span class="value">${i.distance} m.</span>
+          <span class="value">${distance} m.</span>
         </div>
       ` : ''}
       
-      ${s.selectedTrip ? html`
+      ${t.selectedTrip ? html`
         <div class="departure info-field">
           <label class="label">Vertrektijd bus</label>
-          <span class="value">${relativeTime(s.selectedTrip.ts, true, 'short')}</span>
+          <span class="value">${relativeTime(t.selectedTrip.ts, true, 'short')}</span>
         </div>
       ` : ''}
 
       ${punctuality ? html`
-        <div class="punctuality info-field ${punctuality < 0 ? 'negative' : ''} ${s.selectedTrip.punctuality > 40 ? 'early' : ''}">
+        <div class="punctuality info-field ${punctuality < 0 ? 'negative' : ''} ${t.selectedTrip.punctuality > 40 ? 'early' : ''}">
           ${punctuality < 0 ? html`
             <label class="label">Te laat</label>
           ` : ''}
@@ -57,17 +66,17 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
         </div>
       ` : ''}
       
-      ${i.walkInMinutes ? html`
+      ${walkInMinutes ? html`
         <div class="departure info-field">
           <label class="label">Wandeltijd</label>
-          <span class="value">${i.walkInMinutes} min.</span>
+          <span class="value">${walkInMinutes} min.</span>
         </div>
       ` : ''}
 
-      ${i.walkInMinutes ? html`
+      ${walkInMinutes && t.selectedTrip ? html`
         <div class="departure info-field">
           <label class="label">Jouw vertrektijd</label>
-          <span class="value">${relativeTime(s.selectedTrip.ts - (i.walkInMinutes * 60 + i.prepareMinutes * 60), true, 'short')}</span>
+          <span class="value">${relativeTime(t.selectedTrip.ts - (walkInMinutes * 60 + i.prepareMinutes * 60), true, 'short')}</span>
         </div>
       ` : ''}
 

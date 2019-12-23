@@ -23,7 +23,7 @@ export function getPhase(
   const averageWalkInSeconds = distance / averageWalkingSpeed * 60 * 60;
   const fastWalkInSeconds = distance / fastWalkingSpeed * 60 * 60;
 
-  const timeLeft = departureTime - now;
+  const timeLeft = (departureTime - now) - (prepareMinutes * 60);
 
   let phase = '';
 

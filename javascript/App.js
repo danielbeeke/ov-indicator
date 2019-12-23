@@ -53,7 +53,7 @@ customElements.define('ov-app', class OvApp extends BaseElement {
       <div class="${m.expanded ? 'menu-expanded' : ''} page ${s.isLoading || e.message ? 'hidden' : ''}">
         <trip-selector />      
         <trip-info />
-        <trip-indicator />
+        <trip-indicator />    
       </div>
       <app-error class="page ${e.message ? '' : 'hidden'}" />
       <app-menu class="${m.expanded ? 'expanded' : ''}  ${s.isLoading || e.message ? 'hidden' : '' }" />
