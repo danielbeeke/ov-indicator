@@ -38,10 +38,21 @@ trip-selector {
     border-bottom-right-radius: 0;
     flex: 1 1 80%;
   }
+
+  .no-trips {
+    margin-top: 2px;
+    line-height: 1.2;
+    font-size: 14px;
+    font-weight: 100;
+  }
 }
 
 @media all and (min-width: 500px) {
   trip-selector {
     flex-direction: row;
+
+    .trip-selector {
+      margin-top: $padding;
+    }
   }
 }

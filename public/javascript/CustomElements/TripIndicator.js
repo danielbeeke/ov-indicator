@@ -7,24 +7,25 @@ import {html} from "../vendor/lighterhtml.js";
  */
 customElements.define('trip-indicator', class TripIndicator extends BaseElement {
 
-  /**
-   * When our custom element is placed inside the DOM.
-   */
   connectedCallback() {
     this.draw();
+    this.watch([
+      'tripSelector.selectedStop',
+      'tripSelector.selectedTrip'
+    ], () => {this.draw()});
     this.interval = setInterval(() => {
       this.draw();
     }, 1000);
   }
 
-  /**
-   * Our lighterHTML render function.
-   * @returns {*}
-   */
   draw() {
     const s = Store.getState().indicator;
 
     return html`
+      ${s.phase === 'arrived' ? html`
+        <p>Je bent gearriveerd.</p>
+      ` : ''}
+
       ${s.phase === 'wait' ? html`
         <p>Je kunt nog wachten.</p>
       ` : ''}

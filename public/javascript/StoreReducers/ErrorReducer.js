@@ -15,7 +15,7 @@ export function errorReducer (state = {
       }
 
       if (action.type === 'request-geolocation') {
-        nextState.message = 'De app heeft geolocatie nodig om te kunnen functioneren. Wil je checken of het aan staat?';
+        nextState.message = 'De app heeft je locatie nodig om te kunnen functioneren. Wil je checken of het aan staat?';
         nextState.type = 'no-geolocation';
       }
     }

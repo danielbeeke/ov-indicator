@@ -49,7 +49,10 @@ customElements.define('app-menu', class AppMenu extends BaseElement {
 
         </div>
 
-        <div class="build-by">Ontwikkeld door <a href="https://danielbeeke.nl" target="_blank">Daniël Beeke</a>,<br>Open source project, code op <a href="https://github.com/danielbeeke/ov-indicator" target="_blank">github</a></div>
+        <div class="build-by">
+          Ontwikkeld door <a href="https://danielbeeke.nl" target="_blank">Daniël Beeke</a>,
+          <br>Open source project, code op <a href="https://github.com/danielbeeke/ov-indicator" target="_blank">github</a>
+        </div>
       </div>
     `
   }

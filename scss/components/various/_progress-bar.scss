@@ -1,14 +1,16 @@
 .progress-bar {
-  height: calc(100% - .6em);
-  background-color: #fff;
-  background-image: linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+  height: calc(100% - 8px);
+  background-color: #e5e5e5;
   position: absolute;
   top: 50%;
-  left: .3em;
+  left: 4px;
   transform: translateY(-50%);
   transition: width .5s ease-in-out;
   border-radius: .3em;
-  max-width: calc(100% - .8em);
+  max-width: calc(100% - 8px);
+  background-image: repeating-linear-gradient(-45deg, white, white 11px, transparent 10px, transparent 28px);
+  background-size: 40px 40px;
+  animation: move 1s linear infinite;
 }
 
 .progress-bar-wrapper {
@@ -26,5 +28,15 @@
     font-weight: 100;
     font-size: 11px;
     color: $color-tertiary;
+  }
+}
+
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 0;
   }
 }

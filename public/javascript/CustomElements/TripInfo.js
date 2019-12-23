@@ -12,9 +12,10 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
    * When our custom element is placed inside the DOM.
    */
   connectedCallback() {
-    this.interval = setInterval(() => {
-      this.draw();
-    }, 1000);
+    this.watch([
+      'tripSelector.selectedStop',
+      'tripSelector.selectedTrip'
+    ], () => {this.draw()})
   }
 
   /**
@@ -62,6 +63,14 @@ customElements.define('trip-info', class TripInfo extends BaseElement {
           <span class="value">${i.walkInMinutes} min.</span>
         </div>
       ` : ''}
+
+      ${i.walkInMinutes ? html`
+        <div class="departure info-field">
+          <label class="label">Jouw vertrektijd</label>
+          <span class="value">${relativeTime(s.selectedTrip.ts - (i.walkInMinutes * 60 + i.prepareMinutes * 60), true, 'short')}</span>
+        </div>
+      ` : ''}
+
     `
   }
 });

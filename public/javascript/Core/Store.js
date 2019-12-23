@@ -15,10 +15,10 @@ import {savableSlicer} from '../Helpers/SavableSlicer.js';
 const initialState = {};
 
 const reducers = sharedCombineReducers({
-  indicator: indicatorReducer,
-  loadingScreen: loadingScreenReducer,
   tripSelector: tripSelectorReducer,
   device: deviceReducer,
+  indicator: indicatorReducer,
+  loadingScreen: loadingScreenReducer,
   error: errorReducer,
   menu: menuReducer,
 });
